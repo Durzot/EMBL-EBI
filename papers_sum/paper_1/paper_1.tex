@@ -1,0 +1,172 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+%\newtheorem{thm}{Theorem}
+%\newtheorem{lem}[thm]{Lemma}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+
+
+\begin{document}
+\title{Summary paper 1: Cardinal Hermite Interpolation Schoenberg}
+\author{Yoann Pradat}
+\maketitle
+
+Given a sequence of numbers y and a linear space $\mathcal{S}$ we denote as C.I.P ($y, \mathcal{S}$) the problem of 
+finding $F \in \mathcal{S}$ that satisfies $F(\nu) = y_{\nu}$ for all $\nu$.  \\
+
+Given $r$ sequences of numbers $y, \ldots, y^{(r-1)}$ and a linear space $\mathcal{S}$ we denote as C.H.I.P ($y, 
+\mathcal{S}$) the problem of finding $F \in \mathcal{S}$ that satisfies $F^{(s)}(\nu) = y^{(s)}_{\nu}$ for all $s = 0, 
+\ldots, r-1$ for all $\nu$.  \\
+
+\paragraph{Notations} 
+
+\begin{align}
+  S_{2m, r} &= \{\text{Cardinal splines of order $2m-1$ with knots at integers of multiplicity r}\} \\
+  F_{\gamma,r} &= \{F | F^{(s)}(x) = \mathcal{O}(|x|^{\gamma}) \quad \text{as }  x \to \pm \infty \quad \forall s=0, 
+  \ldots, r-1\} \\
+  \mathcal{L}_{p,r} &= \{F | F^{(s)} \in \mathcal{L}_p \quad \forall s=0, \ldots, r-1\}\\
+  S^0_{2m, r} &= \{S \in S_{2m,r} | S^{(s)}(\nu)=0 \quad \forall s=0, \ldots, r-1 \quad \forall \nu\}
+\end{align}
+
+\begin{thm}{1}
+  C.H.I.P ($y, S_{2m,r} \cap F_{\gamma, r}$) has a solution iif $y^{(s)}_{\nu} = \mathcal{O}(|\nu|^{\gamma})$ as $\nu 
+  \to \pm \infty$. If it exists the solution is unique.
+\end{thm}
+
+\begin{thm}{2}
+  C.H.I.P ($y, S_{2m,r} \cap \mathcal{L}_{p, r}$) has a solution iif $y^{(s)} \in l_p$. If it exists the solution is 
+  unique.
+\end{thm}
+
+For $s=0, \ldots, r-1$, let the $r$ sequences $y^{(\rho)}_{\nu} = \delta_{\nu}\delta_{\rho-s}$ for $\rho=0, \ldots, 
+r-1$. As these are in $l_1$, there exists a unique $L_{2m, r, s} \in  S_{2m,r} \cap \mathcal{L}_{1, r}$ such that for 
+all $s=0, \ldots, r-1$, $L_{2m, r, s}^{(\rho)}(\nu) = \delta_{\nu}\delta_{\rho-s}$ for all $\rho=0, \ldots, r-1$ and 
+$\nu$. Let $L_s = L_{2m, r, s}$. 
+
+\begin{thm}{3}
+  There exists $A(m,r)$, $\alpha(m,r)$ such that
+  \begin{equation}
+  \forall s, \rho = 0, \ldots, r-1 \quad \forall x \quad  |L_{2m, r, s}^{(\rho)}(x)| \leq A(m,r) \exp(-\alpha(m,r)x)
+  \end{equation}
+\end{thm}
+
+\begin{thm}{4}
+  The spline function unique solution to theorems 1 and 2 is given by Lagrange-Hermite interpolation
+  \begin{equation}
+    \forall x \quad S(x) = \sum_{-\infty}^{\infty} y_{\nu} L_0(x-\nu) + \cdots + y^{(r-1)}_{\nu} L_{r-1}(x-\nu)
+  \end{equation}
+\end{thm}
+
+\paragraph{I\@. Proof of unicity in theorems 1 and 2} \mbox{} \\
+
+Note that a spline is uniquely defined by $P(x) \in \pi_{2m-1}$ that satisfies $\forall x \in [0, 1] \quad S(x) = P(x)$.  
+Indeed, with $n = 2m-1$, then $\displaystyle S(x) = P(x) + \sum_{s=0}^{r-1} c_1^{(s)} {(x-1)}_+^{2m-1-s} + \cdots + 
+\sum_{s=0}^{r-1} c_0^{(s)} {(-x)}_+^{2m-1-s} + \sum_{s=0}^{r-1} c_{-1}^{(s)} {(-x-1)}_+^{2m-1-s} + \cdots$ and 
+$c_2^{(s)}$ are uniquely defined by $S^{(s)}(2) = y^{(s)}(2)$, etc.\\
+
+$S^0_{2m, r}$ is a linear space of dimension $d=2m-2r$. $S \in S^0_{2m, r}$ that satisfies $\forall x \quad S(x+1) = 
+\lambda S(x)$ is an \underline{eigenspline} for eigenvalue $\lambda$. Let $P$ be the polynomial component of $S$ on 
+$[0,1]$. The conditions $P^{(s)}(1) = P^{(s)}(0) = 0$ for $s=0, \ldots, r-1$ allows to write
+    
+\begin{equation}
+P(x) = a_0 x^n + a_1 \binom{n}{1} x^{n-1} + \cdots + a_{n-r} \binom{n}{n-r} x^r
+\end{equation}
+
+The conditions $P^{(s)}(1) = \lambda P^{(s)}(1) = 0$ for $s=r, \ldots, 2m-r-1$ (from $S_{2m,r} \subseteq 
+\mathcal{C}^{2m-r-1}$) transform into 
+
+\begin{equation}
+  \Delta_{r,d}(\lambda) {[a_0, \ldots, a_{n-r}]}^T = 0
+\end{equation}
+
+\begin{thm}{5}
+  $|\Delta_{r,d}(\lambda)|=0$ is a reciprocal equation of degree $d=2m-2r$ and has all its roots real, simple and of 
+  sign ${(-1)}^r$.
+\end{thm}
+
+\begin{lem}{3} $|\Delta_{r,d}(\lambda)| = {(-1)}^{rd} |A_d - \lambda I_d|$ with ${(-1)}^r A_d = {(J_d)}^r P_{r,d}$
+\end{lem}
+
+This lemma is proved by proving that ${(-1)}^{r} A_d$ is an \underline{oscillation matrix} and then using the 
+Gantmatcher-Krein theorem. \\
+
+$|\Delta_{r,d}(\lambda)|=0$ have $d$ simple roots all of sign ${(-1)}^{r}$ and they are such that
+\begin{equation}
+  0 < |\lambda_1| < \cdots < |\lambda_{m-r}| < 1 < |\lambda_{m-r+1}| < \cdots < |\lambda_{2m-2r}|
+\end{equation}
+
+Let $S_1, \ldots, S_d$ the associated eigenspline. These are defined up to a factor (as the kernel of 
+$\Delta_{r,d}(\lambda_i)$ is a line) and we choose to have $\forall 0<x<1 \quad 0 < S(x) < 1$ and $S^{(r)} = 0$.  \\ 
+
+As a consequence, $\forall x \quad S_j(x) = {(-1)}^{r} S_{d-j+1}(x)$ and $\forall n < x < n+1 \quad {(-1)}^{nr}S_j(x) > 
+0$.
+
+\begin{lem}{6}
+  If $S \in S^0_{2m, r}$, there exists a unique decomposition
+  \begin{equation}
+    \forall x \quad S(x) = \sum_{j=1}^d c_j S_j(x)
+  \end{equation}
+\end{lem}
+
+\paragraph{II\@. Proof of theorems 1,2,3 and 4} \mbox{} \\
+
+$\forall s=0, \ldots, r-1 \quad \forall x \quad L_s(x) = L_{2m, r, s}(x)$ and $L_s \in S_{2m,r} \cap \mathcal{L}_{1,r}$.
+Note that $L_s$ is even if $s$ is even, odd if $s$ is odd. To construct $L_s$ we first look at extension of the 
+restriction to $\verb+[+1, \infty\verb+)+$ i.e $\tilde{L}_s(x) = L_s(x)$ for $x \geq 1$ and $\tilde{L}_s \in 
+S^0_{2m,r}$. Applying lemma 6 and as $S_j \in \mathcal{L}_{1,r}$ we can write
+
+\begin{equation}
+  \tilde{L}_s(x) = \sum_{j=1}^{m-r} c_j S_j(x)
+\end{equation}
+
+Let $P(x) = L_s(x) \forall x \in [0,1]$. Then we can write
+\begin{itemize}
+  \item{if $r$ and $s$ have same parity} 
+    \begin{equation}P(x) = \frac{x^s}{s!} + a_1 x^r + a_2 x^{r+2} + \cdots + a_{m-r+1} x^{2m-r} + a_{m-r+2} x^{2m-r+1} + 
+      \cdots + a_{m} x^{2m-1}
+    \end{equation} 
+  \item{if $r$ and $s$ have opposite parity} 
+    
+    \begin{equation}P(x) = \frac{x^s}{s!} + a_1 x^{r+1} + a_2 x^{r+3} + \cdots + a_{m-r} x^{2m-r-1} + a_{m-r+1} x^{2m-r}  
+      + a_{m-r+2} x^{2m-r+1} + \cdots + a_{m} x^{2m-1}
+    \end{equation}
+\end{itemize}
+
+The conditions $P^{(\rho)}(1) = \tilde{L}^{(\rho)}(1)$ for $\rho = 0, \ldots, 2m-r-1$ yields $2m-r$ equations for the 
+$m+m-r = 2m-r$ unknowns $c_j$ and $a_j$. We can then explicitly compute the expressions of the $L_s$. The system 
+resulting from these equations is non singular as there is no non-trivial spline in $S_{2m,r} \cap \mathcal{L}_{1}$.
+
+\begin{cor}{Cardinal Lagrange-Hermite interpolation}
+  \begin{equation}
+    f(x) = \sum_{-\infty}^{\infty} f(\nu) L_0(x-\nu) + \cdots + f^{(r-1)}(\nu) L_{r-1}(x-\nu) + R(x)
+  \end{equation}
+  is exact (i.e $R=0$) if $f \in F^{*}_{r}$ and is a cardinal spline function of degree $2m-1$ and class 
+  $\mathcal{C}^{2m-r-1}$. It is exact also for $f \in \pi_{2m-1}$.  
+\end{cor}
+
+\end{document}
+
+
+
+

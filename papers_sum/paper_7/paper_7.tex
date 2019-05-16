@@ -1,0 +1,194 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\newcustomtheorem{deftn}{Definition}
+\newcustomtheorem{prop}{Proposition}
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\Tr}{Tr}
+
+\begin{document}
+\title{Summary paper 7: Spline-based deforming ellipsoids for 3D bioimage segmentation Delgado al}
+\author{Yoann Pradat}
+\maketitle
+
+In this paper the authors derive an exponential B-splines-based model that allow to reproduce ellipsoids. The model 
+proposed is computationally efficient because basis functions are of the shortest possible support and volume integrals 
+are advantageously transformed into surface integrals using Gauss's theorem. The model can approximate very well blobs 
+and perfectly spheres and ellipsoids. A plugin named “Active cells 3D” is provided for the software Icy. \\
+
+Other references in this subject include [2] (simplex meshes), [4] (fully parametric snakes AGF), [5] (refinement of AGF 
+using polynomial B-splines), [6] spline-based parametric model with sphere topology. \\
+
+The parametric snake model in the article have the following important features: perfectly reproduce ellipsoids, 
+shortest possible support, refinable. 
+
+\paragraph{Splines surfaces for object segmentation} \mbox{} \\
+
+The work here is an extension to 3D of 2D snakes presented in [7] that also have ellipse-reproducing properties. A 
+surface is represented by two continuous parameters as such
+
+\begin{equation}
+  \sigma(u, v) = \sum_{(i,j) \in \mathbb{Z}^2} c[i,j] \Phi(\frac{u}{T_1}-i, \frac{v}{T_2}-j)
+\end{equation}
+
+where $T_1, T_2$ are sampling steps for each parametric dimension. A common strategy is to use tensor products for the 
+construction of $\Phi$ that is $\Phi(u, v) = \phi_1(u)\phi_2(v)$. Various choices of $\phi_1, \phi_2$ have been 
+considered such as polynomials, polynomial B-splines and trigonometric B-splines. This tensor decomposition allow for 
+fast and stable interpolation algorithms. Limits to what surfaces can represented by such as $\Phi$? \\ 
+
+At point ${\bf p} = \sigma(u_0, v_0)$ we define the tangent plane as space spanned by the vectors 
+
+\begin{align}
+  {\bf T_1} &= \frac{\partial \sigma}{\partial u}(u_0, v_0) \\
+  {\bf T_2} &= \frac{\partial \sigma}{\partial v}(u_0, v_0)
+\end{align}
+
+The tangent bundle is the union of all tangent spaces at points on the surface $S$. It is said to well-defined if all 
+tangent spaces have dimension 2. In that case $S$ is regular i.e it is not self-intersecting nor does it have borders.  
+Under these conditions, the normal vector to $S$ at ${\bf p}$ is ${\bf n} = {\bf T_1} \times {\bf T_2}$ where the 
+product is the cross-product. \\
+
+There are three properties we would like our basis functions to have that are: uniqueness of representation and 
+numerical stability, affine invariance and well-defined gaussian curvature. A sufficient condition for the first 
+property is to have $\phi_1, \phi_2$ to be Riesz generators. The second property is ensured if $\Phi$ has the partition 
+of unity property which holds iif $\phi_1, \phi_2$ themselves have it. The gaussian curvature is at point ${\bf p} = 
+\sigma(u_0, v_0)$ is $K = \frac{\det II}{\det I}$ where
+
+\begin{align}
+  I &= \begin{bmatrix} {\bf T_1.T_1} & {\bf T_1.T_2} \\ {\bf T_1.T_2} & {\bf T_2.T_2} \\ \end{bmatrix} \\
+  II &= \begin{bmatrix} \frac{\partial^2 \sigma}{\partial u^2}.{\bf \hat{n}} & \frac{\partial^2 \sigma}{\partial 
+  u\partial v}.{\bf \hat{n}} \\ \frac{\partial^2 \sigma}{\partial u \partial v}.{\bf \hat{n}} & \frac{\partial^2 
+\sigma}{\partial v^2}.{\bf \hat{n}} \end{bmatrix}
+\end{align}
+
+The 3D parametric model represents closed parametric surfaces $\sigma$ and thus it is enough to consider a compact set 
+$\Omega \subseteq \mathbb{R}^2$ for the continuous parameters. The range of continuous parameters are normalized so that 
+$\Omega = {[0,1]}^2$ that is 
+
+\begin{equation}
+  \forall (u, v) \in {[0,1]}^2 \quad \sigma(u,v) = \sum_{(i,j) \in \mathbb{Z}^2} c[i,j] \phi_1(M_1u-i)\phi_2(M_2v-j)
+\end{equation}
+
+With the appropriate choice of $\phi_1, \phi_2$ we can force the surface to take the topology of an ellipsoid with 
+appropriate boundary conditions on ${(c[i,j])}_{(i,j) \in \mathbb{Z}^2}$. We choose to adopt earth-like terminology and 
+refer to $u$ as latitude parameter while referring to $v$ as meridian parameter. For fixed $v$, $\sigma_{v}(.)$ is a 
+closed circle.  This is achieved by letting functions of each component of $\sigma$  in $u$ to be 1-periodic for $v$ 
+constant. Thus it is necessary to have the sequence of coefficients to be $M_1$-periodic in the first variable. Then
+
+\begin{equation}
+  \forall (u, v) \in {[0,1]}^2 \quad \sigma(u,v) = \sum_{i=0}^{M_1-1} \sum_{j \in \mathbb{Z}} c[i,j] \phi_{1, per} 
+  (M_1u-i)\phi_2(M_2v-j)
+\end{equation}
+
+Note that curves for $u$ constant $\sigma_{u}(.)$ are open curves from north pole ${\bf c_N}$ to south pole ${\bf c_S}$.  
+\\
+
+The classical parametrization of the unit sphere is
+
+\begin{equation*}
+  \forall (u, v) \in {[0,1]}^2 \quad \sigma(u, v) = 
+  \begin{bmatrix} \cos (2\pi u) \sin(\pi v) \\ \sin (2\pi u) \sin(\pi v) \\ \cos (\pi v) \end{bmatrix} 
+\end{equation*}
+
+For $\Phi$ to satisfy previous properties and reproduce ellipsoids, $\phi_1$ must reproduce constants and sinusoids of 
+period 1 while $\phi_2$ must reproduce constants and sinusoids of period 2. The optimal choice of $\phi_1, \phi_2$ is 
+dictated by spline theory about reproduction of exponential polynomials [17]
+
+\begin{thm}{1}
+  The centered generating function with minimal support, maximum smoothness satisfying Riesz-basis property, partition 
+  of unity property and that reproduces sinusoids of unit period with $M$ coefficients is
+  \begin{equation}
+    \varphi_{M}(.) = \sum_{k=0}^3 {(-1)}^k h_{M}[k] \varsigma_M(. + \frac{3}{2} - k)
+  \end{equation}
+  where $\varsigma_M(.) = \frac{1}{4} sgn(.) \frac{\sin^2(\frac{\pi}{M}.)}{\sin^2(\frac{\pi}{M})}$ and $h_M = [1, 
+1+2\cos(\frac{2\pi}{M}), 1+2\cos(\frac{2\pi}{M}), 1]$ 
+\end{thm}
+
+Therefore we take $\phi_1 = \varphi_{M_1}, \phi_2 = \varphi_{2M_2}$. Note that these functions have support of size 3 
+and that they converge to quadratic B-spline as $M$ goes to infinity. The control points that make the snake take the 
+shape of a perfect unit square are given by
+
+\begin{equation}
+  c[i, j]  = \begin{bmatrix} c_{M_1}[i]s_{2M_2}[j] \\ s_{M_1}[i]s_{2M_2}[j] \\ c_{2M_2}[j] \end{bmatrix}
+\end{equation}
+
+Note that this is not unique as we arbitrarily choose the origin of the parametrization. The chosen basis functions are 
+twice differentiable with bounded second derivative. However the model has two singular points at the poles where 
+continuity of the representation and of its derivative is not guaranteed. In order to be well-defined we require 
+$\sigma(u, 0), \sigma(u, 1)$ to be independent of $u$. A sufficient condition for continuity of the tangent plane was 
+proven in [8] to be 
+
+\begin{align}
+  \frac{\partial \sigma}{\partial u}(u, 0) &= {\bf T_{1, N}} \cos (2\pi u) + {\bf T_{2, N}} \sin (2\pi u) \\
+  \frac{\partial \sigma}{\partial u}(u, 1) &= {\bf T_{1, S}} \cos (2\pi u) + {\bf T_{2, S}} \sin (2\pi u) \\
+\end{align}
+
+Tensor-product polynomial splines on the sphere have already been considered but they cannot reproduce perfectly 
+ellipsoids. No attempt was made to deal with the pole problem and take advantage of B-splines. Interpolation conditions 
+at the poles translate into 
+
+\begin{align*}
+  \forall i=0, \ldots, M-1 \quad {\bf c_N} &= \phi_2(-1) c[i, 1] + \phi_2(0) c[i, 0] + \phi_2(1) c[i, -1] \\
+  \forall i=0, \ldots, M-1 \quad {\bf c_S} &= \phi_2(-1) c[i, M_2+1] + \phi_2(0) c[i, M_2] + \phi_2(1) c[i, M_2-1]
+\end{align*}
+
+This is proved from Riesz-basis property and partition of unity of $\phi_1$. Sufficient conditions for continuity of the 
+tangent plane translate into
+
+\begin{align*}
+   {\bf T_{1, N}} \cos (2\pi u) + {\bf T_{2, N}} \sin (2\pi u) &= M_2\sum_{i=0}^{M_1-1} \sum_{j \in \mathbb{Z}} c[i,j] 
+   \phi_{1, per} (M_1u-i)\phi_2(-j)' \\
+   {\bf T_{1, S}} \cos (2\pi u) + {\bf T_{2, S}} \sin (2\pi u) &= M_2\sum_{i=0}^{M_1-1} \sum_{j \in \mathbb{Z}} c[i,j] 
+   \phi_{1, per} (M_1u-i)\phi_2(M_2-j)' 
+ \end{align*}
+
+Given these conditions we can now explicitly express our 3D snake model as
+
+\begin{thm}{2}
+  A parametric splines-bases surface with a sphere-like topology, $C^1$ continuity and ellipsoid-reproducing 
+  capabilities (all positions and orientations) is given by
+  \begin{equation}
+    \forall (u, v) \in {[0,1]}^2 \quad \sigma(u,v) = \sum_{i=0}^{M_1-1} \sum_{j=-1}^{M_2+1} c[i,j] \phi_{1, per} 
+    (M_1u-i)\phi_2(M_2v-j)
+  \end{equation}
+  
+  where ${\{c[i,j]\}}_{i \in [0, \ldots, M_1-1], j \in [1, \ldots, M_2-1]}, {\bf T_{1, N}}, {\bf T_{2, N}}, {\bf T_{1, 
+  S}} , {\bf T_{1, S}}, {\bf c_{N}}, {\bf c_{S}}$ are free parameters that is $M_1(M_2-1) + 6$ control points. $c[i,-1], 
+  c[i, 0], c[i, M_2], c[i, M_2+1]$ are constrained by the values of the free parameters.
+\end{thm}
+
+\paragraph{Energies and implementation} \mbox{} \\
+
+The rest of the article then discusses snake energies to be minimized in order to detect and outline objects in the 
+image of interest. The global energy is the sum of three energies: image energy (edge or region-based), internal energy 
+(ensures smoothness), constrained energy (in practice hard constraints on parameters). 
+
+\end{document}
+
+
+
+

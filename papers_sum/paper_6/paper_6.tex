@@ -1,0 +1,198 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\newcustomtheorem{deftn}{Definition}
+\newcustomtheorem{prop}{Proposition}
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\Tr}{Tr}
+
+\begin{document}
+\title{Summary paper 6: Efficient prior shapes for spline-based snakes Delgado}
+\author{Yoann Pradat}
+\maketitle
+
+Active detouring and outlining object is now popularly done with the help of spline-based schemes but the efficiency of 
+is dependent on the choice of a good basis function for the type of shapes we want to detect as well as on the choice of 
+a energy adapted to the image we are looking at. This paper introduces a new scheme based on exponential B-spline basis 
+functions that incorporates a prior shape in the energy of the snakes. The four main contributions of the paper are
+
+\begin{enumerate}
+  \item Presentation of a shape projector that maps any continuously-defined closed spline curve to a space shape
+  \item Derivation of an analytical form for a measure of distance to the shape space
+  \item A spline-based solution at no additional computational cost with a finite number of control-points.
+  \item Ready-to-use plugins on Icy.
+\end{enumerate}
+
+\paragraph{Parametric snake model} \mbox{} \\
+
+We look for a basis-function $\phi$ that can represent 2D parametric closed curves $r(t) = (r_1(t), r_2(t)) \ t \in 
+\mathbb{R}$ with the help of $M$ control points in the following form
+
+\begin{equation}
+  \label{gen_form}
+  \forall t \in [0, M] \quad r(t) = \sum_{k \in \mathbb{Z}} c[k] \phi(t-k)
+\end{equation}
+
+with ${(r[k])}_{k \in \mathbb{Z}}$ an M-periodic sequence. The domain of $t$ can be remapped to $[0,1]$ while the sum 
+can limited to $M$ elements by rewriting as
+
+\begin{equation}
+  \label{comp_form}
+  \forall t \in [0, 1] \quad r(t) = \sum_{k=0}^{M-1} c[k] \phi_{M}(Mt-k)
+\end{equation}
+
+As usual we require that this spline scheme has the following properties: uniqueness of representation and stability 
+w.r.t to the control parameters (Riesz-basis); affine invariance (partition of unity). Additionally we require the 
+scheme to be able to reproduce the curve to be segmented. \\
+
+The Riesz-basis property is proved in the Fourier domain. Note that for any function $\phi: \mathbb{R} \to \mathbb{C}$ 
+in $\mathcal{L}_1 \cup \mathcal{L}_2$, $\displaystyle \forall w \in \mathbb{R} \quad \sum_{k \in \mathbb{Z}} 
+\hat{\phi}(w + 2k\pi) = \sum_{k \in \mathbb{Z}} \phi(k) e^{-ikw}$. Indeed let $\psi$ the $2\pi$-periodized version of 
+$\hat{\phi}$. Then $\hat{\psi}: \mathbb{Z} \to \mathbb{R}$ with $\hat{\psi}[k] = \int_{-\pi}^{\pi} \psi(w) e^{-iwk} dw$.  
+Just notice then that $\hat{\psi}[k] = 2\pi \phi(-k)$ and that $\displaystyle \forall w \quad \psi(w) = \sum_{k \in 
+\mathbb{Z}} \frac{\hat{\psi}[k]}{2\pi} e^{ikw}$ to have the result. \\
+
+Any 2D affine transformation is dependent on a $2\times2$ matrix $\bf A$ and a $2\times1$ translation vector $\bf b$.  
+The transformation can be rewritten in matrix form using homogeneous coordinates that is to the 2D vector $r = {[r_1, 
+r_2]}^T$ we associate the 3D vector $r_h = {[r_1, r_2, 1]}^T$. The transformed point in homogeneous coordinates is then 
+${\bf H}r_h$ with 
+
+\begin{equation}
+  {\bf H} = \begin{bmatrix} {\bf A} & {\bf b} \\ {\bf 0} & 1 \end{bmatrix}
+\end{equation}
+
+Then affine invariance simply translates into $\displaystyle \forall t \in \mathbb{R} \quad \sum_{k \in \mathbb{Z}} 
+\phi(Mt-k) = 1$.
+
+\paragraph{Efficient shape prior} \mbox{} \\
+
+The prior knowledge of the shape is encoded in  $r^{ref}$, the reference curve. The set of all affine transformations of 
+$r^{ref}$, $S_{ref}$, is a vector space of dimension 6 given the matrix form of an affine transform in homogeneous 
+coordinates. Let $S$ the vector space of all splines that takes the form of (\ref{comp_form}). We endow this space with 
+the scalar product
+
+\begin{equation*}
+  \forall r, s \in S \quad <r, s> = \int_{0}^1 r^T s
+\end{equation*}
+
+making $(S_{ref}, <.,.>$) a finite dimension vector subspace on which we can define on orthogonal projector. \\ 
+
+For $r \in S$ we denote $r^p$ its orthogonal projection on $S_{ref}$. By property of orthogonal projection we know that 
+$r^p$ is the sole element in $S_{ref}$ that minimizes $\displaystyle \| r - s\|^2 = \int_{0}^1 \|r(t)-s(t)\|^2 dt$ over 
+$s \in S_{ref}$.  Note that the norms on the left and on the right of the equation are different, first one is derived 
+from the scalar product defined above while second one is canonical norm on $\mathbb{R}^2$. \\
+
+To any $r \in S$ we associate $C$ the $M\times2$ matrix of coordinates of its control points and $C_h$ the $M\times3$ 
+matrix of coordinates of $r_h$ at its control points. Note that the functional relation $r_h = {\bf H} r^{ref}_h$ can 
+equivalently be written as the matrix equality $C_h = C^{ref}_h {\bf H^T}$.
+
+We can now write explicitly the expression of the projection of any $r \in S$ through the following theorem
+
+\begin{thm}{1}
+  Let $r \in S$, $C_h$ the coordinates matrix of its homogeneous form $r_h$. Let $r^p_h$ its projection onto $S_{ref}$ 
+  and $C^p_h$ the associated matrix. Then
+    \begin{equation}
+      C^p_h = P^{ref} C_h
+    \end{equation}
+
+    with $P^{ref} = C^{ref}_h{\left({C^{ref}_h}^T {\bf \Phi}C^{ref}_h\right)}^{-1} {C^{ref}_h}^T {\bf \Phi}$ and ${\bf
+    \Phi}$ is the autocorrelation matrix that is 
+    
+    \begin{equation*}
+      {\bf \Phi}_{i,j} = \int_0^1 \phi_M(Mt-i)\phi_M(Mt-j)dt
+    \end{equation*}
+\end{thm}
+
+This theorem is proved naturally by rewriting the minimization of the norm as the minimization of a matrix form over the 
+matrix variable ${\bf H}$. In the proof we make use of $\nabla_H \Tr(AH^T) = A$ and $\nabla_H \Tr(HAH^T) = H(A+A^T)$. 
+ 
+\paragraph{Active contours with prior shapes} \mbox{} \\
+
+The coefficients of the snake to be found are parameters in the problem of minimizing the snake energy which in its 
+general form can be decomposed as
+
+\begin{equation}
+  E_{snake}(\Omega) = E_{image}(\Omega) + E_{internal}(\Omega) + E_{constraint}(\Omega)
+\end{equation}
+
+The image term makes the snake converge to boundaries in the images which is what you want to do to outline shapes. The 
+internal energy is a regularization term that enforces smoothness constraints into the snake and the constraint term 
+allows for user interaction by forcing some values of coefficients where the user put a control point for example. \\
+
+In practice the image term is a balance between an “edge” term and a “region” term that is $E_{image} = \alpha E_{edge} 
++ (1-\alpha)E_{region}$. Be aware that the region term is generally computationally much more expensive than the edge 
+term as it looks at all pixels in the region surrounding the region of interest to compute the associated energy. 
+
+\paragraph{Internal energy with shape prior} \mbox{} \\
+
+The authors introduce a new energy that encourages the snake to stay close to $S_{ref}$. The energy is given with a 
+weight $\beta$
+
+\begin{equation}
+  E_{internal} = \beta {\|(I-P^{ref})C_h \|}_F
+\end{equation}
+
+
+The proposed prior shape model can also be transposed into discrete setting using the conventional discrete shape-space 
+formalism. If we consider a pixel-based approach where we uniformly sample the parameter space of a continuous curve 
+that is ${\{r(\frac{n}{N})\}}_{n=0, \ldots, N-1}$, such pointwise representation converges to the curve when $N \to 
+\infty$ if it does not contain discontinuities. The discrete mean-squared error is then $\displaystyle \frac{1}{N} 
+\sum_{n=0}^{N-1} \| r(\frac{n}{N}) - r^p(\frac{n}{N})\|^2$. An equivalent projection operation would be defined as an 
+$N\times N$ matrix which is usually much larger than $M \times M$ in the continuous case. \\
+
+Optimization is carried out with a Powell-like line search method ([34]). The method requires the partial derivatives of 
+the energy function w.r.t to the parameters that is the coordinates of the control points. Note that the contribution to 
+the gradient by the internal energy is 
+
+\begin{equation}
+  2 \beta {\left(I-P^{ref}\right)}^T\left(I-P^{ref}\right) C_h
+\end{equation}
+
+\paragraph{Validation and experiments} \mbox{} \\ 
+
+In a first experiment, authors tested sensitivity of the snake to initialization. They then investigated the effect of 
+$\beta$ before analyzing the performance of the scheme on real biological data. \\ 
+
+Sensitivity to initialization is tested with synthetic 8-bit image of mitotic cell in fluorescence. The ground truth is 
+given by a 9-point spline curve that perfectly match the edges. The experience was repeated 50 times with different 
+initialization and two different values of $\beta$, 0 and 10. The basin of attraction (where Jaccard index is above 0.9) 
+is twice as large with $\beta = 10$! \\
+
+Then sensitivity to different level of noise was tested with one initialization and 50 different noise realisations.  
+With $\beta=10$ the average Jaccard index remains the same despite increase level of noise and even the variance remains 
+the same. With $\beta=0$, the snake always fail to converge to a satisfying contour with average Jaccard indices at 0.75 
+only. \\ 
+
+In the end a qualitative example is shown with body tracking of a Drosophilia fly along frame sequences without prior 
+and with prior shape correspond to the fly body shape. With the latter the results are much more satisfactory. The 
+result also proved really good on segmenting yeast cells with a yeast cell shape prior. 
+
+\end{document}
+
+
+
+

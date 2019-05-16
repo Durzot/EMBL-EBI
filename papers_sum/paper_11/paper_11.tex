@@ -1,0 +1,209 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\newcustomtheorem{deftn}{Definition}
+\newcustomtheorem{prop}{Proposition}
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\Tr}{Tr}
+
+\begin{document}
+\title{Summary paper 11: Snakes with an ellipse-reproducing property Delgado et al}
+\author{Yoann Pradat}
+\maketitle
+
+[3] Reviews of snakes energies and algorithms Jacob, Blu, Unser “Efficients energies and algorithms for parametric 
+snakes”. Snakes are popular tools for outlining in all sorts of images. They vary from one another by the type of snake 
+used and, in the case on continuous snakes, by the basis generators of the representation. Snakes may be classified into
+
+\begin{enumerate}
+  \item discrete snakes that make use of a large number of control points
+  \item continuous snakes
+  \item implicit snakes where representation of the curve is described at level set of a surface.
+\end{enumerate}
+
+Continous snakes are parametrized by only a few points which, along with small support of the basis generators, makes 
+computations very fast. The drawback from having only a few anchor points is of course that not every curve can be 
+represented, only those in the span of integer shifts of the generators are perfectly reproduced. However good 
+approximation can be obtained by simply increasing the number of control points. In this paper authors propose 
+generators that have minimal support, an important feature for fast and efficient algorithms and that have the property 
+of perfectly reproducing ellipses. \\
+
+\underline{Remark} In the parametric representation of a curve we always consider the space spanned by integer shifts of 
+the basis generators as this allows to take advantage of fast and stable algorithms.
+
+\paragraph{Desired properties of the snake} \mbox{} \\
+
+In here we are interested in reproducing closed curves from a $M$-periodic sequence ${\{c[k]\}}_{k \in \mathbb{Z}}$ of 
+control points in the following form
+
+\begin{equation}
+  r(t) = \sum_{k \in \mathbb{Z}} c[k] \varphi (Mt-k)
+\end{equation}
+
+There are some properties we would like $\varphi$ to satisfy in order to have a good snake model. As usual the properties 
+are
+
+\begin{enumerate}
+  \item Representation should be unique and numerically stable. Verified if $\varphi$ satisfies Riesz-basis property.
+  \item Affine invariance i.e representation of affinely transformed curve is the affine transformation of the 
+    representation. Verified iif $\varphi$ satisfies partition of unity condition
+  \item Well-defined curvature that is $\kappa(x_1, x_2) = \frac{\dot{x_1}\ddot{x_2} - \ddot{x_1}\dot{x_2}}{{(\dot{x_1} 
+    + \dot{x_2})}^{\frac{3}{2}}}$ defined everywhere. For this $\varphi$ must be twice-diff with bounded second derivative.
+\end{enumerate}
+
+\paragraph{Reproduction of ellipses} \mbox{} \\
+
+Given affine invariance it is enough to reproduce the unit sphere in order to reproduce any ellipse. A parametric snake 
+is said to reproduce the unit sphere with $M$ anchor points if there exists two $M$-periodic sequences ${\{c_1[k]\}}_{k 
+\in \mathbb{Z}}$, ${\{c_2[k]\}}_{k \in \mathbb{Z}}$ such that
+
+\begin{align}
+  \cos (2\pi t) &= \sum_{k \in \mathbb{Z}} c_1[k] \varphi (Mt-k) \\
+  \sin (2\pi t) &= \sum_{k \in \mathbb{Z}} c_2[k] \varphi (Mt-k)
+\end{align}
+
+Here is now the main result of the paper that explicitly give the expression of the generate $\varphi$ with all 
+properties stated above.
+
+\begin{thm}{1}
+  The centered generating function with minimal support that has the Riesz-basis, partition of unity, twice 
+  differentiable with bounded second derivative and ellipse-reproducing with $M$ anchor points properties is given by
+    \begin{equation}
+      \varphi(t) = \begin{dcases}
+        \frac{\cos (\frac{2\pi |t|}{M}) \cos (\frac{\pi}{M}) - \cos (\frac{2\pi}{M})} {1- \cos (\frac{2\pi}{M})} 
+        &\text{if } 0 \leq |t| < \frac{1}{2} \\
+        \frac{1- \cos (\frac{2\pi(\frac{3}{2} - |t|)}{M})}{2(1 - \cos (\frac{2\pi}{M}))} &\text{if } \frac{1}{2} \leq 
+      |t| < \frac{3}{2} \\
+      0 &\text{if } |t| \geq \frac{3}{2}
+    \end{dcases}
+    \end{equation}
+\end{thm}
+
+This is proved using a theorem from paper 10-“Exponential splines and minimal-support bases for curve representation” 
+that will be read after this one. The theorem states that every minimal support function that reproduces $e^{\alpha_n 
+t}$ for $n=0, \ldots, N-1$, with $\alpha$ such that there it has no pair of purely imaginary numbers separated by a 
+distance that is a multiple of $2\pi$, can be written as
+
+\begin{equation*}
+  \varphi(t) = \sum_{n=0}^{N-1} \lambda_n \frac{d^n t}{dt^n}\beta_{\alpha}(t-a)
+\end{equation*}
+
+with $a$ is an arbitrary shift that correspond to the lower extremity of the support of $\varphi$. In order to satisfy 
+partition of unity and reproduce sinusoids we need to choose $\alpha = (\frac{-2j\pi}{M}, 0,\frac{2j\pi}{M})$. For such 
+an $\alpha$, $\beta_{\alpha}$ has a discontinuous second derivative. This leads us to choosing $\lambda_1 = \lambda_2 = 
+0$. In the end, given the property of exponential B-splines, we get
+
+\begin{equation}
+  \lambda_0 = \frac{{(\frac{2\pi}{M})}^2}{2(1-\cos(\frac{2\pi}{M}))}
+\end{equation}
+
+\paragraph{Approximation properties of $\varphi$} \mbox{} \\
+
+Noticing that $\varphi$ converges to the quadratic B-spline as $M$ grows to infinity, we can expect $\varphi$ to have 
+approximately the same approximation properties as that of a quadractic B-spline. The space spanned by $\varphi$ is not 
+shift-invariance in general. Therefore the approximation error using $M$ coefficients is dependent upon a shift in the 
+continous parameter $t$ of the function of unit period $s$. The minimum mean-square approximation error for a shift 
+function is
+
+\begin{equation}
+  \gamma(\tau, M) = \int_0^1 \| s(.-\tau) - r(.) \|^2 = {\| s(.-\tau) - r(.) \|}_{L_2([0,1])}^2 
+\end{equation}
+
+where $r$ is the best approximation from the span ${\{\varphi(M.-k)\}}_{k \in \mathbb{Z}}$. Since $\tau$ is usually 
+unknown, the measure error is average over all possible shift that is
+
+\begin{equation}
+  \eta(M) = {\left(\int_0^1 \gamma(\tau, M) d\tau\right)}^{\frac{1}{2}}
+\end{equation}
+
+It is shown in the paper, based on the main result of [30] M. Jacob, T. Blu, and M. Unser, “Sampling of periodic 
+signals: A quantitative error analysis” that $\eta(M) = \mathcal{O}(M^{-3})$. 
+
+\paragraph{Explicit coefficients for best ellipse fitting and sinusoids} \mbox{} \\
+
+Since the snake can reproduce curves, it is natural to wonder what is the best ellipse that approximates a curve $r$ 
+defined by the $M$-periodic sequence ${\{c[k]\}}_{k \in \mathbb{Z}}$ that is find $r_e$ that minimizes
+
+\begin{equation*}
+  \int_0^1 \|r(t) - r_e(t)\|^2 dt
+\end{equation*}
+
+Aparte. For a function $f: \mathbb{R} \to \mathbb{C}$ that is $2\pi$-periodic one can represent $f$ in its Fourier 
+series as 
+
+\begin{equation*}
+  f(t) = \sum_{k \in \mathbb{Z}} \frac{\hat{f}[k]}{2\pi} e^{jkt}
+\end{equation*}
+
+with $\hat{f}[k] = \int_{-\pi}^{\pi} f(t)e^{-jkt} dt$. What about a function $g$ that is $\frac{2\pi}{a}$-periodic? Let 
+$g(t) = f(at)$. We have
+
+\begin{equation*}
+  \hat{f}[k] = a\int_{-\frac{\pi}{a}}^{\frac{\pi}{a}} f(at)e^{-jkat} dt
+\end{equation*}
+
+and
+\begin{equation*}
+  g(t) = \sum_{k \in \mathbb{Z}} \frac{\hat{f}[k]}{2\pi} e^{jkat}
+\end{equation*}
+
+For example for $a = 2\pi$ i.e $g$ is 1-periodic
+\begin{equation*}
+  g(t) = \sum_{k \in \mathbb{Z}} \left(\int_{-\frac{1}{2}}^{\frac{1}{2}} g(u)e^{-2\pi j ku}du\right)  e^{j2\pi kt}
+\end{equation*}
+
+The continuous 1-periodic function $r$ can be represented as 
+
+\begin{equation}
+  r(t) = \sum_{k \in \mathbb{Z}} R[k] e^{j2\pi kt}
+\end{equation}
+
+with $R[k] = \left(\int_{0}^{1} g(u)e^{-2\pi j ku}du\right)$. From classical result in harmonic analysis, the best 
+approximating ellispe $r_e$ is the first-order truncation of the series above i.e $R[0], R[1], R[-1]$. \\
+
+Finally we derive explicit formulas for the coefficient of the sinusoids of unit period with $M$ anchor points. Recall 
+the exponential-reproducing property of exponential B-spline
+
+\begin{equation}
+  e^{\alpha t} = \sum_{k \in \mathbb{Z}} e^{\alpha k} \beta_{\alpha}(t-k)
+\end{equation}
+
+
+Taking $\alpha = \frac{2j\pi}{M}$ and convolving both sides above with $\beta_{(0, \frac{-2j\pi}{M})}$ allow us to find 
+the coefficients for representing $\cos (2\pi (t+\frac{3}{2}))$ and the equivalent $\sin$ function in the span of
+${\{\varphi(M.-k)\}}$
+
+\begin{align}
+  c_1[k] &= \frac{2(1-\cos (\frac{2\pi}{M}))\cos (\frac{\pi(2k+3)}{M})}{\cos (\frac{\pi}{M}) - \cos (\frac{3\pi}{M})} \\
+  c_2[k] &= \frac{2(1-\cos (\frac{2\pi}{M}))\sin (\frac{\pi(2k+3)}{M})}{\cos (\frac{\pi}{M}) - \cos (\frac{3\pi}{M})}
+\end{align}
+
+\end{document}
+
+
+
+

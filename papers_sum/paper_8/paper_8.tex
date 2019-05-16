@@ -1,0 +1,205 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\newcustomtheorem{deftn}{Definition}
+\newcustomtheorem{prop}{Proposition}
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\Tr}{Tr}
+
+\begin{document}
+\title{Summary paper 8: Compactly-supported smooth interpolators for shape modeling with varying resolution Schmitter et 
+al}
+\author{Yoann Pradat}
+\maketitle
+
+In all applications of shape-modeling there is a need for intuitive user interaction which is best achieved when the 
+representation is interpolatory. Domains related to interactive curves or shape modeling include computer graphics, 
+biomedical imaging, industrial design, modeling of animated surfaces etc. Techniques can be categorized between discrete 
+and continuous methods. Discrete methods include polygonal meshes and subdivision scheme and they allow to locally 
+refine a shape.  The most used continuous method is the NURBS model but it generally cannot be smooth and interpolatory 
+at the same time. \\ 
+
+In the paper authors propose a 3D shape modeling in continuous domain that also has the advantages of discrete domain 
+representation that is to say refinement capabilities and interpolation properties. The interpolatory functions are 
+written as linear combinations of shifts on the half integer grid of exponential B-splines. This representation allow to 
+transfer good properties of B-splines to the basis functions used for modeling. 
+
+\paragraph{Review of exponential B-splines} \mbox{} \\
+ 
+To a vector ${\bf \alpha} \in \mathbb{R}^n$ we can associate a causal B-spline of order $n$ $\beta^+_{\alpha}$. Indeed
+if $r^n + a_{n-1}r^{n-1} + \ldots, a_{0}$ is the polynomial of unit leading coefficient whose roots are $\alpha$ then 
+the differential operator
+
+\begin{equation}
+  L = D^n + a_{n-1}D^{n-1} + \ldots, a_{0}
+\end{equation}
+
+can factorize into 
+
+\begin{equation}
+  L = \prod_{i=1}^n (D-\alpha_i I)
+\end{equation}
+
+The null space of that LSI operator is $\mathcal{N}_{\alpha} = \text{span}{\{t^n e^{\alpha_{m}t}\}}_{m=1, \ldots, n_d ; 
+n=1, \ldots, n_{(m)}}$ where $n_d$ is the number of unique components in ${\bf \alpha}$. The Green function of $L$ is 
+defined as the unique causal function $\rho_{\alpha}$ that satisfies $\delta = L\{\rho\}$. To each elementary operator 
+$D - \alpha_i I$ we associate the Green's function $\rho_{\alpha_i}$ and we define the order 1 exponential B-spline as 
+
+\begin{equation}
+  \beta^+_{\alpha_i}(t) = \rho_{\alpha_i}(t) - e^{\alpha_i}\rho_{\alpha_i}(t-1)
+\end{equation}
+
+and the order n exponential B-spline as
+
+\begin{equation}
+  \beta^+_{\alpha}(t) = (\beta^+_{\alpha_1} * \ldots * \beta^+_{\alpha_n})(t)
+\end{equation}
+
+As a consequence $\displaystyle \hat{\beta}^+_{\alpha}(w) = \prod_{i=1}^n \hat{\beta}^+_{\alpha_i}(w)$. From 
+$\hat{\rho}_{\alpha_i}(w) = \frac{1}{jw-\alpha_i}$ and the equation defining the order exponential B-spline we deduce
+
+\begin{equation}
+  \hat{\beta}^+_{\alpha}(w) = \prod_{i=1}^n \frac{1-e^{\alpha_i-jw} }{jw-\alpha_i}
+\end{equation}
+
+The function $\beta^+_{\alpha}$ is compactly supported on $[0, n]$. In interpolation schemes we prefer having basis 
+functions symmetric around 0 so let's define $\beta_{\alpha}(t) = \beta^+_{\alpha}(t+n/2)$. This order n exponential 
+B-spline can reproduce functions in the nullspace $\mathcal{N}_{\alpha}$. 
+
+\paragraph{Characterization of the interpolator}
+
+\begin{deftn}{1}
+  For a sequence $\lambda \in l_1(\mathbb{Z})$ and a vector ${\bf \alpha}$ we define the interpolatory function
+  \begin{equation}
+    \phi_{\lambda, \alpha}(t) = \sum_{k \in \mathbb{Z}} \lambda[k] \beta_{\alpha}(t-k/2)
+  \end{equation}
+\end{deftn}
+
+The resulting scheme is then, for suitable functions $f$, given by $f(t) = \sum_{k \in \mathbb{Z}}f[k] \phi_{\lambda, 
+\alpha}(t-k)$.  The desired properties for the basis function are the following
+
+\begin{enumerate}
+  \item ${\{ \phi_{\lambda, \alpha}(.-k) \}}_{k \in \mathbb{Z}}$ is interpolatory
+  \item $\phi_{\lambda, \alpha}$ is compactly supported i.e $\lambda$ has finite number of non-zero values
+  \item $\phi_{\lambda, \alpha}$ is smooth i.e at least $\mathcal{C}^1$
+  \item ${\{ \phi_{\lambda, \alpha}(.-k) \}}_{k \in \mathbb{Z}}$ is a Riesz basis
+  \item Can reproduce the nullspace $\mathcal{N}_{\alpha}$
+  \item Can reproduce shapes at various resolutions
+\end{enumerate}
+
+\begin{prop}{1}
+  Let ${\bf \alpha}$ a vector be such that $\alpha_m-\alpha_n \not\in 2j\pi\mathbb{Z}$ for any pair of purely imaginary 
+numbers $(\alpha_m, \alpha_n)$ in ${\bf \alpha}$. For any sequence $\lambda \in l_1(\mathbb{Z})$ if $\phi_{\lambda, 
+\alpha}$ is interpolatory then ${\{ \phi_{\lambda, \alpha}(.-k) \}}_{k \in \mathbb{Z}}$ is a Riesz basis.  \end{prop}
+
+\begin{prop}{2}
+  Let ${\bf \alpha}$ be a vector of roots and suppose $\lambda \in l_1(\mathbb{Z})$ satisfies
+  \begin{align*}
+    &\sum_{k \in \mathbb{Z}} |\lambda[k]| e^{-\alpha_i \frac{k}{2}} < \infty \\
+    &\sum_{k \in \mathbb{Z}} \lambda[k] e^{-\alpha_i \frac{k}{2}} = 0
+  \end{align*}
+  for all $i=1, \ldots n$ then the basis function $\phi_{\lambda, \alpha}$ has the same reproduction properties as 
+  $\beta_{\alpha}$.
+\end{prop}
+
+The dilation by an integer $m \in \mathbb{N}^*$ of an exponential B-spline is expressed as
+\begin{equation*}
+  \beta^+_{\alpha}(\frac{t}{m}) = \sum_{k \in \mathbb{Z}} h_{\frac{\alpha}{m}, m}[k] \beta^+_{\frac{\alpha}{m}}(t-k)
+\end{equation*}
+
+\begin{prop}{3}
+  Let ${\bf \alpha}$ be a vector of roots, $\lambda \in l_1(\mathbb{Z})$ and $m_0$ an even integer. Then we have
+  \begin{equation}
+    \phi^+_{\lambda, \alpha}(\frac{t}{m_0}) = \sum_{k \in \mathbb{Z}} g_{\lambda, \frac{\alpha}{m_0}, m_0}[k] 
+    \beta^+_{\frac{\alpha}{m_0}}(t-k)
+  \end{equation}
+\end{prop}
+
+\begin{prop}{4}
+  Let ${\bf \alpha}$ be a vector of roots, $\lambda \in l_1(\mathbb{Z})$ and $m_0$ an even integer, $m$ an integer. For 
+  a continuous function $f$ with samples $\{c[k] = f(k) \ k \in \mathbb{Z}\}$ we consider the iterative scheme specified 
+  by
+  \begin{enumerate}
+    \item pre-filter step: $c_0[k] = \left(g_{\lambda, \frac{\alpha}{m_0}, m_0}*c_{\uparrow m_0}\right)[k]$
+    \item iterative steps: $c_n[k] = \left(g_{\lambda, \frac{\alpha}{m_0m^n}, m}*{(c_{n-1})}_{\uparrow m}\right)[k]$
+  \end{enumerate}
+
+  is convergent in the sense that $\displaystyle \lim_{n \to \infty} \sum_{k \in \mathbb{Z}} c_n[k]\delta(m_0 m^n t-k) = 
+  f(t)$
+\end{prop}
+
+\paragraph{Construction of family of compactly supported interpolators in practice} \mbox{} \\
+
+It is known that there exists no exponential B-spline that $\beta_{\alpha}$ that is interpolatory and smooth. The goal 
+here is to construct a compactly supported generator that has the same properties as $\beta_{\alpha}$ while also being 
+intepolatory. For it to be real-valued and symmetric, elements of $\alpha$ must be 0 or come in complex conjugate pairs.  
+\\
+
+We assume additionally that condition of proposition 1 are satisfied. For such an $\alpha$ the interpolatory function 
+is of the form
+\begin{equation}
+  \phi_{\lambda, \alpha}(t) = \lambda[0]\beta_{\alpha}(t) + \sum_{i=1}^{n-2} \lambda[n](\beta_{\alpha}(t-n/2) + 
+\beta_{\alpha}(t+n/2)) \end{equation}
+
+whose support is included in $[-(n-1), (n-1)]$. This function is interpolatory if and only if $\phi_{\lambda, 
+\alpha}(0)=1$ and $\phi_{\lambda, \alpha}(1)=\cdots=\phi_{\lambda, \alpha}(n-2)=0$. This defines a system of $n-1$ 
+equations with $n-1$ unknowns. The system has a solution if the matrix defined by $k,l = 0, \ldots, n-2$
+
+\begin{equation}
+  {[A_{\alpha}]}_{k+1, l+1} = \begin{dcases}
+    \beta_{\alpha}(k) &\text{if } l=0 \\
+    \beta_{\alpha}(k-\frac{l}{2}) + \beta_{\alpha}(k+\frac{l}{2})  &\text{else }      
+  \end{dcases}
+\end{equation}
+
+is invertible. In that case $\lambda = A_{\alpha}^{-1}(1, 0, \ldots, 0)$.
+
+\begin{deftn}{3}
+  Let $\alpha$ be a vector of roots whose elements are 0 or come in complex conjugate pairs with no pair of imaginary 
+  roots separated by a multiple of $2j\pi$. In case the matrix $A_{\alpha}$ is invertible define $\phi_{\alpha} = 
+  \phi_{\lambda, \alpha}$.  
+\end{deftn}
+
+A parametric curve ${\bf r(t)} = {[r_x(t), r_y(t), r_z(t)]}^T$ can then be readily expressed as
+
+\begin{equation}
+  {\bf r(t)} = \sum_{k \in \mathbb{Z}} r[k] \phi_{\alpha}(t-k)
+\end{equation}
+
+This can be extended to represent tensor-product surfaces that
+
+\begin{equation}
+  {\bf \sigma(u, v)} = \sum_{k \in \mathbb{Z}}\sum_{l \in \mathbb{Z}} {\bf \sigma[k,l]} \phi_{\alpha_1}(u-k) 
+  \phi_{\alpha_2}(v-l)
+\end{equation}
+
+
+\end{document}
+
+
+
+

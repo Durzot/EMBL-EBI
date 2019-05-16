@@ -1,0 +1,210 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax} 
+
+\begin{document}
+\title{Summary paper 2: Hermite Snakes with Control of Tangents Uhlmann}
+\author{Yoann Pradat}
+\maketitle
+
+In the problem of finding a parametric contour in a continuous fashion, Hermite snakes are more efficient than other 
+active contour snake-based techniques. In order to be a good, a model needs to be invariant to affine transformations 
+and to have good approximation properties. \\
+
+In this paper, an interpolation scheme is proposed with 2 classes of basis functions compared to 1 class of basis 
+functions in other schemes. As we will see, the second type of basis functions allows for sharp corners and tips without 
+increasing the number of control points and allows to introduce directional energies that improves the contouring 
+results. \\
+
+[18] gives a good review of parametric snakes, check it out when possible. \\
+
+The contour is represented in 2D by $r(t) = (x(t), y(t))$ and $\Phi = (\phi_1, \phi_2)$ are the 2 basis functions we 
+will consider. Both open and closed curves can be modeled as follows
+
+\begin{enumerate}
+  \item{\underline{Open curve}} For an open curve specified by $M$ anchor points, let $r[k] = r(\frac{k}{M-1}), r'[k] = 
+    r'(\frac{k}{M-1})$ then
+    \begin{equation}
+      \forall t \in [0, 1] \quad r(t) = \sum_{k=0}^{M-1} r[k]\phi_1((M-1)t - k) + r'[k]\phi_2((M-1)t - k)
+    \end{equation}
+
+  \item{\underline{Closed curve}} For an closed curve specified by $M$ anchor points, let $r[k] = r(\frac{k}{M}), r'[k] 
+    = r'(\frac{k}{M})$ then
+    \begin{equation}
+      \forall t \in [0, 1] \quad r(t) = \sum_{k=0}^{M-1} r[k]\phi_{1, per}(Mt - k) + r'[k]\phi_{2, per}(Mt - k)
+    \end{equation}
+\end{enumerate}
+
+The basis functions chosen are the splines $\phi_1 = L_{4, 2, 0}$ and $\phi_2 = L_{4, 2, 1}$ as per defined in the 
+Schoenberg paper. Recall the expression of these functions
+\begin{equation}
+    \phi_1(t) = \begin{dcases}
+                1-3|t|^2 + 2|t|^3 &\text{for } 0 \leq |t| \leq 1\\
+                0 &\text{for } 1 < |t|\\
+            \end{dcases} \quad
+    \hfill
+    \phi_2(t) = \begin{dcases}
+               t(|t|^2-2|t|+1) &\text{for } 0 \leq |t| \leq 1\\
+                0 &\text{for } 1 < |t|\\
+              \end{dcases}
+\end{equation}
+
+These functions belong to $S^0_{4,2} \cap \mathcal{L}_{1,2}$. They are thus splines of degree 3 with knots at integers 
+of order 2 and are in $\mathcal{C}^1$ ($2m-r-1 = 1$). Note that they satisfy
+\begin{equation*}
+  \forall k \in \mathbb{Z} \quad \phi_1(k) = \delta_k \quad \phi_1^{(1)}(k) = 0 \quad \phi_2(k) = 0 \quad 
+  \phi_2^{(1)}(k) = \delta_k
+\end{equation*}
+
+It is precisely because these functions are in $\mathcal{C}^1$ and not $\mathcal{C}^2$ that sharp corners may arise! \\
+
+The span of functions we will represent with our Hermite interpolation scheme is
+\begin{equation*}
+  \left\{s(t) = \sum_{k \in \mathbb{Z}} (s[k], s'[k]) \Phi(t-k) \ | \ s[k], s'[k] \in l_2(\mathbb{Z}) \right\}
+\end{equation*}
+
+Note that $s$ above are in $\mathcal{L}_{2,2}$ i.e $s$ and $s^{(1)}$ are in $\mathcal{L}_2(\mathbb{R})$. In the Fourier 
+domain the basis functions are expressed by
+\begin{align}
+  \hat{\phi}_1(w) &= \int_{\mathbb{R}} \phi_1(t) e^{-iwt} dt = \frac{-12}{w^4}(w\sin(w) + 2\cos(w) - 2) \\
+  \hat{\phi}_2(w) &= \int_{\mathbb{R}} \phi_2(t) e^{-iwt} dt = \frac{-4i}{w^4}(w\cos(w) - 3\sin(w) + 2w) \\
+\end{align}
+
+that is $\hat{\Phi}(w) = \hat{R}(w) \hat{\rho}(w)$ or $\hat{\rho}(w) = \hat{S}(w) \hat{\Phi}(w)$ with $\hat{S}$ the 
+inverse of $\hat{R}$. Decomposing we have
+\begin{align}
+  \hat{\rho_1} &= \hat{s_1} \hat{\phi_1} + \hat{s_2} \hat{\phi_2} \\
+  \rho_1 &= s_1 * \phi_1 + s_2 * \phi_2 \\
+\end{align}
+
+Note that the convolution are mixed i.e $s_1 : \mathbb{Z} \to \mathbb{C}$ while $\phi_1 : \mathbb{R} \to \mathbb{C}$.  
+This is simply defined as $s_1 * \phi_1 (t) = \sum_{k \in \mathbb{Z}} s_1[k] \phi_1(t-k)$ and the property of Fourier 
+transform over a convolution product holds. Note also that $\hat{s}_1 : \mathbb{R} \to \mathbb{C}$ is $2\pi$-periodic 
+and that 
+\begin{align*}
+  \hat{s}_1(w) &= \sum_{k \in \mathbb{Z}} s_1[k] e^{-iwk} \\
+  s_1[k] &= \frac{1}{2\pi}\int_{-\pi}^{\pi} \hat{s}_1(w) e^{iwk} dw
+\end{align*}
+
+In the end we can correctly write $\rho = S * \Phi$ with $\rho_1$ and $\rho_2$ being the Green's functions of operators 
+$D^4$ and $D^3$ respectively. As the cubic splines are generated by ${(\rho_1(.-k))}_{k \in \mathbb{Z}}$ and the 
+quadratic are generated by ${(\rho_2(.-k))}_{k \in \mathbb{Z}}$ \underline{cubic and quadratic splines are included in 
+cubic Hermite splines}. 
+
+In the same fashion, cubic B-splines $\beta^3_+ = \Delta^4_+ \rho_{D^4}$ and quadratic B-splines $\beta^2_+ = \Delta^3_+ 
+\rho_{D^3}$ are readily expressed as finite combinations of $\phi_1$ and $\phi_2$ which yields that all polynomials of 
+degree 3 are in the span of cubic Hermite splines. \\
+
+Uniqueness of the parametric curve defined by its anchor points and control tangents and numerical stability of the 
+interpolation process are ensured by the Riesz-basis condition for $\Phi$ i.e there exist $0 \leq A, B < \infty$ such 
+that
+\begin{equation}
+  A \|a\|_{l_2} \leq \| \sum_{k \in \mathbb{Z}} {a[k]}^T \Phi(.-k)\|_{L_2} \leq B \|a\|_{l_2}
+\end{equation}
+
+for all $a[k] = (s[k], s'[k])$ with $s[k], s'[k] \in {l_2}(\mathbb{Z})$. This is proved in the Fourier domain. 
+
+\paragraph{Approximation error} \mbox{} \\
+
+As cubic splines are also cubic Hermite splines, the approximation error it as least as good as that of cubic splines.  
+For the latter see theorem 1 from [27] for some asymptotic approximation order. 
+
+\begin{thm}{1}
+  Let $s[k], s'[k] \in l_2(\mathbb{Z})$. Among all functions that satisfy $\forall k \ f(k) = s[k], f'(k) = s'[k]$ and 
+  $f, f', f'' \in L_2$, the one that minimizes $\|f''\|_{L_2}$ is given by
+  \begin{equation}
+    \forall t \quad f(t) = \sum_{k \in \mathbb{Z}} s[k] \phi_1(t-k) + s'[k] \phi_2(t-k)
+  \end{equation}
+\end{thm}
+
+$\|f''\|_{L_2}$ is a good approximation of the curvature of the contour. Cubic Hermite splines appear thus as 
+interpolating schemes that minimize the curvature. It therefore holds the potential for eliminating an explicit internal 
+energy term. \\ 
+
+Let's relate now the Hermite basis functions to the Bernstein polynomials which are themselves basis functions for 
+Bézier curves. For $t \in \verb+[+n, n+1\verb+)+$, we have
+\begin{equation}
+  \forall 0 \leq u < 1 \quad s(n+u) = s[n] \phi_1(u) + s'[n] \phi_2(u) +  s[n+1] \phi_1(u-1) + s'[n]+1 \phi_2(u-1)
+\end{equation}
+
+Since $s(n+.)$ is a cubic polynomial we may express it using the Bernstein polynomials
+\begin{equation}
+  b_{i, 3}(u) = \binom{3}{i} u^i {(1-u)}^{3-i}
+\end{equation}
+
+i.e 
+
+\begin{equation}
+  \forall 0 \leq u < 1 \quad s(n+u) = p_0 b_{0,3}(u) + \cdots + p_3 b_{3,3}(u) 
+\end{equation}
+
+with control polygon
+\begin{align*}
+  p_0 &= r[n], &p_1= r[n] + \frac{1}{3}r'[n] \\
+  p_2 &= r[n+1] - \frac{1}{3}r'[n+1],  &p_3= r[n+1]\\
+\end{align*}
+
+The Hermite snake can therefore be easily converted to a Bézier curve while the converse is not true.
+
+\paragraph{Applicative aspects} \mbox{} \\
+
+Suppose we consider open curve with 3 anchor points. If you choose $\forall i=0, 1,2 \ x'(i) = y'(i) = 0$ there is sharp 
+corner at knot 1. If additionally you set $(x'(1), y'(1)) \neq 0$, the curve at the knot is smooth. Also, if you set 
+$i=0, 2 \ (x'(i), y'(i)) \neq 0$, $(x'(1), y'(1))=0$ the curve has a roundish corner in 1, something you cannot create 
+with other active contour snakes. \\
+
+Given a snake curve $r:[0,1] \to S$, we define a directional energy term that we will optimize as
+\begin{equation}
+    E_{\text{directional}} = - \frac{1}{L} \int_{S} \left| <\theta, \frac{r'}{\|r'\|}>\right| \rho(r)dr
+\end{equation}
+
+where $L$ is the length of the snake and $\theta$ and $\rho$ are orientation and amplitude information. \\
+
+\underline{Choice of $\theta, \rho$}
+\begin{enumerate}
+  \item{Image gradient}
+    \begin{align}
+      \theta(X) &= \arctan\left(\frac{\frac{\partial f}{\partial y}(X)}{\frac{\partial f}{\partial x}(X)} \right) \\
+      \rho(X) &= \sqrt{{\frac{\partial f}{\partial x}(X)}^2 + {\frac{\partial f}{\partial y}(X)}^2}
+    \end{align}
+  \item{Steerable filter}
+    \begin{align}
+      \theta(X) &= \argmin_{v} (f * h(R_v.))(X) \\
+      \rho(X) &= (f * h(R_{\theta}.))(X)
+    \end{align}
+\end{enumerate}
+
+with the detection template $\displaystyle h(X) = \sum_{k=0}^N \sum_{i=0}^k a_{k,i} \frac{\partial^{k-i}}{\partial 
+x^{k-i}} \frac{\partial^{i}}{\partial ^{i}} g(X)$ and $g$ is a Gaussian window. The features detected by $h$ can be 
+modified by acting on $N$, odd $N$ yields edge detectors while even $N$ detects ridges.  
+
+\end{document}
+
+
+
+
