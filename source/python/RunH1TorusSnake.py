@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Class that produces a snake from the H1SphereSnake class and produces a VTK rendering
+Class that produces a snake from the H1TorusSnake class and produces a VTK rendering
 
 Designed to be run in Python 3 virtual environment 3.7_vtk
 
@@ -9,7 +9,7 @@ Designed to be run in Python 3 virtual environment 3.7_vtk
 """
 
 import argparse
-from snake.H1SphereSnake import H1SphereSnake
+from snake.H1TorusSnake import H1TorusSnake
 from roi.ROI3DSnake import ROI3DSnake
 
 # =========================================== PARAMETERS =========================================== # 
@@ -25,7 +25,7 @@ opt = parser.parse_args()
 
 # =========================================== SNAKE DISPLAY =========================================== # 
 # Create SphereSnake and intialize
-snake = H1SphereSnake(opt.M_1, opt.M_2, opt.nSamplesPerSeg)
+snake = H1TorusSnake(opt.M_1, opt.M_2, opt.nSamplesPerSeg)
 snake.initializeDefaultShape()
 
 if opt.nullTwist:
@@ -39,3 +39,4 @@ roi3dsnake = ROI3DSnake(snake)
 
 # Display the snake
 roi3dsnake.displaySnake(renWinSize=(opt.renWinSizeX, opt.renWinSizeY))
+

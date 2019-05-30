@@ -31,4 +31,3 @@ roi3dsnake = ROI3DSnake(snake)
 
 # Display the snake
 roi3dsnake.displaySnake(renWinSize=(opt.renWinSizeX, opt.renWinSizeY))
-

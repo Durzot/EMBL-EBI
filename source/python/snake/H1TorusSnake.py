@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-This class implements extension of Conti's et al paper to Sphere-like surfaces
-that is open lines on longitudes and closed lines on latitudes.
+This class implements extension of Conti's et al paper to Torus-like surfaces
+that is closed lines on longitudes and latitudes.
 
 Designed to be run in Python 3 virtual environment 3.7_vtk
 
@@ -17,7 +17,7 @@ from process.SurfaceOracles import *
 from snake3D.Snake3DNode import Snake3DNode
 from snake3D.Snake3DScale import Snake3DScale
 
-class H1SphereSnake(object):
+class H1TorusSnake(object):
     def __init__(self, M_1, M_2, nSamplesPerSeg=11):
         # Number of control points on latitudes
         self.M_1 = M_1
@@ -32,13 +32,13 @@ class H1SphereSnake(object):
         # Number of points on latitudes for scale (closed curve)
         self.MR_1 = nSamplesPerSeg*M_1
 
-        # Number of points on longitudes for scale (open curve)
+        # Number of points on longitudes for scale (closed curve)
         self.MR_2 = nSamplesPerSeg*M_2
 
         # Number of coefficients of spline representation
         # i=1,...,4  
         # c_i[k,l] for k=0,..., M_1-1 and l=0,..., M_2
-        self.nCoefs = 4*M_1*(M_2+1)
+        self.nCoefs = 4*M_1*M_2
         self.coefs = [Snake3DNode(0, 0, 0) for _ in range(self.nCoefs)]
         
         # Samples of the coordinates of the snake contour 
@@ -51,33 +51,35 @@ class H1SphereSnake(object):
         # The calculation assumes a regular grid
         surfaceValue = Snake3DNode(0, 0, 0)
         for k in range(self.M_1):
-            for l in range(self.M_2+1):
+            for l in range(self.M_2):
                 phi_1_w1_per = self._phi_1(self.w_1, self.M_1*u-k) + self._phi_1(self.w_1, self.M_1*(u-1)-k)
                 phi_2_w1_per = self._phi_2(self.w_1, self.M_1*u-k) + self._phi_2(self.w_1, self.M_1*(u-1)-k)
-                phi_1_w2 = self._phi_1(self.w_2, self.M_2*v-l)
-                phi_2_w2 = self._phi_2(self.w_2, self.M_2*v-l)
+                phi_1_w2_per = self._phi_1(self.w_2, self.M_2*v-l) + self._phi_1(self.w_2, self.M_2*(v-1)-l)
+                phi_2_w2_per = self._phi_2(self.w_2, self.M_2*v-l) + self._phi_2(self.w_2, self.M_2*(v-1)-l)
 
                 c_1 = self.coefs[k + l*self.M_1] 
-                c_2 = self.coefs[k + l*self.M_1 + self.M_1*(self.M_2+1)] 
-                c_3 = self.coefs[k + l*self.M_1 + 2*self.M_1*(self.M_2+1)] 
-                c_4 = self.coefs[k + l*self.M_1 + 3*self.M_1*(self.M_2+1)] 
-                surfaceValue += c_1*phi_1_w1_per*phi_1_w2
-                surfaceValue += c_2*phi_1_w1_per*phi_2_w2
-                surfaceValue += c_3*phi_2_w1_per*phi_1_w2 
-                surfaceValue += c_4*phi_2_w1_per*phi_2_w2
+                c_2 = self.coefs[k + l*self.M_1 + self.M_1*self.M_2] 
+                c_3 = self.coefs[k + l*self.M_1 + 2*self.M_1*self.M_2] 
+                c_4 = self.coefs[k + l*self.M_1 + 3*self.M_1*self.M_2] 
+                surfaceValue += c_1*phi_1_w1_per*phi_1_w2_per
+                surfaceValue += c_2*phi_1_w1_per*phi_2_w2_per
+                surfaceValue += c_3*phi_2_w1_per*phi_1_w2_per
+                surfaceValue += c_4*phi_2_w1_per*phi_2_w2_per
+
+        #if abs(surfaceValue.x - np.cos(2*np.pi*u)*np.sin(np.pi*v)) > 0.1:
+        #    print("error on x for u=%.2f and v=%.2f" % (u, v))
+        #if abs(surfaceValue.y - np.sin(2*np.pi*u)*np.sin(np.pi*v)) > 0.1:
+        #    print("error on y for u=%.2f and v=%.2f" % (u, v))
+        #if abs(surfaceValue.z - np.cos(np.pi*v)) > 0.1:
+        #    print("error on z for u=%.2f and v=%.2f" % (u, v))
 
         return surfaceValue
 
     def _updateContour(self):
         for k in range(self.MR_1):
             for l in range(self.MR_2):
-                if self.lat_closed and not self.lon_closed:
-                    surfaceValue = self._surfaceValue(k/self.MR_1, l/(self.MR_2-1))
-                elif self.lat_closed and self.lon_closed:
-                    surfaceValue = self._surfaceValue(k/self.MR_1, l/self.MR_2)
-                elif not self.lat_closed and self.lon_closed:
-                    surfaceValue = self._surfaceValue(k/(self.MR_1-1), l/self.MR_2)
-
+                surfaceValue = self._surfaceValue(k/self.MR_1, l/self.MR_2)
+                
                 if abs(surfaceValue.x) < 1e-10:
                     surfaceValue.x = 0
                 if abs(surfaceValue.y) < 1e-10:
@@ -114,30 +116,14 @@ class H1SphereSnake(object):
                 return (-aw + bw*x + -cw*np.exp(-w*x*1j) - dw*np.exp(w*x*1j)).real
 
     def initializeDefaultShape(self):
-        ## Initalize snake coefs for a sphere shape
-        #oracle = OracleSphere(R=1)
-        #self.w_1 = 2*np.pi/self.M_1
-        #self.w_2 = np.pi/self.M_2
-        #self.lon_closed=False
-        #self.lat_closed=True
-
-        ## Initalize snake coefs for a half sphere shape
-        #oracle = OracleHalfSphere(R=1)
-        #self.w_1 = 2*np.pi/self.M_1
-        #self.w_2 = np.pi/self.M_2
-        #self.lon_closed=False
-        #self.lat_closed=True
-
         # Initalize snake coefs for a torus shape
         oracle = OracleTorus(R=2, r=0.5)
         self.w_1 = 2*np.pi/self.M_1
         self.w_2 = 2*np.pi/self.M_2
-        self.lon_closed=True
-        self.lat_closed=True
 
         # Coefficients c_i[k,l] k=0,.., M_1-1, l=0,.., M_2
         # i=1,..,4
-        for l in range(0, self.M_2+1):
+        for l in range(0, self.M_2):
             for k in range(self.M_1):
                 # Coefficients c_1. Surface values
                 value = oracle.value(k/self.M_1, l/self.M_2)
@@ -145,15 +131,15 @@ class H1SphereSnake(object):
                 
                 # Coefficients c_2. Surface v-derivatives
                 v_deriv = 1/(1.*self.M_2)*oracle.v_deriv(k/self.M_1,l/self.M_2)
-                self.coefs[k + l*self.M_1 + self.M_1*(self.M_2+1)] = v_deriv
+                self.coefs[k + l*self.M_1 + self.M_1*self.M_2] = v_deriv
 
                 # Coefficients c_3. Surface u-derivatives
                 u_deriv = 1/(1.*self.M_1)*oracle.u_deriv(k/self.M_1,l/self.M_2)
-                self.coefs[k + l*self.M_1 + 2*self.M_1*(self.M_2+1)] = u_deriv
+                self.coefs[k + l*self.M_1 + 2*self.M_1*self.M_2] = u_deriv
 
                 # Coefficients c_4. Surface uv-derivatives or "twist vector"
                 uv_deriv = 1/(1.*self.M_1*self.M_2)*oracle.uv_deriv(k/self.M_1,l/self.M_2)
-                self.coefs[k + l*self.M_1 + 3*self.M_1*(self.M_2+1)] = uv_deriv
+                self.coefs[k + l*self.M_1 + 3*self.M_1*self.M_2] = uv_deriv
         
         self._updateContour()
 
@@ -161,20 +147,21 @@ class H1SphereSnake(object):
         for l in range(0, self.M_2+1):
             for k in range(self.M_1):
                 # Coefficients c_4. Surface uv-derivatives or "twist vector"
-                self.coefs[k + l*self.M_1 + 3*self.M_1*(self.M_2+1)] = Snake3DNode(0, 0, 0)
+                self.coefs[k + l*self.M_1 + 3*self.M_1*self.M_2] = Snake3DNode(0, 0, 0)
 
         self._updateContour()
 
     def setRandomPertTwist(self, mu, sigma):
-        for l in range(0, self.M_2+1):
+        for l in range(0, self.M_2):
             for k in range(self.M_1):
                 # Coefficients c_4. Surface uv-derivatives or "twist vector"
                 x = np.random.randn()*sigma + mu
                 y = np.random.randn()*sigma + mu
                 z = np.random.randn()*sigma + mu
-                self.coefs[k + l*self.M_1 + 3*self.M_1*(self.M_2+1)] += Snake3DNode(x, y, z)
+                self.coefs[k + l*self.M_1 + 3*self.M_1*self.M_2] += Snake3DNode(x, y, z)
 
         self._updateContour()
+
 
     def getNumScales(self):
         return self.MR_1 + self.MR_2
@@ -188,7 +175,7 @@ class H1SphereSnake(object):
                 points[v, 0] = self.snakeContour[i][v].x
                 points[v, 1] = self.snakeContour[i][v].y
                 points[v, 2] = self.snakeContour[i][v].z              
-            scale = Snake3DScale(points=points, closed=self.lon_closed, color=Color(255, 128, 128))
+            scale = Snake3DScale(points=points, closed=True, color=Color(255, 128, 128))
 
         # Latitude scale
         elif i >= self.MR_1 and i < self.MR_1+self.MR_2:
@@ -198,7 +185,7 @@ class H1SphereSnake(object):
                 points[u, 1] = self.snakeContour[u][i-self.MR_1].y
                 points[u, 2] = self.snakeContour[u][i-self.MR_1].z
                 
-            scale = Snake3DScale(points=points, closed=self.lat_closed, color=Color(128, 128, 128))
+            scale = Snake3DScale(points=points, closed=True, color=Color(128, 128, 128))
         return scale
 
     """ Return list of scales """
@@ -207,4 +194,5 @@ class H1SphereSnake(object):
         for i in range(self.getNumScales()):
             scales.append(self._getScale(i))
         return scales
+
 
