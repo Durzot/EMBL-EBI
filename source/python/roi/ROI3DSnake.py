@@ -7,7 +7,7 @@ Designed to be run in Python 3 virtual environment 3.7_vtk
 
 Rendering of a Snake surface in VTK
 
-@version: May 14, 2019
+@version: June 10, 2019
 @author: Yoann Pradat
 """
 
@@ -22,14 +22,9 @@ class ROI3DSnake(object):
         self.snake = snake
         self.scaleSubsampling = scaleSubsampling
 
-        # List of vtkActor
-        self.scaleActors = list()
-        # List of vtkPolyData
-        self.scaleDatas = list()
-
-        self.pixelSizeX = 2
-        self.pixelSizeY = 2
-        self.pixelSizeZ = 2
+        self.pixelSizeX = 1
+        self.pixelSizeY = 1
+        self.pixelSizeZ = 1
 
         # vtkRenderer
         self.renderer = vtkRenderer()
@@ -61,8 +56,47 @@ class ROI3DSnake(object):
         result.SetData(array)
         return result
 
-    def _init3DRenderer(self):
-        #renderer.SetGlobalWarningDisplay(0)
+    def _nodeToWorldScale(self, coordinates, scaleX, scaleY, scaleZ):
+        scaledPoint = np.array([coordinates[0]*scaleX, coordinates[1]*scaleY, coordinates[2]*scaleZ])
+        return scaledPoint
+
+    def _createNodesActors(self, renderer):
+        nodes = self.snake.getNodes()
+        for i in range(0, len(nodes)):
+            if nodes[i].hidden:
+                pass
+            else:
+                # Create sphere at nodes coordinates
+                sphereNode = vtkSphereSource()
+                nodePos = nodes[i].getCoordinates()
+                sphereNode.SetCenter(self._nodeToWorldScale(nodePos, self.pixelSizeX, self.pixelSizeY, self.pixelSizeZ))
+
+                sphereNode.SetRadius(self.pixelSizeX/20)
+                sphereNode.SetThetaResolution(25)
+                sphereNode.SetPhiResolution(25)
+
+                sphereNode.Update()
+
+                # Get vtkPolyData from sphere
+                nodeData = sphereNode.GetOutput()
+
+                # Set nodeData to mapper
+                nodeMapper = vtkPolyDataMapper()
+                nodeMapper.SetInputData(nodeData)
+
+                # Set nodeMapper to actor and add actor to the renderer
+                nodeActor = vtkActor()
+                
+                color = nodes[i].getColor()
+                red = color.getRed()
+                green = color.getGreen()
+                blue = color.getBlue()
+                nodeActor.GetProperty().SetColor(red/255., green/255., blue/255.)
+
+                nodeActor.SetMapper(nodeMapper)
+                renderer.AddActor(nodeActor)
+
+    def _init3DRenderer(self, renderer):
         scales = self.snake.getScales()
         for i in range(0, len(scales), self.scaleSubsampling):
             scale = scales[i]
@@ -88,31 +122,28 @@ class ROI3DSnake(object):
             cells = getCells(num_segments, prepareCells(lineIdx))
             scaleData = vtkPolyData()
 
-            # set vertices and lines to scaleData
+            # Set vertices and lines to scaleData
             scaleData.SetPoints(points)
             scaleData.SetLines(cells)
-            self.scaleDatas.append(scaleData)
 
-            # set scaleData to mapper
+            # Set scaleData to mapper
             polyMapper = vtkPolyDataMapper()
             polyMapper.SetInputData(scaleData)
 
-            # set mapper to actor and add actor to the renderer
+            # Set mapper to actor and add actor to the renderer
             lineActor = vtkActor()
-            lineActor.SetMapper(polyMapper)
-            self.renderer.AddActor(lineActor)
 
-            c = scale.getColor()
-            red = c.getRed()
-            green = c.getGreen()
-            blue = c.getBlue()
-
+            color = scale.getColor()
+            red = color.getRed()
+            green = color.getGreen()
+            blue = color.getBlue()
             lineActor.GetProperty().SetColor(red/255., green/255., blue/255.)
-            self.scaleActors.append(lineActor)
+            
+            lineActor.SetMapper(polyMapper)
+            renderer.AddActor(lineActor)
 
-            #         # display control points on 3D vtk renderer
-            #         createNodesActors(renderer)
-            #         createPicker()
+            # display control points on 3D vtk renderer
+            self._createNodesActors(renderer)
 
             painter3Dintialized=True
 
@@ -126,9 +157,9 @@ class ROI3DSnake(object):
         iren.SetRenderWindow(renWin)
 
         # Add actors to the renderer
-        self._init3DRenderer()
+        self._init3DRenderer(self.renderer)
 
-        # Add renderer to the windo
+        # Add renderer to the window
         renWin.AddRenderer(self.renderer)
 
         # Set Background and camera parameters

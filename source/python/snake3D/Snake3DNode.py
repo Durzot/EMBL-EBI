@@ -8,10 +8,11 @@ This class is used to store the snake-defining anchor points
 @author: Yoann Pradat
 """
 
-from auxiliary.aux import Point3D
+import numpy as np
+from auxiliary.aux import Point3D, Color
 
 class Snake3DNode(Point3D):
-    def __init__(self, x, y, z, hidden=False, color=None):
+    def __init__(self, x, y, z, hidden=False, color=Color(0,0,255)):
         super(Snake3DNode, self).__init__(x, y, z)
         self.hidden = hidden
         self.color = color
@@ -30,34 +31,6 @@ class Snake3DNode(Point3D):
     def getPoint(self, x, y, z):
         return Point3D(self.x, self.y, self.z)
 
-    # -–––––----------------------––-------
-    # Overload useful operators
-    # -–––––----------------------––-------
-    
-    def __str__(self):
-        return "Point %.3f, %.3f, %.3f" % (self.x, self.y, self.z)
-
-    def __add__(self, other):
-        return Snake3DNode(self.x+other.x, self.y+other.y, self.z+other.z)
-
-    def __sub__(self, other):
-        return Snake3DNode(self.x-other.x, self.y-other.y, self.z-other.z)
-
-    def __mul__(self, scalar):
-        if isinstance(scalar, (int, float)):
-            return Snake3DNode(self.x*scalar, self.y*scalar, self.z*scalar)
-        else:
-            return NotImplemented
-
-    def __rmul__(self, scalar):
-        if isinstance(scalar, (int, float)):
-            return Snake3DNode(self.x*scalar, self.y*scalar, self.z*scalar)
-        else:
-            return NotImplemented
-
-    def __truediv__(self, scalar):
-        if isinstance(scalar, (int, float)):
-            return Snake3DNode(self.x/scalar, self.y/scalar, self.z/scalar)
-        else:
-            return NotImplemented
+    def getCoordinates(self):
+        return np.array([self.x, self.y, self.z])
 

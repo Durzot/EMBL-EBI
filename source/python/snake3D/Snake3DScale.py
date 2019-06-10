@@ -7,7 +7,7 @@ Designed to be run in Python 3 virtual environment 3.7_vtk
 
 This class is used to store the scales that are used to draw the skin
 
-@version: May 14, 2019
+@version: June 10, 2019
 @author: Yoann Pradat
 """
 
