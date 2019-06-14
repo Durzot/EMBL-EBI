@@ -71,7 +71,7 @@ class ROI3DSnake(object):
                 nodePos = nodes[i].getCoordinates()
                 sphereNode.SetCenter(self._nodeToWorldScale(nodePos, self.pixelSizeX, self.pixelSizeY, self.pixelSizeZ))
 
-                sphereNode.SetRadius(self.pixelSizeX/20)
+                sphereNode.SetRadius(self.pixelSizeX/50)
                 sphereNode.SetThetaResolution(25)
                 sphereNode.SetPhiResolution(25)
 

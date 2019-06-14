@@ -9,13 +9,8 @@ Designed to be run in Python 3 virtual environment 3.7_vtk
 """
 
 import argparse
-from snake.H1ExpSphereSnake import H1ExpSphereSnake
+from snake.H1PolSphereSnake import H1PolSphereSnake
 from roi.ROI3DSnake import ROI3DSnake
-
-from snake import H1ExpSphereSnake
-import importlib
-importlib.reload(H1ExpSphereSnake)
-from snake.H1ExpSphereSnake import H1ExpSphereSnake
 
 
 def boolean_string(s):
@@ -36,20 +31,12 @@ parser.add_argument('--renWinSizeY', type=int, default=900, help='size of displa
 opt = parser.parse_args()
 
 # =========================================== SNAKE DISPLAY =========================================== # 
+
 # Create SphereSnake and intialize
-snake = H1ExpSphereSnake(opt.M_1, opt.M_2, opt.nSamplesPerSeg, opt.hidePoints)
+snake = H1PolSphereSnake(opt.M_1, opt.M_2, opt.nSamplesPerSeg, opt.hidePoints)
 snake.initializeDefaultShape(shape=opt.shape)
 
-if opt.twist=='null':
-    snake.setNullTwist
-elif opt.twist=='rand':
-    snake.setRandTwist(mu=0, sigma=1)
-elif opt.twist=='Selesnick':
-    snake.estimateTwist('Selesnick')
-elif opt.twist=='default':
-    pass
-else:
-    raise ValueError('Invalid value of twist')
+snake.estimateTwist('Selesnick')
 
 # Create 3D painter
 roi3dsnake = ROI3DSnake(snake)
