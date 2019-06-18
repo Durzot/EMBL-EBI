@@ -1,0 +1,2 @@
+\babel@toc {english}{}
+\contentsline {section}{\numberline {1}Translation of Schoenberg's 1973 paper for the case $r=3, m=3$}{2}

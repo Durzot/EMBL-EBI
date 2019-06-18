@@ -1,0 +1,13 @@
+\babel@toc {english}{}
+\beamer@sectionintoc {2}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {3}{I/ Introduction to interpolation}{5}{0}{2}
+\beamer@subsectionintoc {3}{1}{I/1 Polynomial interpolation}{5}{0}{2}
+\beamer@subsectionintoc {3}{2}{I/2 Piecewise-polynomial interpolation}{10}{0}{2}
+\beamer@sectionintoc {4}{II/ Introduction to spline curves}{13}{0}{3}
+\beamer@subsectionintoc {4}{1}{II/1 Cardinal B-splines}{13}{0}{3}
+\beamer@subsectionintoc {4}{2}{II/2 Schoenberg theorems}{18}{0}{3}
+\beamer@subsectionintoc {4}{3}{II/3 Ellipse-preserving snakes}{23}{0}{3}
+\beamer@sectionintoc {5}{III/ Representation of spline surfaces}{27}{0}{4}
+\beamer@subsectionintoc {5}{1}{III/1 Extension of Conti's scheme}{27}{0}{4}
+\beamer@subsectionintoc {5}{2}{III/2 The twist vector}{31}{0}{4}
+\beamer@sectionintoc {6}{Summary and future research}{32}{0}{5}

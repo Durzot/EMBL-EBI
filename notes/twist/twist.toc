@@ -1,0 +1,13 @@
+\babel@toc {english}{}
+\contentsline {section}{\numberline {1}Estimation of twist vector at corners of a single patch}{2}
+\contentsline {subsection}{\numberline {1.1}Selesnick's method}{2}
+\contentsline {subsection}{\numberline {1.2}Minimum quadratic oscillation}{3}
+\contentsline {section}{\numberline {2}Estimation of twist vector over the whole surface}{3}
+\contentsline {subsection}{\numberline {2.1}Bicubic Coon's is cubic Hermite spline interpolation}{3}
+\contentsline {subsection}{\numberline {2.2}Romani Conti's ellipse-reproducing splines}{4}
+\contentsline {section}{\numberline {3}Twist estimation in the sphere}{6}
+\contentsline {subsection}{\numberline {3.1}Hermite polynomial order 1}{7}
+\contentsline {subsubsection}{\numberline {3.1.1}Twist estimation from $\sigma , \sigma _1, \sigma _2$}{7}
+\contentsline {subsubsection}{\numberline {3.1.2}Twist estimation from $\sigma , \sigma _1, \sigma _2, K$}{9}
+\contentsline {subsubsection}{\numberline {3.1.3}Twist estimation from $\sigma , \mathaccentV {hat}05E{n}, K$}{11}
+\contentsline {subsection}{\numberline {3.2}Hermite exponential order 1}{11}
