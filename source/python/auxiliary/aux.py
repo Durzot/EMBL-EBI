@@ -4,7 +4,7 @@ Designed to be run in Python 3 virtual environment 3.7_vtk
 
 This class is used to define classes used throughout the code
 
-@version: May 14, 2019
+@version: July 16, 2019
 @author: Yoann Pradat
 """
 
@@ -51,6 +51,9 @@ class Point3D(object):
 
     def __sub__(self, other):
         return Point3D(self.x-other.x, self.y-other.y, self.z-other.z)
+
+    def __neg__(self):
+        return Point3D(-self.x, -self.y, -self.z)
 
     def __mul__(self, scalar):
         if isinstance(scalar, (int, float)):

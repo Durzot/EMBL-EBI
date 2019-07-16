@@ -7,7 +7,7 @@ Designed to be run in Python 3 virtual environment 3.7_vtk
 
 Three-dimensional Hermite polynomial spline snake
 
-@version: June 10, 2019
+@version: July 16, 2019
 @author: Yoann Pradat
 """
 
@@ -212,22 +212,22 @@ class H1PolSphereSnake(object):
             scales.append(self._getScale(i))
         return scales
 
-    def setNullTwist(self):
-        for l in range(0, self.M_2+1):
-            for k in range(self.M_1):
-                # Coefficients c_4. Surface uv-derivatives or "twist vector"
-                self.coefs[k + l*self.M_1 + 3*self.M_1*(self.M_2+1)].updateFromCoords(0, 0, 0)
-
-        self._updateContour()
-
-    def setRandTwist(self, mu, sigma):
-        for l in range(0, self.M_2+1):
-            for k in range(self.M_1):
-                # Coefficients c_4. Surface uv-derivatives or "twist vector"
-                x = np.random.randn()*sigma + mu
-                y = np.random.randn()*sigma + mu
-                z = np.random.randn()*sigma + mu
-                self.coefs[k + l*self.M_1 + 3*self.M_1*(self.M_2+1)] += Snake3DNode(x, y, z)
+    def setTwist(self, method):
+        if method=='null':
+            for l in range(0, self.M_2+1):
+                for k in range(self.M_1):
+                    self.coefs[k + l*self.M_1 + 3*self.M_1*(self.M_2+1)].updateFromCoords(0, 0, 0)
+        elif method=='random':
+            mu = 0
+            sigma = 0.2
+            for l in range(0, self.M_2+1):
+                for k in range(self.M_1):
+                    x = np.random.randn()*sigma + mu
+                    y = np.random.randn()*sigma + mu
+                    z = np.random.randn()*sigma + mu
+                    self.coefs[k + l*self.M_1 + 3*self.M_1*(self.M_2+1)] += Snake3DNode(x, y, z)
+        else:
+            raise ValueError("Unrecognized value for argument 'method'. Choose between 'null' and 'random'")
 
         self._updateContour()
 
@@ -267,7 +267,6 @@ class H1PolSphereSnake(object):
                 for k in range(self.M_1):
                     sigma_21[k + l*self.M_1].updateFromCoords(slopex[k]/self.M_1, slopey[k]/self.M_1, slopez[k]/self.M_1)
 
-
             error = 0
             for k in range(self.M_1):
                 for l in range(self.M_2+1):
@@ -277,7 +276,142 @@ class H1PolSphereSnake(object):
                     error += (twist-twist_hat).norm()
             print("Average error %.3g" % (error/(self.M_1*(self.M_2+1))))
 
-        elif method=='Selesnick':
+        elif method=='oscillation':
+            # The following estimation is an implementation of minimum oscillation principle introduced by Guo et Han to 
+            # determine the twist components in the article "A New Computational Approach to the Twists of Bicubic Coons 
+            # Surfaces" of 2017
+            
+            # The system slightly differs from that of the article because of the
+            # periodicity on latitudes. All details can be found in my note on twist vectors.
+
+            # The matrix equation is (K \bigotimeplus L) R = C with unknown R, K and L depending on the knot
+            # locations and C depending in addition to that on surface values and first-order derivatives at knots
+
+            K = np.zeros((self.M_2+1, self.M_2+1))
+            L = np.zeros((self.M_1, self.M_1))
+            C = np.zeros(self.M_1*(self.M_2+1))
+
+            # As the spacing is uniform in our scheme, the formulas for K and L are greatly simplified
+            for i in range(1, self.M_2):
+                K[i,i-1] = -3./self.M_2**3
+                K[i,i] = 8./self.M_2**3
+                K[i,i+1] = -3./self.M_2**3
+
+            for i in range(self.M_1):
+                L[i,i-1] = -3./self.M_1**3
+                L[i,i] = 8./self.M_1**3
+                L[i,(i+1)%self.M_1] = -3./self.M_1**3
+
+            K[0,0] = 4./self.M_2**3
+            K[0,1] = -3/self.M_2**3
+            K[self.M_2,self.M_2-1] = -3/self.M_2**3
+            K[self.M_2,self.M_2] = 4./self.M_2**3
+
+            # Compute kronecker product to create M_1*(M_2+1) matrix
+            M = np.kron(K, L)
+
+            # In order to compute C we need to compute B_{i,j} and G_0, ..., G_3 as defined in my notes
+            # List of integral value of product g_0/1 * f_0/1 or g_0/1
+            # Order is g_0^h*[f_0^h, f_1^h, g_0^h, g_1^h] then g_1^h*[f_0^h, f_1^h, g_0^h, g_1^h]
+            I = np.empty(2, dtype=object)
+            I[0] = np.array([[11/120, 13/420, 1/105, -1/140]])
+            I[1] = np.array([[-13/240, -11/120, -1/140, 1/105]])
+            
+            G = np.empty(4, dtype=object)
+            G[0] = I[0].T.dot(I[0])
+            G[1] = I[1].T.dot(I[0])
+            G[2] = I[0].T.dot(I[1])
+            G[3] = I[1].T.dot(I[1])
+
+            # Don't forget normalization factor appearing in g_0, g_1
+            for q in range(len(G)):
+                for i in range(4):
+                    for j in range(4):
+                        if i >= 2:
+                            G[q][i,j] /= self.M_1
+                        if j >= 2:
+                            G[q][i,j] /= self.M_2
+
+            # Link coefficients c_1, c_2, c_3 to quantities p, g, f
+            p = np.empty((self.M_1+1, self.M_2+1), dtype=Point3D)
+            g = np.empty((self.M_1+1, self.M_2+1), dtype=Point3D)
+            f = np.empty((self.M_1+1, self.M_2+1), dtype=Point3D)
+
+            for i in range(self.M_1+1):
+                for j in range(self.M_2+1):
+                    # p[i,j] = c_1[i,j]
+                    p[i,j] = self.coefs[i%self.M_1 + j*self.M_1]
+                    # g[i,j] = c_2[i,j]/l_j
+                    g[i,j] = self.coefs[i%self.M_1 + j*self.M_1 + self.M_1*(self.M_2+1)]*self.M_2
+                    # f[i,j] = c_3[i,j]/h_i
+                    f[i,j] = self.coefs[i%self.M_1 + j*self.M_1 + 2*self.M_1*(self.M_2+1)]*self.M_1
+
+            # Compute quantities defining matrices B_{i,j} as defined in Guo et Han article except for 
+            # \tilde{r} which carries a mistake
+
+            bar_f = np.empty((self.M_1+1, self.M_2+1), dtype=Point3D)
+            bar_g = np.empty((self.M_1+1, self.M_2+1), dtype=Point3D)
+            bar_r = np.empty((self.M_1+1, self.M_2+1), dtype=Point3D)
+
+            for i in range(self.M_1+1):
+                for j in range(self.M_2+1):
+                    if i%2 == 0: 
+                        bar_f[i,j] = (p[i+1,j]-p[i,j])*self.M_1
+                        bar_f[min(i+1,self.M_1),j] = (p[i+1,j]-p[i,j])*self.M_1
+                    if j%2 == 0:
+                        bar_g[i,j] = (p[i,j+1]-p[i,j])*self.M_2
+                        bar_g[i,min(j+1,self.M_2)] = (p[i,j+1]-p[i,j])*self.M_2
+                    if i%2 == 0 and j%2 == 0:
+                        qty = (p[i,j] - p[i,j+1] - p[i+1,j] + p[i+1,j+1])*self.M_1*self.M_2
+                        bar_r[i,j] = qty
+                        bar_r[min(i+1,self.M_1),j] = qty
+                        bar_r[i,min(j+1,self.M_2)] = qty
+                        bar_r[min(i+1,self.M_1),min(j+1,self.M_2)] = qty
+
+            # Compute matrices B_{i,j} i = 0, ..., M_1-1, j=0, ..., M_2-1
+            B = np.empty((self.M_1,self.M_2), dtype=object)
+            for i in range(self.M_1):
+                for j in range(self.M_2):
+                    B[i,j] = np.empty((4,4), dtype=Point3D)
+                    for s in range(4):
+                        for t in range(4):
+                            if s >= 2 and t >= 2:
+                                B[i,j][s,t] = -bar_r[i+s-2,j+t-2]
+                            elif s >= 2:
+                                B[i,j][s,t] = f[i+s-2,j+t] - bar_f[i+s-2,j+t]
+                            elif t >= 2:
+                                B[i,j][s,t] = g[i+s,j+t-2] - bar_g[i+s,j+t-2]
+                            else:
+                                B[i,j][s,t] = Point3D(0,0,0)
+
+            # Compute long column vector C
+            C = np.empty(self.M_1*(self.M_2+1), dtype=Point3D)
+            for i in range(self.M_1):
+                # First M_1 elements of C
+                C[i] = (np.trace(G[1].dot(B[i-1, 0])) + np.trace(G[0].dot(B[i,0])))*self.M_1**2*self.M_2**2 
+
+                # Last M_1 elements of C
+                C[i+self.M_1*self.M_2] = (np.trace(G[3].dot(B[i-1, self.M_2-1])) \
+                                          + np.trace(G[2].dot(B[i,self.M_2-1])))*self.M_1**2*self.M_2**2 
+                
+                # All in-between elements (4 patches)
+                for j in range(1, self.M_2):
+                    C[i+self.M_1*j] = (np.trace(G[3].dot(B[i-1, j-1])) \
+                                      + np.trace(G[2].dot(B[i,j-1])) \
+                                      + np.trace(G[1].dot(B[i-1,j])) \
+                                      + np.trace(G[0].dot(B[i,j])))*self.M_1**2*self.M_2**2 
+
+            # Inverse the system
+            print(K)
+            R = np.linalg.inv(M).dot(C)
+
+            for j in range(self.M_2+1):
+                for i in range(self.M_1):
+                    print("At i=%d, j=%d" % (i,j))
+                    print("optimal twist %s" % (R[i+j*self.M_1]/(self.M_1*self.M_2)))
+                    print("real twist %s" % self.coefs[i + j*self.M_1 + 3*self.M_1*(self.M_2+1)])
+
+        elif method=='selesnick':
             # The following estimation of the twist vector is an implementation of what S.A Selesnick 
             # describes in his article "Local invariants and twist vectors in computer-aided geometric design" of 1981
             #
@@ -466,5 +600,6 @@ class H1PolSphereSnake(object):
                                 j += 1
                             
         else:
-            raise ValueError("Please choose 'Selesnick' for the method")
+            raise ValueError("Unrecognized value for argument 'method'. Please choose 'naive', 'oscillation', and \
+                             'selesnick' for the method")
 
