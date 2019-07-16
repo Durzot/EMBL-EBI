@@ -1,0 +1,11 @@
+\babel@toc {english}{}
+\beamer@sectionintoc {2}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {3}{I/ Polynomial interpolation}{17}{0}{2}
+\beamer@subsectionintoc {3}{1}{I/1 Principles}{17}{0}{2}
+\beamer@subsectionintoc {3}{2}{I/2 Limits}{26}{0}{2}
+\beamer@sectionintoc {4}{II/ Piecewise-polynomial interpolation}{35}{0}{3}
+\beamer@subsectionintoc {4}{1}{II/1 Piecewise-linear}{36}{0}{3}
+\beamer@subsectionintoc {4}{2}{II/2 Piecewise cubic interpolation}{41}{0}{3}
+\beamer@sectionintoc {5}{III/ B-splines and Splines}{53}{0}{4}
+\beamer@subsectionintoc {5}{1}{III/1 Definition and fundamental properties}{53}{0}{4}
+\beamer@subsectionintoc {5}{2}{III/2 Applications}{63}{0}{4}

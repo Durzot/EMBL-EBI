@@ -1,0 +1,188 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\newcustomtheorem{deftn}{Definition}
+\newcustomtheorem{prop}{Proposition}
+\newcustomtheorem{remark}{Remark}
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\Tr}{Tr}
+\DeclareMathOperator*{\sinc}{sinc} 
+
+\begin{document}
+\title{Summary paper 25: Approximation errors for quasi-interpolators and multi-wavelets expansions}
+\author{Yoann Pradat}
+\maketitle
+
+This papers is concerned with providing approximation properties of general polynomial preserving operators that 
+approximate a function into some subspace of $L_2$. The approximation error is estimated as a function of the scaling 
+parameter $T$. The main result of this paper is theorem 1 that decomposed the error into an explicit term and a residual 
+term that can be bounded by a given order of $T$. \\
+
+For the analysis, authors chose a very broad class of linear approximation operators by imposing weak conditions on the 
+synthesis and analysis functions. The paper treats the case of multi-generators $q > 1$ and therefore includes Hermite 
+polynomial interpolation. 
+
+\paragraph{Fourier transform remarks} \mbox{} \\
+
+As later calculations use Poisson-formula, let's prove and give all its variants. For that let $f \in L_1(\mathbb{R})$.  
+The Fourier transform is, in frequency and pulsation notation,
+
+\begin{equation*}
+  \hat{f}(w) = \int_{\mathbb{R}} f(x) e^{-jwx}dx \qquad \tilde{f}(\nu) = \int_{\mathbb{R}} f(x) e^{-2j\pi \nu x}dx
+\end{equation*}
+
+Note that both transformations are linked by $\tilde{f}(\nu) = \hat{f}(2\pi \nu)$. Given that relation, one can derive 
+properties on one transformation using that of the other transformation. For instance, we have
+
+\begin{align*}
+  \hat{\tilde{f}}(\nu) &= \widehat{\hat{f}(2\pi \nu)} = \frac{1}{2\pi} \hat{\hat{f}}(\frac{\nu}{2\pi}) \\
+  \text{therefore}, \quad \tilde{\tilde{f}}(\nu) &= \hat{\tilde{f}}(2\pi\nu) = \frac{1}{2\pi} \hat{\hat{f}}(\nu) \\
+  \text{leading to}, \quad \bar{\tilde{\tilde{f}}}(\nu) &= f(\nu)
+\end{align*}
+
+
+The Poisson summation formula is as follows
+\begin{lem}{Poisson}
+  \begin{enumerate}
+    \item Suppose $f \in L_1$ and $\hat{f} \in L_1$, then
+      \begin{equation*}
+      \sum_{k \in \mathbb{Z}} \hat{f}(w+2k\pi) = \sum_{k \in \mathbb{Z}} f(k) e^{-jwk} \qquad i.e \qquad \sum_{k \in 
+      \mathbb{Z}} \hat{f}(\nu+k) = \sum_{k \in \mathbb{Z}} f(k) e^{-2j\pi \nu k}
+      \end{equation*}
+    \item Suppose $f \in L_1$ and $\hat{f} \in L_1$, then
+      \begin{equation*}
+        \sum_{k \in \mathbb{Z}} 2\pi f(-w+2k\pi) = \sum_{k \in \mathbb{Z}} \hat{f}(k) e^{-jwk} \qquad i.e \qquad \sum_{k 
+        \in \mathbb{Z}} f(-\nu+k) = \sum_{k \in \mathbb{Z}} \tilde{f}(k) e^{-2j\pi \nu k}
+      \end{equation*}
+  \end{enumerate}
+\end{lem}
+
+\begin{remark}{1} Defining the Fourier transform with a reversed sign in the exponential inside the integral leads to 
+  following adapted formulas of 2\@. in the lemma above
+  \begin{equation*}
+    \sum_{k \in \mathbb{Z}} 2\pi f(w+2k\pi) = \sum_{k \in \mathbb{Z}} \hat{f}(k) e^{jwk} \qquad i.e \qquad \sum_{k \in 
+    \mathbb{Z}} f(\nu+k) = \sum_{k \in \mathbb{Z}} \tilde{f}(k) e^{2j\pi \nu k}
+  \end{equation*}
+
+  The second one is exactly the version given in the article at the end of page 3.
+\end{remark}
+
+In accordance with the notation adopted in the article, Fourier transform is defined with a reversed sign. In pulsation 
+and frequency notations, Parseval's formula is 
+
+\begin{lem}{Parseval}
+  \begin{equation*}
+    \forall f, g \in L_2, \quad \int_{\mathbb{R}} f\bar{g} = 2\pi \int_{\mathbb{R}} \hat{f} \bar{\hat{g}} = 
+    \int_{\mathbb{R}} \tilde{f} \bar{\tilde{g}}
+  \end{equation*}
+\end{lem}
+
+For any integer $r$, $\hat{f^{(r)}}(w) = {(-jw)}^r \hat{f}(w)$ or equivalently $\tilde{f^{(r)}}(\nu) = {(-2j\pi \nu)}^r 
+\tilde{f}(\nu)$ and therefore ${\|\hat{f^{(r)}}\|}_{L_2}^2 = {\|{(-jw)}^r\hat{f}\|}_{L_2}^2 = {\|{(-2j\pi 
+\nu)}^r\tilde{f}\|}_{L_2}^2$. Taking $r$ not integer allows us to define \textbf{fractional derivatives}. Now we define 
+the Sobolev space $W^r_2$ as the collection of functions satisfying $\int {(1+\nu^2)}^r |\tilde{f}(\nu)|^2 d\nu < 
+\infty$. For such a function, $\int {(1+\nu^2)}^s |\tilde{f}(\nu)|^2 d\nu < \infty$ also holds true for any $0 \leq s 
+\leq r$ which means that all fractional derivatives between 0 and $r$ have a finite $L_2$ norm. \\ 
+
+
+\paragraph{Approximation by multi-wavelets} \mbox{} \\
+
+The problem of describing a continuous signal by a discrete sequence of numbers was first solved in the case of 
+bandlimited functions, giving rise to the well-known Shannon's sampling theorem. In that case, the interpolated signal 
+is in the space generated by sinc basis that is $V_T = \text{span}{\{ \sinc(\frac{.}{T}-k) \}}_{k \in \mathbb{Z}}$ 
+restricted to $L_2$. This space has the property of general shift-invariance and general scale invariance that is for 
+any $f \in V_T$, $f(.+\tau)$ and $f(a^{-1}.)$ are also in $V_T$ for any real $\tau$ and $a$. According to some papers it 
+is more useful and robust to consider spaces where the shift-invariance is limited to integer translations and where 
+scale-invariance is limited to integer exponents of some integer $a_0 \leq 2$. \\
+
+Authors consider the multiple generator case, namely $q$ of them, and the subspace they generate
+\begin{equation*}
+  V_T = \text{span}{\{ \varphi_i(\frac{.}{T}-kq) \}}_{i=1,\dots, q; k \in \mathbb{Z}} \cap L_2
+\end{equation*}
+
+to be $q$-shift-invariant and $a_0$-scale-invariant. As mathematics are the same for single or multiple generators, 
+authors do not distinguish by using the notation $\varphi$ for the q-vector ${(\varphi_1, \dots, \varphi_q)}^t$. \\
+
+It is possible to orthormalize the generators through matrix filtering by the $q\times q$ matrix $\hat{A}(\nu)$ defined 
+by
+
+\begin{equation*}
+  {A(\nu)}_{ij}  = \frac{1}{q} \sum_{k \in \mathbb{Z}} 
+  \hat{\varphi_i}(\frac{\nu+k}{q})\overline{\hat{\varphi_j}(\frac{\nu+k}{q})} = \sum_{k \in \mathbb{Z}} \langle \varphi_i, 
+  \varphi_j(.-kq) \rangle e^{-2j\pi \nu k}
+\end{equation*}
+
+\begin{remark}{2}
+  \begin{enumerate}
+    \item To note that the above is true, notice that $\langle \varphi_i, \varphi_j(.-kq) \rangle = \varphi_i * \check{\varphi_j}
+      (kq)$. Using Parseval's theorem and basic properties of Fourier transform give the equality.
+    \item The authors don't name but this is exactly the Gram matrix. As a reminder, we are interested in the Gram 
+    matrix in the case of Hermite interpolation as proving that it's minimum and maximum eigenvalues are essentially 
+    bounded by strictly positive constants would prove that the Hermite generators are a Riesz-Schauder basis.
+  \end{enumerate}
+\end{remark}
+
+The Fourier transform of the \textbf{orthonormal} generators and their associated analysis functions are given by 
+\begin{align}
+  \hat{\phi}(\nu)  &= \sqrt{A(\nu)}^{-1} \hat{\varphi}(\nu) \\
+  \hat{\tilde{\phi}}(\nu)  &= \sqrt{A(\nu)} \hat{\tilde{\varphi}}(\nu)
+\end{align}
+
+The approximation operator authors study takes the form
+\begin{equation}
+  \mathcal{I}_T(f) = \sum_{k} \mathcal{S}_T (f) \varphi_k(\frac{t}{T})
+\end{equation}
+
+with $\mathcal{S}_T (f) = \int f(\tau) \tilde{\varphi}_k(\frac{\tau}{T}) d\frac{\tau}{T}$ the linear operator that 
+associates to the function its sequence of coefficients in the representation by $\varphi_k$. \\
+
+In here the synthesis functions $\{\varphi_k\}$ and the sampling functions $\{\tilde{\varphi_k}\}$ are independent 
+parameters.  This explains the notion of quasi-biorthonormality introduced by the authors
+
+\begin{deftn}{1}
+    Synthesis functions $\{\varphi_k\}$ and sampling functions $\{\tilde{\varphi_k}\}$ are quasi-biorthormal if
+    \begin{itemize}
+      \item Functions $\varphi_k$ are of order $L$.
+      \item Distributions $\tilde{\varphi}_k$ satisfy
+        \begin{equation*}
+          \forall s=0,\dots, L-1, \forall k, \quad \int x^s \tilde{\varphi}_k(x)dx = \lambda_k^{(s)}
+        \end{equation*}
+    \end{itemize}
+\end{deftn}
+
+All the results that are soon to be given are dependent on the following hypotheses
+
+\begin{enumerate}
+  \item $\{\varphi_k\}$ are in $L_2$ and form a Riesz-basis.
+  \item $\mathcal{M} = \{ \{\lambda_k\} | \sum_k \lambda_k \varphi_k = 0 \}$ is finite dimensional.
+  \item $\varphi_k$ are of order $L$ and $\forall k=0, \dots, q-1, \forall l=0,\dots, L$, $\int |x-k|^l 
+    |\varphi_k(x)|dx$ is finite.
+  \item $\tilde{\varphi}_k$ have a bounded Fourier transform.
+  \item $f \in W^r_2$ (as this implies $\mathcal{S}_T(f)$ is in $l_2$)
+\end{enumerate}
+
+\end{document}

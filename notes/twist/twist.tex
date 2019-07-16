@@ -11,7 +11,7 @@
 \usepackage{mathtools}
 \usepackage{booktabs}
 \usepackage{stmaryrd}
-
+\usepackage{breqn}
 \usepackage{wrapfig}
 
 \usepackage{tikz}
@@ -40,8 +40,10 @@
 \newcustomtheorem{cor}{Corollary}
 \newcustomtheorem{deftn}{Definition}
 \newcustomtheorem{prop}{Proposition}
+\newcustomtheorem{remark}{Remark}
 \DeclareMathOperator*{\argmin}{argmin} 
-\DeclareMathOperator*{\argmax}{argmax} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\Tr}{Tr} 
 
 \begin{document}
 \title{Estimation of the twist vector}
@@ -50,7 +52,7 @@
 \tableofcontents
 \clearpage
 
-\section{Estimation of twist vector at corners of a single patch}
+\section{Estimation technique of the twist vector}
 
 Suppose we would like to represent a surface over the patch ${[0,1]}^2$ from data at each of the 4 corners.  Depending 
 on the available data, different interpolation techniques (with different properties) can be used. In case of bicubic 
@@ -179,7 +181,7 @@ bilinear interpolant
   \int_a^b \int_c^d \|Q(x,y) - L(x,y)\|^2 dxdy
 \end{equation}
 
-\section{Estimation of twist vector over the whole surface}
+\section{Coon's formulation for polynomial and exponential cubic Hermite splines}
 
 \subsection{Bicubic Coon's is cubic Hermite spline interpolation}
 
@@ -226,7 +228,7 @@ Restricting our attention to a single patch $I_{k,l} = [\frac{k}{M_1}, \frac{k+1
 
 with renoting $u \leftarrow M_1u-k, v \leftarrow M_2v-l$ and $\sigma(u,v) \leftarrow \sigma(M_1u-k, M_1v-l)$.
 
-\subsection{Romani Conti's ellipse-reproducing splines}
+\subsection{Exponential cubic Hermite splines}
 
 Conti et al's paper \underline{Ellipse-preserving interpolation and subdivision scheme} introduces two basis functions 
 from the space $\mathcal{E}_4 = <1, x, e^{-iw_1x}, e^{iw_1x}>$ where $w = \frac{2\pi}{M}$ to reproduce closed curves 
@@ -294,7 +296,7 @@ its derivative over $[0,1]$ are very close to that taken by $f$ and its derivati
 
 \clearpage
 
-\section{Twist estimation in the sphere}
+\section{Twist estimation for the sphere}
 
 
 In this work we try to get a mathematical representation of a surface from information at a few points. This information 
@@ -386,6 +388,8 @@ value of the coefficient (a 3D vector) that goes in front of the term $\phi_{2, 
 mentionned above this term is the scaled first order cross-derivative (or twist vector). Therefore if we can find a way 
 to estimate this twist vector from the rest of the data our scheme would be complete. \\
 
+\paragraph{Naive technique} \mbox{}\\
+
 A \emph{naive} way of doing this is to interpolate for example $\sigma_1$ at the different control points on a given 
 longitude and compute the derivative of the interpolant at the control points locations. \\
 
@@ -443,6 +447,199 @@ interpolation at latitude $v=0.2$.
   \includegraphics[width=\textwidth]{cubic_sigma_2.png}
   \caption{Cubic spline not-a-knot interpolation of ${\left(\sigma_{2,y}(\frac{k}{M_1}, 0.2)\right)}_{l=0}^{M_1-1}$}
 \end{figure}
+
+\paragraph{Minimum quadratic oscillation} \mbox{}\\
+
+In order to treat the general case of non uniform spacing, let's adopt the following notations:
+
+\begin{enumerate}
+  \item The index $i$ denotes the $u$ direction and ranges from $0$ to $M_1-1$. Similarly index $j$ denotes the $v$ 
+    direction and ranges from $0$ to $M_2$.
+  \item Subscript $i=-1$ or $i=M_1$ are to be considered with $M_1$ periodicity. For instance $r_{-1, j}$ stands for 
+    $r_{M_1-1,j}$ while $r_{M_1, j}$ stands for $r_{0,j}$.
+  \item For $i=0, \ldots, M_1-1$, $h_i$ denotes the spacing $u_{i+1}-u_i$ in the u direction with the previous 
+    convention on indices outside $[0, M_1-1]$.
+  \item For $j=0, \ldots, M_2-1$, $l_j$ denotes the spacing $v_{j+1}-v_i$ in the v direction with no convention.
+  \item For $i=0, \ldots, M_1-1, j=0, \ldots, M_2-1$, $I_{i,j}$ denotes the square $[\frac{i}{M_1}, 
+    \frac{i+1}{M_1}]\times[\frac{j}{M_2}, \frac{j+1}{M_2}]$.
+  \item $f_0^h(u) = 1-3u^2 + 2u^3, f_1^h(u) = 3u^2-2u^3$ and $g_0^h(u) = u{(u-1)}^2, g_1^h(u) = u^2(u-1)$ denote the 
+    Hermite polynomials at order 3.
+  \item $f_0(u), f_0(v), f_1(u), f_1(v), g_0(u), g_0(v), g_1(u), g_1(v)$ are as defined in the article, where the 
+    dependence on $h_i$ and $l_j$ has been dropped for lighter notations but must no be forgotten.
+  \item
+    \begin{align*}
+      G_0 &= -\int_0^1 \int_0^1 g_0^h(u) g_0^h(v)H(u,v)dudv & G_1 &= -\int_0^1 \int_0^1 g_1^h(u) g_0^h(v)H(u,v)dudv \\
+      G_2 &= -\int_0^1 \int_0^1 g_0^h(u) g_1^h(v)H(u,v)dudv & G_3 &= -\int_0^1 \int_0^1 g_1^h(u) g_1^h(v)H(u,v)dudv
+    \end{align*}
+  \end{enumerate}
+
+
+On $I_{i,j}$ the cubic polynomial Hermite surface can be rewritten as
+
+\begin{equation}
+  Q_{i,j}(u,v) = \begin{bmatrix} f_0(u) \\ f_1(u) \\ g_0(u) \\ g_1(u) \end{bmatrix}^T
+  \begin{bmatrix}
+    p_{i,j} & p_{i, j+1} & g_{i,j} & g_{i, j+1} \\
+    p_{i+1, j} & p_{i+1, j+1} & g_{i+1, j} & g_{i+1, j+1} \\
+    f_{i,j} & f_{i, j+1} & r_{i,j} & r_{i, j+1} \\
+    f_{i+1, j} & f_{i+1, j+1} & r_{i+1, j} & r_{i+1, j+1} \\
+  \end{bmatrix}
+  \begin{bmatrix} f_0(v) \\ f_1(v) \\  g_0(v) \\ g_1(v) \end{bmatrix}
+\end{equation}
+
+where
+
+\begin{align*}
+  p_{i,j} &= c_{1}[i,j] & l_j g_{i,j} &= c_{2}[i,j] \\
+  h_i f_{i,j} &= c_{3}[i,j] & h_i l_j r_{i,j} &=  c_{4}[i,j] \\
+\end{align*}
+
+
+The linear Hermite polynomial surface can be rewritten in a similar way
+
+\begin{equation}
+  L_{i,j}(u,v) = \begin{bmatrix} f_0(u) \\ f_1(u) \\ g_0(u) \\ g_1(u) \end{bmatrix}^T
+  \begin{bmatrix}
+    p_{i,j} & p_{i, j+1} & \bar{g}_{i,j} & \bar{g}_{i, j+1} \\
+    p_{i+1, j} & p_{i+1, j+1} & \bar{g}_{i+1, j} & \bar{g}_{i+1, j+1} \\
+    \bar{f}_{i,j} & \bar{f}_{i, j+1} & \bar{r}_{i,j} & \bar{r}_{i, j+1} \\
+    \bar{f}_{i+1, j} & \bar{f}_{i+1, j+1} & \bar{r}_{i+1, j} & \bar{r}_{i+1, j+1} \\
+  \end{bmatrix}
+  \begin{bmatrix} f_0(v) \\ f_1(v) \\  g_0(v) \\ g_1(v) \end{bmatrix}
+\end{equation}
+
+
+The minimization problem is
+
+\begin{equation*}
+  \min_{r_{i,j}} \sum_{i=1}^{M_1} \sum_{j=1}^{M_2} E_{i,j}
+\end{equation*}
+
+with \begin{equation*}
+  E_{i,j} = h_i l_j \int_0^1 \int_0^1 \| Q_{i,j}(u,v) - L_{i,j}(u,v) \|^2 du dv
+\end{equation*}
+
+The term inside the norm can be rewritten as
+\begin{equation*}
+  Q_{i,j}(u,v) - L_{i,j}(u,v) = \Tr (H(u,v)B_{i,j}) + \sum_{s,t \in \{0, 1\}} r_{i+s, j+t} g_s(u), g_t(v)
+\end{equation*}
+
+\begin{remark}{1} 
+  $B_{i,j}$ defined as in the article except that $\tilde{r}_{i,j} = -\bar{r}_{i,j}$ (it is an error in the article).  
+\end{remark}
+
+The partial derivative of $E_{i,j}$ w.r.t to $r_{i+k, j+l}$ for $k, l \in \{0,1\}$ is such that
+\begin{equation*}
+  \frac{1}{2} \frac{\partial E_{i,j}}{\partial r_{i+k, j+l}} = h_i^2 l_j^2  \Tr \left( \int_0^1 \int_0^1 g_k^h(u) 
+  g_l^h(v) H(u,v) du dv B_{i,j} \right) + h_i^3 l_j^3 \int_0^1 \int_0^1 \sum_{s,t \in \{0,1\}} r_{i+s, j+l} g_s^h(u) 
+  g_t^h(v) g_k^h(u)g_l^h(v) du dv
+\end{equation*}
+
+\begin{remark}{2}
+  Again this is slightly different from what is written in the article. The coefficient in front of the integral changes 
+  as $k, l$ change but it should not. It has no impact in case of uniform spacing but it would otherwise.
+\end{remark}
+
+Now the system defining the optimal solution differs slightly because of the closure along latitudes. Indeed, the twists 
+$r_{i,0}, r_{i, M_2}$ at north and south poles are shared between two adjacent patches for all $i$ while all other 
+twists $r_{i,j}$ are shared between four adjacent patches. Note also that $r_{0,j} = r_{M_1, j}$ for all $j$ that is the 
+number of free vectors to optimize is $M_1 \times (M_2+1)$. This observation leads to the following variation of the 
+system of equations given in the article
+
+\begin{align}
+  \frac{\partial E_{i-1, 0}}{\partial r_{i,0}} + \frac{\partial E_{i, 0}}{\partial r_{i,0}} &= 0 & \ \text{for} \ i&=0, 
+  \ldots, M_1-1 \label{eq:a} \\
+  \frac{\partial E_{i-1, M_2-1}}{\partial r_{i,M_2}} + \frac{\partial E_{i, M_2-1}}{\partial r_{i,M_2}} &= 0 & \ 
+  \text{for}\
+  i&=0, \ldots, M_1-1 \label{eq:b} \\
+  \frac{\partial E_{i-1, j-1}}{\partial r_{i,j}} + \frac{\partial E_{i, j-1}}{\partial r_{i,j}} + \frac{\partial E_{i-1, 
+  j}}{\partial r_{i,j}} + \frac{\partial E_{i, j}}{\partial r_{i,j}} &= 0 & \ \text{for} \ i&=0, \ldots M_1 - 1, j=1, 
+  \ldots, M_2-1 \label{eq:c}
+\end{align}
+
+with the $M_1$ periodic notation $E_{-1, j} = E_{M_1-1,j}$ for all $j$. This makes $M_1\times(M_2+1)$ linear equations 
+for the $M_1\times(M_2+1)$ variables $R = {[r_{0, 0}, \ldots, r_{M_1-1, 0}, \ldots, r_{0, M_2}, \ldots ,r_{M_1-1, 
+M_2}]}^T$.  \\
+
+Note that in the expression of partial derivative of $E_{i,j}$, elements of the unknown vector $R$ comes in factor of at 
+most 9 different values (down from 16 by symmetry) that are $\int_0^1 \int_0^1 g_s^h(u) g_k^h(u) g_t^h(v)  g_l^h(v) du 
+dv$ for $s,t,k,l \in \{0,1\}$. Actually, it so happens that $\int_0^1 g_0^h(u) g_0^h(u) = \int_0^1 g_0^h(u) g_0^h(u)= 
+\frac{1}{105}$ and $\int_0^1 g_0^h(u) g_1^h(u) = \frac{-1}{140}$ so that only 3 different factors can appear in front of 
+the unknown quantities $r_{i,j}$. Noting that $176400$ can be divided by $105^2, 105\times140$ and $140^2$, it will be 
+convenient to factorize by this number. \\
+
+Equation (\ref{eq:a}) can be rewritten for $i=0, \ldots, M_1-1$
+\begin{dmath}
+  \label{eq:ab}
+  l_0^3\left(-12h_{i-1}^3 r_{i-1, 0} + 16(h_{i-1}^3 + h_{i}^3) r_{i,0} - 12h_i^3 r_{i+1, 0} \right) + l_0^3 
+  \left(9h_{i-1}^3 r_{i-1, 1} - 12 (h_{i-1}^3 + h_i^3) r_{i, 1} + 9h_i^3 r_{i+1, 1} \right) = h_{i-1}^2 l_0^2 \Tr 
+  \left(G_1 B_{i-1,0} \right) + h_i^2 l_0^2  \Tr \left(G_0 B_{i,0} \right)
+\end{dmath}
+
+while equation (\ref{eq:b}) can be rewritten for $i=0, \ldots, M_1-1$
+\begin{dmath}
+  \label{eq:bb}
+  l_{M_2-1}^3\left(-12h_{i-1}^3 r_{i-1,M_2-1} + 16(h_{i-1}^3 + h_{i}^3) r_{i,M_2-1}-12h_i^3 r_{i+1,M_2-1} \right) + 
+  l_{M_2-1}^3 \left(9h_{i-1}^3r_{i-1,M_2}-12 (h_{i-1}^3 + h_i^3) r_{i, M_2} + 9h_i^3 r_{i+1, M_2} \right) = h_{i-1}^2 
+  l_{M_2-1}^2 \Tr \left(G_1 B_{i-1,M_2-1} \right)+h_i^2 l_{M_2-1}^2 \Tr\left(G_0 B_{i,M_2-1} \right)
+\end{dmath}
+
+This calls for a slight modification of the $M$ matrix given in the article. Indeed, in the article the twist vector at 
+corners of the surface contribute to 1 unique patch whereas they contribute to 2 patches for the case of closed 
+latitudes. The modification is simply a “periodization” of the first and last rows of the matrix $L = W*D$
+
+\begin{equation}
+  \label{eq:K}
+  K = \begin{bmatrix}
+    4l_0^3 & -3 l_0^3 & & & & &  \\
+    -3l_0^3 & 4(l_0^3 + l_1^3) & -3l_1^3 & & & & \\
+    & \ddots & \ddots & \ddots & & & \\
+    & & & & -3l_{M_2-2}^3 & 4 (l_{M_2-2}^3 + l_{M_2-1}^3) & -3 l_{M_2-1}^3 \\
+    & & & & & -3l_{M_2-1}^3 & 4 l_{M_2-1}^3  \\
+  \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+  \label{eq:L}
+  L = \begin{bmatrix}
+    4(h_{M_1-1}^3 + h_0^3) & -3 h_0^3 & & & & & -3h_{M_1-1}^3 \\
+    -3h_0^3 & 4(h_0^3 + h_1^3) & -3h_1^3 & & & & \\
+    & \ddots & \ddots & \ddots & & & \\
+    & & & & -3h_{M_1-3}^3 & 4 (h_{M_1-3}^3 + h_{M_1-2}^3) & -3 h_{M_1-2}^3 \\
+    -3h_{M_1-1}^3 & & & & & -3h_{M_1-2}^3 & 4 (h_{M_1-2}^3 + h_{M_1-1}^3) \\
+  \end{bmatrix}
+\end{equation}
+
+The sequence of optimal twist in the sense of minimal quadratic oscillation is solution to 
+
+\begin{equation}
+  (K \bigotimes L) R = 176400 C
+\end{equation}
+
+with $C = {[c_{0, 0}, \ldots, c_{M_1-1, 0}, \ldots, c_{0, M_2}, \ldots ,c_{M_1-1, M_2}]}^T$ and for $i=0, \ldots, M_1-1$
+
+\begin{align*}
+  c_{i,0} &= h_{i-1}^2 l_0^2 \Tr \left(G_1 B_{i-1, 0}\right) + h_{i}^2 l_0^2 \Tr \left(G_0 B_{i, 0}\right) \\
+  c_{i,M_2} &= h_{i-1}^2 l_{M_2-1}^2 \Tr \left(G_3 B_{i-1, M_2-1}\right) + h_{i}^2 l_{M_2-1}^2 \Tr \left(G_2 B_{i, 
+  M_2-1}\right) \\
+\end{align*}
+
+and for $i=0, \ldots, M_1-1$, $j=1, \ldots, M_2-1$
+
+\begin{equation*}
+  c_{i,j} = h_{i-1}^2 l_{j-1}^2 \Tr \left(G_3 B_{i-1, j-1}\right) + h_{i}^2 l_{j-1}^2 \Tr \left(G_2 B_{i, j-1}\right) + 
+  h_{i-1}^2 l_{j}^2 \Tr \left(G_1 B_{i-1, j}\right) + h_{i}^2 l_{j}^2 \Tr \left(G_0 B_{i, j}\right)
+\end{equation*}
+
+
+As is true for our case, uniform spacing greatly reduces the complexity of the formula with $h_i = \frac{1}{M_1}, l_j = 
+\frac{1}{M_2}$ for all $i$ and $j$. In order to compute the matrices $G_0$ to $G_3$, consider the quantities
+
+\begin{align*}
+  \int f_0^h f_0^h &= \frac{13}{35} & \int f_0^h f_1^h &= \frac{9}{70} & \int f_1^h f_1^h &= \frac{13}{35} \\
+  \int g_0^h g_0^h &= \frac{1}{105} & \int g_0^h g_1^h &= \frac{-1}{140} & \int g_1^h g_1^h &= \frac{1}{105} \\
+  \int f_1^h g_0^h &= - \int f_0^h g_1^h = \frac{13}{420} & \int f_0^h g_0^h &= - \int f_1^h g_1^h = \frac{11}{120}
+\end{align*}
 
 
 \subsubsection{Twist estimation from $\sigma, \sigma_1, \sigma_2, K$}

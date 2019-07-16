@@ -1,0 +1,269 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage{dsfont}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\newcustomtheorem{deftn}{Definition}
+\newcustomtheorem{prop}{Proposition}
+\newcustomtheorem{remark}{Remark}
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\Tr}{Tr}
+\DeclareMathOperator*{\sinc}{sinc} 
+\DeclareMathOperator*{\supp}{supp} 
+\DeclareMathOperator*{\essinf}{ess\ inf}
+\DeclareMathOperator*{\esssup}{ess\ sup} 
+
+\begin{document}
+\title{Summary paper 28: Riesz bases of splines and regularized splines with multiple knots}
+\author{Yoann Pradat}
+\maketitle
+
+This paper is interested in characterizing $L_2$-norm and Sobolev norm stability of polynomial splines with multiple 
+knots, that is to say osculatory interpolation. Stability estimates are reformulated in terms of Riesz basis property.  
+Authors said their work was motivated by talk paper of C. de Boor, \emph{The quasi-interpolant as a tool in elementary 
+polynomial spline theory} that seemingly has the same interrogation as I have for a lower bound on the Gram matrix. In 
+their previous paper published in 1995, \emph{A generalization of de Boor's stability result and symmetric
+preconditioning}, authors developed a generalization for regularized splines with simples knots by tempered 
+distributions. \\
+
+This paper achieves three different results
+\begin{enumerate}
+  \item Extends $L_2$ stability estimates to Sobolev norms
+  \item Extends stability estimates to regularized splines based on tempered distributions
+  \item Prove that scattered Hermite interpolation can be regular provided a given condition is satisfied.
+\end{enumerate}
+
+\section{Notations} 
+
+$X = \{x_i\}$ with $x_i < x_{i+m}$ and $\lim_{i \to -\infty} x_i = -\infty,  \lim_{i \to \infty} x_i = \infty$ denotes a 
+knot sequence of order $m$. Divided differences are renoted $\nu_{i,k}(f) = [x_i, \ldots, x_{i+k}]f$ and the B-splines 
+are defined with Schoenberg's normalization that is $B_{i,m}(t) = m \nu_{i,m}({(.-t)}_{+}^{m-1})$. Let $\beta_{i,m}$ the 
+$i^{th}$ B-spline with de Boor's normalization. Then
+
+\begin{equation*}
+  \beta_{i,m}(t) = (x_{i+m} - x_i) [x_i, \ldots, x_{i+m}]{(.-t)}_+^{m-1} \quad \text{while} \quad B_{i,m}(t) = m[x_i, 
+  \cdots, x_{i+m}]{(.-t)}_+^{m-1}
+\end{equation*}
+
+\begin{equation*}
+  \sum_{i} \beta_{i,m}(t) = 1 \quad \text{while} \quad \int_{\mathbb{R}} B_{i,m}(t) = 1
+\end{equation*}
+
+Note that for Schoenberg's normalization, we have the following property for $f \in \mathcal{C}^{m-1}$
+
+\begin{equation}
+  [x_i, \ldots, x_{i+m}]f = \int B_{i,m} \frac{f^{(m)}}{m!}
+\end{equation}
+
+Let $f(t) = \mathds{1}_{+}(t)$ the Heaviside function. Then for any test function $\psi$, $\langle f', \psi \rangle = 
+\psi(0) = \langle \delta, \psi \rangle$. Therefore $\hat{f'}(w) = 1 = (jw)\hat{f}(w)$ i.e $\hat{f}(w) = \frac{1}{jw}$.  
+Note now that $\frac{t_+^{m-1}}{(m-1)!} = f * \cdots * f$ with $f$ appearing $m$ times. Consequently the function $h(t) 
+= \frac{t_+^{m-1}}{(m-1)!}$ is the fundamental solution to the differential operator $D^m$ that is $D^m h = \delta$. \\
+
+The equality $\nu_{i,m}({(.-t)}_+^{m-1}) = {(-1)}^m \nu_{i,m}({(t-.)}_+^{m-1})$ is not so straightforward to me but can 
+be verified manually for $m=2$. Maybe using $t_+^m = t^{m-1} t_+$? $\nu_{i,m}$ is a \textbf{functional} operator that 
+can be viewed as a tempered distribution. Indeed, $\nu_{i,m}$ takes values in $\mathbb{C}$, $\nu_{i,m}$ is 
+$\mathbb{C}$-linear and $\nu_{i,m}$ is continuous. For the latter, notice that from properties of divided differences we 
+have
+
+\begin{equation}
+  \forall \phi, \psi \in \mathcal{S}(\mathbb{R}), \quad |\nu_{i,m}(\phi-\psi)| \leq \frac{1}{(m-1)!} {\|\phi-\psi\|}_{0, 
+  m-1}
+\end{equation}
+
+where ${\|\phi\|}_{a,b}$ is the semi-norm $\sup_{t \in \mathbb{R}} |t^a \partial^b \phi(t)|$. As convergence in the 
+Schwartz space is defined as the convergence in all such semi-norms, continuity of our operator follows. Consequently, 
+$\nu_{i,m} \in \mathcal{S}'(\mathbb{R})$. \\
+
+For any function $\phi$ in the Schwartz space, convolution with the tempered distribution $\nu_{i,m}$ is defined as 
+$\phi * \nu_{i,m}(t) = \langle \phi(t-.), \nu_{i,m} \rangle := \nu_{i,m}(\phi(t-.))$. Now our function $h$ is not 
+strictly speaking an element of the Schwartz space but can be viewed as the tempered distribution that associates to any 
+test function $\phi$ the scalar quantity $\langle \phi, h \rangle = \int_{0}^{+\infty} \frac{t^{m-1}}{(m-1)!} 
+\phi(t)dt$.  \textbf{How to define then convolution between two tempered distributions? And how to prove that $h * 
+\nu_{i,m} = \nu_{i,m}(\frac{{(t-.)}^{m-1}_+}{(m-1)!})$}? \\
+
+\textbf{Distribution with compact support}. A distribution $T$ is said to vanish on an open set $V$ if for every test 
+function $\phi$ with compact support $\supp \phi \subseteq V$, $\langle \phi, T \rangle = 0$. Then the support of $T$ is 
+the complement of the maximal open set on which the distribution vanishes. For example, the support of the Dirac 
+distribution is $\{0\}$. \\
+
+\textbf{It is possible to define the convolution of two distributions provided one has compact support}. From wikipedia, 
+if $T,S$ are distributions with $T$ compactly supported, then for any test function $\phi$, $\langle \phi, S*T \rangle = 
+\langle \psi, S \rangle$ with $\psi(t) = \langle \phi(t+.), T \rangle$ a test function itself. Applying this to the 
+distributions $h$ and $\nu_{i,m}$ leads to $\langle \phi, h*\nu_{i,m} \rangle = \int_{0}^{\infty} \frac{t^{m-1}}{(m-1)!} 
+\nu_{i,m}(\phi(t+.)) dt$ which I cannot relate to the formula in the article.
+
+\begin{lem}{1}
+  $\exists D_m > 0$ such that for any sequence $v = {(v_j)}_{j \in \mathbb{Z}}$
+  \begin{equation*}
+    D_m \|v\|_{l_2} \leq {\left\| \sum_{j \in \mathbb{Z}} v_j \sqrt{d_{j,m}} B_{j,m} \right\|}_{L_2} \leq \|v\|_{l_2}
+  \end{equation*}
+\end{lem}
+
+\begin{proof}
+  In de Boor's talk paper, the property holds with the basis $N_{im2} = d_{j,m}^{-\frac{1}{2}} \beta_{i,m}$. Now note 
+  that $d_{j,m}^{\frac{1}{2}} B_{i,m} = d_{j,m}^{\frac{1}{2}} d_{j,m}^{-1} \beta_{i,m} = N_{im2}$.
+\end{proof}
+
+Let $\sigma_{v,m} = \sum_{j \in \mathbb{Z}} v_j \sqrt{d_{j,m}} B_{j,m}$. Another result proven again by de Boor in his 
+book \emph{A Practical Guide to splines}, explicitly gives the derivative of a spline as
+
+\begin{equation*}
+  \sigma_{v, m}' = \sigma_{w, m-1}
+\end{equation*}
+
+with $w = D_m v$ and $D_m$ the lower two-banded matrix $d_{j,j}^m = {(d_{j,m-1}, d_{j,m})}^{-1/2}$, $d_{j, j-1}^m =  
+-{(d_{j,m-1}, d_{j-1,m})}^{-1/2}$.
+
+\section{Sobolev norm stability of splines}
+
+Let $q_k := \inf_j d_{j,k}$. The Sobolev norm in $H^s = W^s_2$ is defined from the Fourier transform as
+\begin{equation}
+  {\| f \|}_{H^s} = {\left(\frac{1}{2\pi} \int_{\mathbb{R}} {(1+|w|^2)}^s |\hat{f}(w)|^2 dw \right)}^{1/2}
+\end{equation}
+
+In proof of lemma $2.1$, where does $x$ come from when bounding integral over $[\xi_j, \xi_{j+1}-x]$? From 
+Cauchy-Schwarz!
+
+\begin{lem}{2.1}
+  Let $q_m > 0$. Then for any $v \in l_2(\mathbb{Z})$ and the corresponding spline
+  \begin{equation*}
+    f = \sigma_v  = \sum_{j \in \mathbb{Z}} v_j \sqrt{d_{j,m}} B_{j,m},
+  \end{equation*}
+  we have 
+  \begin{equation}
+    {\| f(.+x) - f\|}_{L_2}^2 \leq \text{const}_m \frac{|x|}{q_m} {\|v\|}_{l_2}^2 \quad \text{for} \quad |x| < q_m
+  \end{equation}
+\end{lem}
+
+\begin{lem}{2.2}
+  Let $q_m > 0$. Then for any $v \in l_2(\mathbb{Z})$ and the corresponding spline
+  \begin{equation*}
+    f = \sigma_v  = \sum_{j \in \mathbb{Z}} v_j \sqrt{d_{j,m}} B_{j,m},
+  \end{equation*}
+  we have
+  \begin{equation}
+    \int \int_{\mathbb{R}^2} \frac{|f(x)-f(y)|^2}{{|x-y|}^{1+2t}} dx dy \leq const_{m, q_m} \frac{1}{t(1-2t)} 
+    {\|v\|}_{l_2}^2
+  \end{equation}
+\end{lem}
+
+\begin{proof} Change of variable $x$ becomes $x+y$ followed by splitting of the integral on $x$ according to absolute 
+value relatively to $q$. Application of lemma 2.1 completes the proof.
+\end{proof}
+
+\begin{thm}{1}
+  Let $\mu \in \{1, \ldots, m\}$ with $q_{\mu} > 0$ and let $0 \leq t < \frac{1}{2}$. Then for any $v \in l_2$ and the 
+  corresponding spline $f = \sigma_v$, we have
+  \begin{equation}
+    D_m \|v\|_{l_2} \leq {\left\| \sum_{j \in \mathbb{Z}} v_j \sqrt{d_{j,m}} B_{j,m} \right\|}_{H^{m-\mu+t}} \leq 
+    \text{const}_{m,t,q_{\mu}}\|v\|_{l_2}
+  \end{equation}
+\end{thm}
+
+\begin{proof}
+  Only the upper bound has to be verified as for any $s \geq 0$,
+  \begin{align*}
+    {\|f\|}_{H^s}^2 &= \frac{1}{2\pi} \int {(1+|w|^2)}^s |\hat{f}(w)|^2 dw \\
+    &\geq \frac{1}{2\pi} \int |\hat{f}(w)|^2 dw \\
+    & = {\|f\|}_{L_2}^2
+  \end{align*}
+\end{proof}
+
+\section{Riesz bases of regularized splines}
+
+$X$ is minimally separated of order $m$ if $q_m > 0$. As before we define functions $B_{i,m}$ as
+\begin{equation*}
+  B_{i,m}(t) = m! {(-1)}^m h*\nu_{i,m}(t)
+\end{equation*}
+
+with $h$ a \textbf{tempered distribution} satisfying for some integer $m$
+\begin{enumerate}
+  \item $\hat{h} \in \mathcal{C}^0(\mathbb{R}^*)$
+  \item $\hat{h} \neq 0$ on $\mathbb{R}^*$
+  \item ${(jw)}^m\hat{h}(w) \in L_{\infty}(\mathbb{R})$
+  \item ${\left({(jw)}^m\hat{h}(w)\right)}^{-1} \in L_{\infty}(U_0)$ for some $U_0 \in \mathcal{V}(0)$.
+\end{enumerate}
+
+In that case let $G(w) = |w|^{2m} |\hat{h}(w)|^2$ and define the matrix $B = {(b_{i,j})}_{(i,j) \in \mathbb{Z}^2}$ by
+\begin{equation}
+  b_{i,j} = \frac{\sqrt{d_{i,m}d_{j,m}}}{2\pi} \int G(w) \hat{B}_{i,m}(w) \overline{\hat{B}_{j,m}(w)} dw
+\end{equation}
+
+Clearly $B$ is Hermitian and allows us to define the quadratic form $\langle By, y \rangle = y^* By$ for any $y \in 
+l_2^0$. In fact it is possible to extend to all of $l_2$ given that
+\begin{equation*}
+  |\langle By, y\rangle| \leq \Gamma {\|y\|}_{l_2}^2
+\end{equation*}
+
+with $\Gamma = {\|G\|}_{L_{\infty}}$.
+
+\begin{thm}{2}
+  Let $q_m > 0$. Then $\exists \gamma > 0$ such that $\forall y \in l_2$, 
+  \begin{equation}
+    \gamma {\|y\|}_{l_2}^2 \leq |\langle By, y \rangle|
+  \end{equation}
+\end{thm}
+
+\begin{proof} The proof relies on the fact that $\essinf_{|w| \leq n} G(w) := \gamma_n > 0$ for any $n > 0$. For that 
+  let $\epsilon > 0$, $\epsilon < n$ such that ${|\left({(jw)}^m\hat{h}(w)\right)|}^{-1}$ is bounded above on 
+  $[-\epsilon, \epsilon]$ by some $\gamma_{\epsilon} > 0$. Then, forall $w \in [-\epsilon, \epsilon]$,
+  \begin{equation*}
+    {|w|}^{2m} |\hat{h}(w)|^2 \geq \frac{1}{\gamma_{\epsilon}^2}
+  \end{equation*}
+
+  The function $w \to   {|w|}^{2m} |\hat{h}(w)|^2$ is continuous on $[\epsilon, n]$ and does not vanish there. Thefore 
+  there exists $\gamma_{+} > 0$ such that  ${|w|}^{2m} |\hat{h}(w)|^2 \geq \gamma_{+}$ on $[\epsilon, n]$. The same 
+  holds for some $\gamma_{-}$ on $[-n, -\epsilon]$ and $\gamma_n \geq \min \{\frac{1}{\gamma_{\epsilon}^2}, \gamma_+, 
+  \gamma_-\}$.
+\end{proof}
+
+This result can be reformulated in terms of generalized splines. For that let $\mu_j = \mu_{j,m} = m! \sqrt{d_{j,m}} 
+\nu_{j,m}$ the modified divided difference and $\phi_j = h * \mu_j$ (${(-1)}^m$, disappeared but it is not important?).  
+This convolution is well-defined given that $\mu_j$ has compact support. Then,
+
+\begin{thm}{3}
+  Suppose $q_m > 0$, assumptions on $h$ are satisfied. Let for $i,j \in \mathbb{Z}$
+  \begin{equation*}
+    b_{i,j} = {\langle \phi_i, \phi_j \rangle}_{L_2}
+  \end{equation*}
+
+  i.e $B$ is the Gramian matrix of $(\phi_i)$. Let
+  \begin{equation*}
+    V_X := \text{clos}_{L_2} \text{span} \{\phi_i, i \in \mathbb{Z}\}
+  \end{equation*}
+  
+  Then $(\phi_i)$ is a Riesz basis for $V_X$ with
+  \begin{equation}
+    \gamma {\|a\|}_{l_2}^2 \leq {\left\| \sum_{j \in \mathbb{Z}} a_j \phi_j \right\|}_{L_2}^2 \leq \Gamma 
+    {\|a\|}_{l_2}^2
+  \end{equation}
+\end{thm}
+
+
+\end{document}
+
+

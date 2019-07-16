@@ -1,0 +1,263 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage{dsfont}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\newcustomtheorem{deftn}{Definition}
+\newcustomtheorem{prop}{Proposition}
+\newcustomtheorem{remark}{Remark}
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\Tr}{Tr}
+\DeclareMathOperator*{\sinc}{sinc} 
+\DeclareMathOperator*{\supp}{supp} 
+\DeclareMathOperator*{\essinf}{ess\ inf}
+\DeclareMathOperator*{\esssup}{ess\ sup} 
+
+\begin{document}
+\title{Summary paper 14: Cardinal exponential splines: Part I}
+\author{Yoann Pradat}
+\maketitle
+
+This paper by M. Unser and T. Blu is part of a larger research program that is intent on bridging the gap between 
+continuous and discrete signal processing. In that matter, polynomial splines are of high interest although the amount 
+of research for that specific issue remains limited as polynomial splines found to be advantageous elsewhere, notably in 
+the context of high-quality interpolation. In the paper authors consider a larger class of splines, namely 
+\textbf{exponential splines} with a restriction to the case of cardinal splines as these are the most suited for signal 
+processing, lending themselves to very efficient digital filtering techniques while using concepts and algorithms 
+familiar to other communities as the “signal-and-systems” community. \\
+
+The mathematical concepts involved in the paper include Fourier analysis, generalized functions, Green's function of 
+ordinary differential operators and z-transforms. As I am not so familiar with the latter, here is a short topo on the 
+subject.
+
+\section{Preliminaries}
+
+\paragraph{Topo on Z-transform} \mbox{} \\
+
+The Z-transform converts a discrete-time signal into a complex frequency-domain representation. Can be viewed 
+discrete-time equivalent of (unilateral) Laplace transform $\mathcal{L}{f}(s) = F(s) = \int_{0}^{\infty} f(t)e^{-st}dt$.
+The (bilateral) Z-transform of a discrete time signal ${(a[k])}_k$ is
+
+\begin{equation*}
+  A(z) = \sum_{k=-\infty}^{\infty} a[k]z^{-k}
+\end{equation*}
+
+The region of convergence (ROC) is the set of points where the summation converges i.e
+\begin{equation*}
+  \text{ROC} = \left\{z: \left| \sum_{k=-\infty}^{\infty} a[k]z^{-k} \right| < \infty \right\}
+\end{equation*}
+
+The inverse Z-transform is 
+
+\begin{equation*}
+  a[k] = \frac{1}{2\pi j} \int_{C} A(z)z^{k-1}dz
+\end{equation*}
+
+with $C$ a counterclockwise path encircling the origin and entirely in the ROC\@. In case the ROC is causal, $C$ must 
+enclose all poles of $A(z)$. In case where $C$ is the unit circle, the inverse Z-transform simplifies into the inverse 
+discrete-time Fourier transform i.e
+
+\begin{equation*}
+  a[k] = \frac{1}{2\pi}\int_{0}^{2\pi} A(e^{jw})e^{jwk} dw
+\end{equation*}
+
+\underline{Examples}
+\begin{enumerate}
+  \item $a[k] = \frac{1}{2^k}$ for $k \in \mathbb{Z}$. Then ROC$=\emptyset$.
+  \item $a[k] = \frac{1}{2^k}$ for $k \in \mathbb{Z}_{+}$. Then $\displaystyle \sum_{k=0}^{\infty} a[k]z^{-k} = 
+    \frac{1}{1-\frac{1}{2z}}$
+    and ROC=$\{z: |z| > \frac{1}{2}\}$. The ROC is causal.
+  \item $a[k] = \frac{1}{2^k}$ for $k \in \mathbb{Z}_{-}$. Then $\displaystyle \sum_{k=0}^{\infty} {a[k]}^{-1}z^{k} = 
+    \frac{1}{1-\frac{1}{2z}}$
+    and ROC=$\{z: |z| < \frac{1}{2}\}$. The ROC is anti-causal.
+\end{enumerate}
+
+In case the ROC includes neither $z=0$ nor $|z| = \infty$, we say that the system is mixed-causality. The Z-transform of 
+$\delta$ is 1, that of $a[k-k_0]$ is $A(z)z^{-k_0}$. A lot more properties can be found on wiki's page. 
+
+\paragraph{Preliminaries of article} \mbox{} \\
+
+Generic differential operator of order $N$ 
+
+\begin{equation*}
+  L{f} = D^N{f} + a_{N-1}D^{N-1}{f} + \cdots + a_0 I{f}
+\end{equation*}
+
+$L = L_{\alpha}$ with $\alpha$ the roots of the characteristic polynomial. The “Fourier transform” of the operator 
+$L_{\alpha}$ is
+\begin{equation*}
+  L_{\alpha}(jw) = \prod_{n=1}^N (jw-\alpha_n)
+\end{equation*}
+
+Meaning that $\widehat{L_{\alpha}f}(w) = L_{\alpha}(jw) \hat{f}(w)$. Let's try to clarify that. Let $L$ be a continuous 
+LSI operator from $\mathcal{S} \to \mathcal{S}'$. From Schwartz kernel theorem we know there exists a (generalized) 
+function $h_L \in \mathcal{S}'$ such that
+
+\begin{equation*}
+  L{f} = h_L*f \quad \text{meaning} \quad L{f}(t) = \langle f(t-.), h_L \rangle
+\end{equation*}
+
+$h_L$ is related to $L$ by $h_L = L{\delta}$. In case $L=D$ for instance, $h_L = D{\delta}$ i.e it is the distribution 
+that associates to any test function $\psi$ the scalar $-\psi'(0)$. We can now use the properties of the Fourier 
+transform directly on this convolution as follows
+
+\begin{equation*}
+  \widehat{L{f}}(w) = \hat{h}_L(w) \hat{f}(w)
+\end{equation*}
+
+Are we sure though that $\hat{h}_L(w)$ can always be interpreted as a usual function? In case $L=D$ note for instance 
+that $\hat{h}_L$ is the distribution that associates to each $\psi$ the quantity $\int jw \psi(w)dw = -\hat{\psi}'(0)$ 
+that is $\hat{h}_L$ can be intepreted as the conventional function $\hat{h}_L(w)= jw$. \\
+
+\textbf{Why is the nullspace of $L_{\alpha}$ of dimension $N$}. For that note the following Cauchy theorem 
+
+\begin{thm}{Cauchy}
+  Let $E$ a finite-dimensional vector space on $\mathbb{K}$ real or complex field. The differential 
+  system
+  \begin{equation*}
+    X'(t) = A(t) X(t) + B(t)
+  \end{equation*}
+
+  with $A \in \mathcal{C}(I, \mathcal{L}(E)), B \in \mathcal{C}(I, E)$ is such that
+  \begin{enumerate}
+    \item for any $(t_0, X_0) \in I\times E$, $\exists$! solution to the system that satisfies $X(t_0) = X_0$.
+    \item for any $t_0 \in I$, the map $\phi: X \in S_0 \mapsto X(t_0) \in E$ is an isormorphism between 
+      $\mathbb{K}$-vector spaces.
+  \end{enumerate}
+\end{thm}
+
+\begin{align*}
+  y \in S &\iff y \ \text{solution to} \ y^{(N)} + a_{N-1} y^{(N-1)} + \cdots + a_0 y =0 \\
+  &\iff Y = \begin{bmatrix} y \\ \vdots \\ y^{(N-1)} \end{bmatrix} \ \text{solution to} \ Y' = AY
+\end{align*}
+
+with $A = \begin{bmatrix} 0 & 1 & 0 & \cdots & 0 \\
+  0 & 0 & 1 & \cdots & 0 \\
+  \vdots & \vdots & \ddots & \ddots & \vdots \\
+  -a_{N-1} & -a_{N-2} & -a_{N-3} & \cdots & -a_0  \\
+\end{bmatrix}$
+
+In link with the formulation in the theorem, $A \in \mathcal{C}(\mathbb{R}, \mathcal{L}(\mathbb{C}^N))$ and therefore 
+the space of solutions to $Y'=AY$, $T$, is of dimension $N$. However $S$ and $T$ are isomorphic given the equivalence 
+above, hence $\dim{S} = N$.
+
+\begin{deftn}{1}
+  An exponential spline with parameter $\alpha$ and knots $-\infty < \cdots < t_{k} < t_{k+1} < \cdots < \infty$ is a 
+  function $s(t)$ such that
+  \begin{equation*}
+    L_{\alpha}\{s(t)\} = \sum_{k} a_k \delta(t-t_k)
+  \end{equation*}
+\end{deftn}
+
+The space spanned by exponential polynomials is shift-invariance. Specifically, for any shift $\tau$, we have
+\begin{equation*}
+  {(t-\tau)}^n e^{\alpha(t-\tau)} = \sum_{m=1}^n a_{\tau, m} t^m e^{\alpha t}
+\end{equation*}
+
+\section{Cardinal exponential splines}
+
+Exponential $B$-splines are localized, shortest-possible version of Green's functions that generate the exponential 
+splines. The first-order $B$-splines with parameter $\alpha$ is 
+
+\begin{equation}
+  \beta_{\alpha}(t) = \rho_{\alpha}(t) - e^{\alpha} \rho_{\alpha}(t-1)
+\end{equation}
+
+$B$-splines are always well-defined and compactly supported. Changing the sign of $\alpha$ has the effect
+\begin{equation*}
+  \beta_{-\alpha}(t) = \left( \prod_{i=1}^N e^{-\alpha_i} \right) \beta_{\alpha}(-t+N)
+\end{equation*}
+
+In case component of $\alpha$ can be grouped into opposite signs pair, $\beta_{\alpha}$ is symmetric wrt its center 
+line. 
+
+\begin{thm}{1}
+  The set of functions ${\{\beta_{\alpha}(t-k)\}}_{k \in \mathbb{Z}}$ provides a Riesz-basis of $V_{\alpha}$ iif 
+  $\alpha_n - \alpha_m \not\in 2\pi\mathbb{Z}$ for all pairs of distinct, purely imaginary roots.
+\end{thm}
+
+There are two important aspects to this theorem: completeness and stability. Formally we can reconstruction the Green 
+function by inverting the relation $\beta_{\alpha} = \Delta_{\alpha}\{\rho_{\alpha}\}$ leading to 
+
+\begin{equation*}
+  \rho_{\alpha}(t) = \sum_{k=0}^{\infty} p_{\alpha}[k]\beta_{\alpha}(t-k)
+\end{equation*}
+
+with $p_{\alpha}[k]$ explicitly computable. In the first-order case extended to the negative domain we have
+
+\begin{equation*}
+  e^{\alpha t} = \sum_{k=-\infty}^{\infty} e^{\alpha k}\beta_{\alpha}(t-k)
+\end{equation*}
+
+\begin{prop}{2}
+  Let $\varphi_{\alpha}$ a function that reproduces exponential polynomials in $\mathcal{N}_{(\alpha, \ldots, \alpha)}$.  
+  Then for any function $\varphi$ such that $\int \varphi(t)e^{-\alpha t}dt \neq 0$, $\varphi * \varphi_{\alpha}$ also 
+  reproduce these exponential polynomials.
+\end{prop}
+
+\begin{proof} (Theorem 1)
+  The completeness is a consequence of the reproduction properties discussed above. The stability result is more tricky.  
+  The upper Riesz bound is easily obtained for compactly supported propototype as we have
+  \begin{align*}
+    \sum_k |\beta_{\alpha}(w+2k\pi)|^2 &= \sum_k \langle \beta_{\alpha}, \beta_{\alpha}(.-k) \rangle e^{-jwk} \\
+    & \leq \sum_{k \in \mathbb{Z}}  |\langle \beta_{\alpha}, \beta_{\alpha}(.-k) \rangle| \\
+    & < \infty
+  \end{align*}
+
+  More difficult is to prove the existence of a lower Riesz bound. Since $A_{\alpha}(w)$ is continuous and 
+  $2\pi$-periodic, we have a lower Riesz bound if and only if $A_{\alpha}(w) > 0$ on $[0,2\pi]$ (in that particular case 
+  our vector space is generated by a single prototype which makes the Gram matrix a scalar) that is $\bigcap_{k \in 
+  \mathbb{Z}} Z_{k, \alpha} = \emptyset$. The author says when $\Re(\alpha_n)=0$ there is always one  $Z_{k, \alpha}$ 
+  that is empty \textbf{which leads to an empty intersection}??
+\end{proof}
+
+\begin{prop}{3}
+  The upper Riesz bound can be estimated by 
+  \begin{equation*}
+    \sup_{w \in \mathbb{R}} |\hat{\beta}_{\alpha}(w)| \leq R_{\alpha} \leq \frac{M_{\alpha}}{\sqrt{\max_{1\leq n \leq N} 
+    M_{-|\alpha_n|}}}
+  \end{equation*}
+\end{prop}
+
+\begin{prop}{4}
+  If the roots are such that $\Im{\alpha_n} - w_0 \in (-\pi, \pi)$ for all $1\leq n \leq N$, then we have the following 
+  lower Riesz bound estimate
+  \begin{equation*}
+    r_{\alpha} \geq M_{\alpha} \prod_{n=1}^N \frac{2\cos(\frac{\Im{\alpha_n}-w_0}{2})}{\pi + |\Im{\alpha_n}-w_0|}
+  \end{equation*}
+\end{prop}
+
+\begin{thm}{2}
+  Let $f \in L_2$ be a function such that $D^N f \in L_2$ and let $P_T f$ denote its orthogonal projection onto the 
+  spline space $V_{\alpha, T}$ at scale $T$. Then,
+  \begin{equation*}
+    \|f - P_T f\|_{L_2} = C_N T^N \|L_{\alpha}f \|_{L_2} \ \text{as} \ T \to 0
+  \end{equation*}
+\end{thm}
+
+\end{document}
+
+
