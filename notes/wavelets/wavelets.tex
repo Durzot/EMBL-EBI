@@ -1,0 +1,214 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{stmaryrd}
+\usepackage{breqn}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\newcustomtheorem{deftn}{Definition}
+\newcustomtheorem{prop}{Proposition}
+\newcustomtheorem{remark}{Remark}
+
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\essinf}{ess\ inf}
+\DeclareMathOperator*{\esssup}{ess\ sup} 
+
+\renewcommand{\thesection}{\Roman{section}} 
+
+\begin{document}
+\title{Hermite Spline wavelets}
+\author{Yoann Pradat}
+\maketitle
+\tableofcontents
+
+\section{A cardinal spline approach to wavelets}
+
+\underline{Notations}
+\begin{itemize}
+  \item $N_m(t) = m[0, \ldots, m]{(\cdot-t)}_+^{m-1} = N_1 * \ldots * N_1(t)$
+  \item $\phi \in L^2$, $\phi_{kj}(x) := \phi(2^k x-j)$
+  \item $\psi_{kj}(x) := \psi(2^k x-j)$
+  \item $V_k = \text{Clos}_{L^2} \text{span} {\{\phi_{kj}\}}_{j\in \mathbb{Z}}$
+\end{itemize}
+
+It is well-kwnon that the $m^{th}$ order B-spline $N_m$ with integer knots generate a mulitresolution analysis with 
+$m^{th}$ order of approximation (references?). This paper achieves the following
+\begin{enumerate}
+  \item $\psi(x) = L_{2m}^{(m)}(2x-1)$ generates the orthogonal wavelet spaces $W_k$.
+  \item Gives exact formulation of $N_{m}(2\cdot - 1)$ in terms of $N_{m}$ and $L_{2m}^{(m)}$.
+\end{enumerate}
+
+An \emph{unconditional} basis is (Mallat, \underline{Multiresolution Approximations and Wavelet orthonormal bases of 
+$L^2(\mathbb{R})$}) a sequence of functions ${(e_{\lambda})}_{\lambda \in \Lambda}$ such that for any sequence of 
+numbers $\alpha := {(\alpha_{\lambda})}_{\lambda \in \Lambda}$
+\begin{equation*}
+  A \|\alpha\|_{l^2} \leq {\left\|\sum_{\lambda \in \Lambda} \alpha_{\lambda}e_{\lambda} \right\|}_{L^2} \leq B 
+  \|\alpha\|_{l^2}
+\end{equation*}
+
+$\psi$ is a basic wavelet relative to $\phi$ if $W_0 = \text{Clos}_{L^2} \text{span} {\{\psi(\cdot-j)\}}_{j}$ is the 
+orthogonal complement to $V_0$ in $V_1$. \textbf{Let us assume} that $V_1 = V_0 \bigoplus W_0$. Let's prove that the 
+following holds then
+
+\begin{prop}{1}
+  \begin{enumerate}
+    \item $V_{k+1} = V_k \bigoplus W_k$
+    \item $W_k \perp W_j$ if $j\neq k$
+    \item $L^2 = \bigoplus_{k} W_k$ 
+  \end{enumerate}
+\end{prop}
+
+\begin{proof}
+  As $V_1 = V_0 \bigoplus W_0$, there exists sequences $(a_i), (\tilde{a}_i), (b_i), (\tilde{b}_i)$ such that
+  \begin{align*}
+    \phi(2x) &= \sum_{i} a_i \phi(x-i) + b_i \psi(x-i) \\
+    \phi(2x-1) &= \sum_{i} \tilde{a}_i \phi(x-i) + \tilde{b}_i \psi(x-i)
+  \end{align*}
+  Defining $(\alpha_i)$ and $(\beta_i)$ so that $\begin{dcases} \alpha_{2i} &= a_{i} \\ \alpha_{2i-1} &= \tilde{a}_i 
+  \end{dcases}$ we get that for any integer $l$
+  \begin{equation}
+    \phi(2x-l) = \sum_{i} \alpha_{2i-l} \phi(x-i) + \beta_{2i-l} \psi(x-i)
+  \end{equation}
+  Changing $x$ in $2x$ leads to 
+  \begin{equation}
+    \phi(4x-l) = \sum_{i} \alpha_{2i-l} \phi(2x-i) + \beta_{2i-l} \psi(2x-i)
+  \end{equation}
+  that is $V_2 \subseteq V_1 + W_1$. \\
+
+  As $V_0 \subset V_1$, there exists $(\gamma_i)$ such that 
+  \begin{equation*}
+    \phi(x) = \sum_i \gamma_i \phi(2x-i)
+  \end{equation*}
+  so that 
+  \begin{equation*}
+    \phi(2x-l) = \sum_i \gamma_{i-2l} \phi(4x-i)
+  \end{equation*}
+  i.e $V_1 \subset V_2$. Similarly $W_1 \subset V_2$ hence $V_1 + W_1 \subseteq V_2$. \\
+
+  As for the orthogonality notice that $\int \phi(x-k) \overline{\psi(x-l)} dx = 2 \int \phi(2x-k) \overline{\psi(2x-l)} 
+dx$ so that $V_0 \perp W_0 \implies V_1 \perp W_1$. Eventually $V_1 \bigoplus W_1= V_2$. The reasoning extends to any 
+integer k.  \end{proof}
+
+Standard method to determine $\tilde{\psi}$ from $\phi$ is: orthormalize $\{\phi_{0j}\}$ into $\{\tilde{\phi}_{0j}\}$, 
+find two-scale relation of $\tilde{\phi}_0$ in terms of $\{\tilde{\phi}_{1j}\}$, alternate the signs cleverly in the 
+sequence to form $\tilde{\psi}_{0}$. See Mallat's paper for linear and cubic spline i.e $m=2$ and $m=4$. \\
+
+In the paper authors do not impose orthogonality of $\{\psi_{0j}\}$ and instead focus on representing $\phi_{1j}$ in 
+terms of $\{\phi_{0j}\}$ and $\{\psi_{0j}\}$ with fast decaying sequences. 
+
+\subsection{Main results}
+
+Note that the $m^{th}$ order B-spline $N_m$ is such that 
+
+\begin{align}
+  N_m(t) & = \sum_{k=0}^m {(-1)}^{m-k} \binom{m}{k} {(k-t)}_+^{m-1} \frac{1}{(m-1)!} \\
+  &= \sum_{k=0}^m {(-1)}^{k} \binom{m}{k} {(t-k)}_+^{m-1} \frac{1}{(m-1)!} \\
+\end{align}
+
+These two writing are equivalent for the reason that ${(t-k)}_+^{m-1} = {(t-k)}^{m-1} + {(-1)}^m {(k-t)}_+^{m-1}$.  
+Notice that $D^m \frac{{(t-k)}_+^{m-1}}{(m-1)!} = \delta_k$ in the sense of distribution hence 
+
+\begin{equation*}
+  D^m N_m = \sum_{k=0}^m {(-1)}^{k} \binom{m}{k} \delta_k \\
+\end{equation*}
+
+$\phi = N_m$ generates a multiresolution analysis. The fundamental splines $L_{2m}$ is an element of $\mathcal{S}_{2m}$ 
+hence the decomposition
+
+\begin{equation}\label{eq:decomposition}
+  L_{2m}(t) = \sum_{i} \alpha_i N_{2m}(t+m-j)
+\end{equation}
+
+where the $+m$ in the B-spline is equivalent to considering a decomposition in the central B-splines $M_{2m}$. Using the 
+$z$-transforms $A(z) = \sum_i \alpha_i z^i$, $B(z) = \sum_{i=-(m-1)}^{m-1} N_{2m}(i+m)z^i$, equation 
+(\ref{eq:decomposition}) becomes
+
+\begin{equation}
+  A(z) B(z) =1
+\end{equation}
+
+As detailed by Schoenberg in constructing $L_{2m}$, we have $B(z) = \frac{\Pi_{2m-1}(z)}{(2m-1)!z^{m-1}}$ with 
+$\Pi_{2m}$ the Euler-Froebenius polynomial of order $2m-1$. The basice wavelet $\psi_m$ related to $\phi_m$ is 
+
+\begin{equation}
+  \psi_m(t) = L_{2m}^{(m)}(2t-1)
+\end{equation}
+
+\textbf{Supposedly}, we have the 2-scale relation
+
+\begin{equation}
+    N_m(t) = \sum_{j=0}^m 2^{-(m-1)} \binom{m}{j} N_m(2t-j)
+\end{equation}
+
+proving that $V_0 \subset V_1$. As $L_{2m} \in \mathcal{S}_{2m}$, $L_{2m}^{(m)} \in \mathcal{S}_m$ so that $W_0 \subset 
+V_1$. Property $W_k \subset V_{k+1}$ is a consequence of lemma 1. It remains to show that $V_1 = V_0 + W_0$ i.e find 
+$(a_n)$, $(b_n)$ such that
+
+\begin{equation*}
+  \phi(2t-l) = \sum_n a_{2n-l} \phi(t-l) + b_{2n-l} \psi(t-l)
+\end{equation*}
+
+$(a_n)$ and $(b_n)$ are the coefficients of the Laurent series $G(z)$, $H(z)$.
+
+\section{Goodman's papers}
+
+\underline{Notations}
+\begin{itemize}
+  \item $\zeta_{2r-1, r}(\mathbb{Z}) = \$_{2r, \mathbb{Z}_r}$ the set of cardinal splines of order $2r$ with knots of 
+    multiplicity $r$
+  \item $V_0 = \zeta_{2r-1, r}(\mathbb{Z}) \cap L_2$
+  \item $V_1 = \zeta_{2r-1, r}(\frac{1}{2}\mathbb{Z}) \cap L_2$
+\end{itemize}
+
+In the introductory part of its 1994 article \emph{Interpolatory Hermite Spline wavelets}, Goodman discussed the 
+B-splines introduced by Schoenberg and Sharma for the problem of Hermite interpolation. Schoenberg and Sharma proposed 
+as generators for the solution of Hermite interpolation problem the functions $L_s \in \zeta_{2r-1, r-1}(\mathbb{Z})$, 
+$s=0, \ldots, r-1$, with support in $[-1,1]$ satisfying for all integers $i$
+
+\begin{equation*}
+  L_s^{(j)}(i) = \delta_{sj} \delta_{i}
+\end{equation*}
+
+These functions are splines of order $2r$ and are symmetric ($s$ even) or antisymmetric ($s$ odd) depending on the 
+parity of $s$. \\
+
+Goodman considers in his paper ${\{B_s = L_s(.-1)\}}_{0\leq s\leq r-1}$, a causal version of these B-splines with 
+support in $[0,2]$. He also introduces $N_s$ the $B$-spline in $\zeta_{2r-1,r}(\mathbb{Z})$ also supported in $[0,2]$ 
+with knots at 0, 1 and 2 of multiplicity $r-s, r, s+1$ for $s=0, \ldots, r-1$ ($N_s \propto [0_{r-s}, 1_{r}, 
+2_{s+1}]{(.-t)}_+^{(2r-1)}$).  He claims that $B_0, \ldots, B_{r-1}$ and $N_0, \ldots, N_{r-1}$ are equivalent bases 
+while the latter (with all integer shifts) is a Riesz basis for $V_0$. This would have the consequence that 
+${\{B_s(.-i)\}}_{0\leq s\leq r-1, i\in\mathbb{Z}}$ is also a Riesz basis for $V_0$, a result that is hard to prove 
+otherwise in the general case. Having a Riesz basis for $V_0$ makes it a closed subspace of the Hilbert space $L_2$ and 
+therefore a Hilbert space itself. \\ 
+
+Goodman makes reference to another of his articles published in 1993 when stating that claim, the article \emph{Wavelets 
+of multiplicity $r$}.
+
+
+
+\end{document}
+
+

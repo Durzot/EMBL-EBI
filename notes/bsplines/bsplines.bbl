@@ -1,0 +1,78 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global}
+  \entry{Bo01}{book}{}
+    \name{author}{1}{}{%
+      {{hash=dBC}{%
+         prefix={de},
+         prefixi={d\bibinitperiod},
+         family={Boor},
+         familyi={B\bibinitperiod},
+         given={Carl},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Springer}%
+    }
+    \strng{namehash}{BCd1}
+    \strng{fullhash}{BCd1}
+    \field{shorthand}{Bo01}
+    \field{label}{Bo01}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{edition}{Revised edition}
+    \field{title}{A practical guide to splines}
+    \field{year}{2001}
+  \endentry
+
+  \entry{CS66}{article}{}
+    \name{author}{2}{}{%
+      {{hash=CH}{%
+         family={Curry},
+         familyi={C\bibinitperiod},
+         given={H.B},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=SI}{%
+         family={Schoenberg},
+         familyi={S\bibinitperiod},
+         given={I.J},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CHSI1}
+    \strng{fullhash}{CHSI1}
+    \field{shorthand}{CS66}
+    \field{label}{CS66}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{pages}{71\bibrangedash 107}
+    \field{title}{On Pólya frequency functions IV: the fundamental spline
+  functions and their limits}
+    \field{volume}{17}
+    \field{journaltitle}{J. Analyse Math.}
+    \field{year}{1966}
+  \endentry
+\enddatalist
+\endinput

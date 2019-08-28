@@ -1,0 +1,368 @@
+\documentclass[
+11pt, % The default document font size, options: 10pt, 11pt, 12pt
+%oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
+openany, % Deactive chapter starting on odd pages
+english, % ngerman for German
+singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
+%draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
+%nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
+%liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
+%toctotoc, % Uncomment to add the main table of contents to the table of contents
+%parskip, % Uncomment to add space between paragraphs
+%nohyperref, % Uncomment to not load the hyperref package
+headsepline, % Uncomment to get a line under the header
+%chapterinoneline, % Uncomment to place the chapter title next to the number on one line
+%consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
+]{MastersDoctoralThesis} % The class file specifying the document structure
+
+\newcommand\hmmax{0}
+\newcommand\bmmax{0}
+
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc} % Required for encoding international characters
+\usepackage{mathpazo} % Palatino font
+\usepackage{lmodern} % Enhancement over Computer Modern fonts
+
+\usepackage{amsmath, mathtools, amsthm, amssymb} % amsthm contains the proof environment
+\usepackage{amsfonts} % for the \mathfrak command
+\usepackage{mathrsfs} % for the \mathscr command
+\usepackage{stmaryrd} % for \llbracket
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
+
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{bm}
+\usepackage{indentfirst}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemmafig:fund-r2-m2}
+\newtheorem{cor}{Corollary}
+\newtheorem{deftn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{con}{Conjecture}
+
+\numberwithin{thm}{chapter}
+\numberwithin{lem}{chapter}
+\numberwithin{cor}{chapter}
+\numberwithin{deftn}{chapter}
+\numberwithin{prop}{chapter}
+\numberwithin{remark}{chapter}
+\numberwithin{example}{chapter}
+\numberwithin{con}{chapter}
+
+\DeclareMathOperator*{\argmin}{argmin} \DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\essinf}{ess\ inf}
+\DeclareMathOperator*{\esssup}{ess\ sup} 
+\DeclareMathOperator*{\dist}{dist} 
+\DeclareMathOperator*{\sinc}{sinc}
+\DeclareMathOperator*{\Span}{span}
+\DeclareMathOperator*{\diag}{diag}
+\DeclareMathOperator*{\com}{com}
+
+
+\newcommand{\matr}[1]{\mathbf{#1}} \newcommand{\vertiii}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert 
+#1\right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+
+\newenvironment{scriptaligned}[1][c]
+ {\,\hbox\bgroup
+  \fontsize{\sf@size}{\dimexpr\sf@size pt+1pt}\selectfont
+  $\!\aligned[#1]}
+ {\endaligned$\egroup}
+\makeatother
+
+\usepackage{scalerel,stackengine}
+\stackMath
+\newcommand\reallywidehat[1]{%
+\savestack{\tmpbox}{\stretchto{%
+  \scaleto{%
+    \scalerel*[\widthof{\ensuremath{#1}}]{\kern.1pt\mathchar"0362\kern.1pt}%
+    {\rule{0ex}{\textheight}}%WIDTH-LIMITED CIRCUMFLEX
+  }{\textheight}% 
+}{2.4ex}}%
+\stackon[-6.9pt]{#1}{\tmpbox}%
+}
+\parskip 1ex
+
+% Set the path for images
+\graphicspath{{../images/}}
+
+\usepackage[backend=bibtex,  sorting=nyt, isbn=false, url=false, doi=false]{biblatex}
+\usepackage[autostyle=true]{csquotes} 
+% Required to generate language-dependent quotes in the bibliography
+\usepackage{filecontents}
+
+\begin{filecontents}{xmpl.bib}
+@article{Me02,
+  shorthand = {Me02},
+  author = {Meijering, E.},
+  title = {A Chronology of Interpolation: From Ancient Astronomy to Modern and Signal Image processing},
+  year = {2002},
+  journal = {Proceedings of the IEEE},
+  volume = {90},
+  number = {3},
+  pages = {319-342},
+}
+
+@book{Bo01,
+  shorthand = {Bo01},
+  author = {De Boor, C.},
+  title = {A practical guide to splines},
+  year = {2001},
+  publisher = {Springer},
+  edition = {Revised edition}
+}
+
+@article{CS66,
+  shorthand = {CS66},
+  author = {Curry, H.B. and Schoenberg, I.J.},
+  title = {On Pólya frequency functions IV: the fundamental spline functions and their limits},
+  year = {1966},
+  journal = {J. Analyse Math.},
+  volume = {17},
+  pages = {71-107},
+}
+
+@article{Sch46,
+  shorthand = {Sch46},
+  author = {Schoenberg, I.J.},
+  title = {Contributions to the problem of approximation of equidistant data by analytic functions.},
+  year = {1946},
+  journal = {Quart. Appl. Math.},
+  volume = {IV},
+  number = {1},
+  pages = {45-99},
+}
+
+@article{Sch69,
+  shorthand = {Sch69},
+  author = {Schoenberg, I.J.},
+  title = {Cardinal interpolation and spline functions},
+  year = {1969},
+  journal = {J. Approx. Theory},
+  volume = {2},
+  pages = {167-206},
+}
+
+@article{Sch72a,
+  shorthand = {Sch72a},
+  author = {Schoenberg, I.J.},
+  title = {Cardinal interpolation and spline functions II: interpolation of data of power growth},
+  year = {1972},
+  journal = {J. Approx. Theory},
+  volume = {6},
+  pages = {404-420},
+}
+
+@article{LS73,
+  shorthand = {LS73},
+  author = {Lipow, P.R. and Schoenberg, I.J.},
+  title = {Cardinal Interpolation and Spline Functions. III\@. Cardinal Hermite Interpolation},
+  year = {1973},
+  journal = {Linear Algebra and its Applications},
+  volume = {6},
+  pages = {273-304},
+}
+
+@article{Sch72b,
+  shorthand = {Sch72b},
+  author = {Schoenberg, I.J.},
+  title = {Cardinal interpolation and spline functions IV: the exponential Euler splines},
+  year = {1972},
+  journal = {International series of numerical mathematics},
+  volume = {20},
+  pages = {382-404},
+}
+
+@article{SS73,
+  shorthand = {SS73},
+  author = {Schoenberg, I.J. and Sharma, A.},
+  title = {Cardinal Interpolation and Spline Functions. V\@. The B-splines for cardinal Hermite interpolation},
+  year = {1973},
+  journal = {Linear Algebra and its Applications},
+  volume = {7},
+  number = {1},
+  pages = {1-42},
+}
+
+@article{Sch73,
+  shorthand = {Sch73},
+  author = {Schoenberg, I.J.},
+  title = {Cardinal Spline Interpolation},
+  year = {1973},
+  journal = {CBMS-NSF Regional conference series in applied mathematics},
+}
+
+@article{Her78,
+  shorthand = {Her78},
+  author = {Hermite, C.},
+  title = {Sur la formule d'interpolation de Lagrange},
+  year = {1878},
+  journal = {Journal für die Reine und Angewandte Mathematik},
+  volume = {84},
+  number = {1},
+  pages = {70-79}
+}
+
+@article{Lee73,
+  shorthand = {Lee73},
+  author = {Lee, S. L.},
+  title = {B-splines for cardinal Hermite interpolation},
+  year = {1975},
+  journal = {Linear Algebra and its Applications},
+  volume = {12},
+  pages = {269-280}
+}
+
+@article{Lee76a,
+  shorthand = {Lee76a},
+  author = {Lee, S. L.},
+  title = {Exponential Hermite-Euler splines},
+  year = {1976}  journal = {J. Approx. Theory.},
+  volume = {18},
+  pages = {205-212}
+}
+
+@article{Lee76b,
+  shorthand = {Lee76b},
+  author = {Lee, S. L.},
+  title = {Fourier transforms of B-splines and fundamental splines for cardinal Hermite interpolation},
+  year = {1976},
+  journal = {Proceedings of the American mathematical society},
+  volume = {57},
+  pages = {291-296}
+}
+
+@article{LeeSh76,
+  shorthand = {LeeSh76},
+  author = {Lee, S. L. and Sharma, A.},
+  title = {Cardinal Lacunary interpolation by g-splines. I. The characteristic polynomial},
+  year = {1976},
+  journal = {J. Approx. Theory},
+  volume = {16},
+  pages = {85-96}
+}
+
+@article{FAUU19,
+  shorthand = {FAUU19},
+  author = {Fageot, Julien and Aziznejad, Shayan and Unser, Michael and Uhlmann, Virginie},
+  title = {Support and approximation properties of Hermite splines},
+  year = {2019}
+}
+
+@article{AldUns94,
+  shorthand = {AldUns94},
+  author = {Aldroubi, A. and Unser, M.},
+  title = {Sampling procedures in function spaces and asymptotic equivalence with Shannon's sampling theory},
+  year = {1994},
+  journal = {Numer. Funct. Anal. And Optimiz.},
+  volume = {15},
+  pages = {1-21}
+}
+
+@article{GST93,
+  shorthand = {GST93},
+  author = {Goodman, T.N.T and Lee, S.L and Tang, W.S},
+  title = {Wavelets in wandering subspaces},
+  year = {1993},
+  journal = {Transactions of the American mathematical society},
+  volume = {338},
+  pages = {639-654}
+}
+
+\end{filecontents}
+
+\addbibresource{zot.bib} % The filename of the bibliography
+
+\geometry{paper=a4paper, % Change to letterpaper for US letter
+  inner=2.5cm, % Inner margin
+  outer=2.5cm, % Outer margin
+  top=1.5cm, % Top margin
+  bottom=1.5cm, % Bottom margin
+  %showframe, % Uncomment to show how the type block is set on the page
+}
+
+%----------------------------------------------------------------------------------------
+%	THESIS INFORMATION
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\supervisor{Virginie \textsc{Uhlmann}}
+\thesistitle{A unified view of Hermite splines}
+\degree{Master}
+\author{Yoann \textsc{Pradat}}
+
+\subject{Applied mathematics} %  Print it with \subjectname
+\university{\href{http://www.mines-paristech.fr}{Mines ParisTech}} % University's name and URL, print it with \univname%
+\department{\href{https://www.ebi.ac.uk}{European Bioinformatics Institute}} % Department, print with \deptname
+\group{\href{https://www.ebi.ac.uk/about/jobs/career-profiles/virginie-uhlmann-research-group-leader}{Uhlmann Lab}} 
+
+\begin{titlepage}
+  \begin{center}
+
+  \vspace*{.06\textheight}
+  {\scshape\LARGE \univname\par}\vspace{1.5cm} % University name
+  \textsc{\Large Master's Thesis}\\[0.5cm] % Thesis type
+
+  \vspace*{.06\textheight}
+  \HRule\\[0.4cm] % Horizontal line
+  {\LARGE \bfseries \ttitle\par}\vspace{0.4cm} % Thesis title
+  \HRule\\[1.5cm] % Horizontal line
+   
+%  \begin{minipage}[t]{0.4\textwidth}
+%    \begin{flushleft} \large
+%      \emph{Author:}\\
+%      \authorname% Author name
+%    \end{flushleft}
+%  \end{minipage}
+%  \begin{minipage}[t]{0.4\textwidth}
+%    \begin{flushright} \large
+%      \emph{Supervisor:} \\
+%      \supname% Supervisor name
+%    \end{flushright}
+%  \end{minipage}\\[2cm]
+ 
+  \vfill
+  \large \textit{A thesis submitted by\\ Yoann \textsc{Pradat}\\under the supervision of PhD. \\ \supname}\\[0.3cm]
+
+  \vspace*{0.1\textwidth}
+  \groupname\\\deptname\\[2cm] % Research group name and department name
+   
+  \vfill
+  \includegraphics[width=0.25\textwidth]{EBI-logo}
+  \hspace*{0.1\textwidth}
+  \includegraphics[width=0.2\textwidth]{Mines-logo}\\
+
+  \vspace*{.06\textheight}
+  {\large \today}\\[4cm] % Date
+   
+  \vfill
+  \end{center}
+\end{titlepage}
+
+\tableofcontents
+
+% Include first chapter 
+\input{chapter1}
+
+% Include second chapter
+\include{chapter2}
+
+% Include third chapter
+\include{chapter3}
+
+% Include annex A
+\appendix
+\include{appendixA}
+
+% Include annex B
+\include{appendixB}
+
+% Include all documents in the bibliography
+\nocite{*}
+\printbibliography%
+
+\end{document}

@@ -1,0 +1,194 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{dsfont}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+\newtheorem{deftn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\essinf}{ess\ inf}
+\DeclareMathOperator*{\esssup}{ess\ sup} 
+
+\renewcommand{\thesection}{\Roman{section}}
+
+\usepackage[url=true,isbn=false, maxbibnames=99,backend=bibtex]{biblatex}
+\usepackage{csquotes}
+\usepackage{filecontents}
+
+\begin{filecontents}{xmpl.bib}
+@book{Bo01,
+  shorthand = {Bo01},
+  author = {Carl de Boor},
+  title = {A practical guide to splines},
+  year = {2001},
+  publisher = {Springer},
+  edition = {Revised edition}
+}
+
+@article{CS66,
+  shorthand = {CS66},
+  author = {Curry, H.B and Schoenberg, I.J},
+  title = {On Pólya frequency functions IV: the fundamental spline functions and their limits},
+  year = {1966},
+  journal = {J. Analyse Math.},
+  volume = {17},
+  pages = {71-107},
+}
+\end{filecontents}
+
+\addbibresource{xmpl.bib}
+
+\begin{document}
+\title{B-splines}
+\author{Yoann Pradat}
+\maketitle
+
+\section{B-splines}
+\subsection{Motivation}
+
+In the problem of interpolating data, may it be values or derivatives of some unknown function, the intuitive method 
+consisting in interpolating all the data at once is prone to large errors when the data exceeds a few points. This is 
+the consequence of resorting to high order polynomials which tend to oscillate a lot when forced to perfectly 
+interpolate the data. A \emph{natural} way of approaching problems deemed too hard consist in splitting them into 
+several subproblems of lesser complexity then solving each of these before putting solutions of all subproblems 
+together.  In our case, the less difficult problems are that of interpolating a subset of the data and then joining 
+interpolating pieces together so that the global solution interpolates all the data. The price to pay for doing so is 
+the decrease in the smoothness of the interpolating function at the break points we will have chosen. As we will see 
+later, the maximum degree of smoothness achievable is a decreasing function of the number of derivatives we try to 
+interpolate. In polynomial interpolation, the subproblems are that of interpolating on subintervals with small degree 
+polynomials so that the general solution belongs to the space of piecewise polynomial functions of given order defined 
+as follows
+
+\begin{deftn}
+  Let $k$ an integer and $\bm{\xi}$ a strictly increasing sequence of real numbers. The set of all piecewise polynomials 
+  of order $k$ with breaks at $\bm {\xi}$ is denoted $\Pi_{<k, \bm{\xi}}$. It consists in all functions that are 
+  polynomials of order $k$ on all intervals $(\xi_i, \xi_{i+1})$. The elements of $\bm{\xi}$ are called \emph{knots}.
+\end{deftn}
+
+For the needs of further results, let's introduce here the subspaces where a certain number of derivatives are made be 
+continuous at the knots. 
+
+\begin{deftn}
+  Let $k$ an integer, $\bm{\xi}$ a strictly increasing sequence of real numbers and $\bm{\nu}$ a sequence of nonnegative 
+  integers. Define
+  \begin{equation}
+    \Pi_{<k, \bm{\xi}, \bm{\nu}} = \{f \in \Pi_{<k, \bm{\xi}} \ | \ \text{jump}_{\xi_i} D^{j-1}f = 0, j=1, \ldots, 
+    \nu_i\}
+  \end{equation}
+\end{deftn}
+
+The maximum degree of continuity achievable at a knot is the order of the polynomials on each side of the knots, $k$ in 
+our notation. Indeed, in the case $\nu_i = k$, writing the polynomials in their Taylor expansion at $\xi_i$ up to order 
+$k$ we see that both polynomials share the same coefficients in the expansion. Consequently polynomials on each side of 
+the knot join \emph{perfectly} in the sense that they are subparts of the same polynomial of order $k$. The value 
+$\nu_i=0$ means we impose no continuity condition at the knot $\xi_i$.  If $\bm{\nu_1}, \bm{\nu_2}$ are two sequences 
+such that $\bm{\nu_1} \leq \bm{\nu_2}$ it follows from the definition that $\Pi_{<k, \bm{\xi}, \bm{\nu_2}} \subset 
+\Pi_{<k, \bm{\xi}, \bm{\nu_1}}$.
+
+\subsection{Definitions}
+
+Let $\bm{t}$ a sequence of nondecreasing real numbers. This sequence can be finite on both sides or only one side or it 
+can be biinfinite. In his book (\cite{Bo01}), De Boor defines \emph{normalized} B-splines using the divided difference 
+operator as follows
+
+\begin{deftn}
+  The $j^{th}$ \emph{normalized} B-spline of order $k$ is
+  \begin{equation}
+    B_{j, k, \bm{t}}(t) = (t_{j+k}-t_j)[t_j, \ldots, t_{j+k}]{(\cdot-t)}_+^{k-1}
+  \end{equation}
+\end{deftn}
+
+In order to ligthen notations we will usually drop the dependence in the knots sequence $\bm{t}$ when it is clear from 
+the context what these knots are. In the definition above we adopt the convention that $0^0 = 0$ which has the 
+consequence of making our B-splines right-continuous.
+
+\begin{example}
+  \begin{itemize}
+    \item \underline{$k=1$}
+      \begin{align*}
+        B_{j,1}(t) &= (t_{j+1}-t_j)[t_j, t_{j+1}]{(\cdot-t)}_+^0 \\
+        &= {(t_{j+1}-t)}_+^0 - {(t_j-t)}_+^0 \\
+        &= \begin{dcases} 1 & t_j \leq t < t_{j+1} \\ 0 & \text{elsewhere} \end{dcases}
+      \end{align*}
+    \item \underline{$k=2$}
+      \begin{align*}
+        B_{j,2}(t) &= (t_{j+2}-t_j)\frac{[t_{j+1}, t_{j+2}]{(\cdot-t)}_+^1-[t_{j}, 
+        t_{j+1}]{(\cdot-t)}_+^1}{t_{j+2}-t_j}\\
+        &= \frac{{(t_{j+2}-t)}_+^1-{(t_{j+1}-t)}_+^1}{t_{j+2}-t_{j+1}}- 
+        \frac{{(t_{j+1}-t)}_+^1-{(t_{j}-t)}_+^1}{t_{j+1}-t_{j}} \\
+        &= 
+        \begin{dcases}
+          \frac{t-t_j}{t_{j+1}-t_j} & t_j \leq t < t_{j+1} \\
+          \frac{t_{j+2}-t}{t_{j+2}-t_{j+1}} & t_{j+1} \leq t < t_{j+2} \\
+          0 & \text{elsewhere} 
+        \end{dcases}
+    \end{align*}
+\end{itemize}
+\end{example}
+
+For the needs of incoming properties we need to define the \textbf{basic interval} $I_{k, \bm{t}}$  as follows
+
+\begin{equation}
+  I_{k, \bm{t}} = (t_-, t_+), \quad t_- := \begin{dcases} t_k & \text{if} \ \bm{t} = (t_1, \ldots) \\ \inf t_j & 
+\text{otherwise} \end{dcases}, \quad t_+ := \begin{dcases} t_{n+1} & \text{if} \ \bm{t} = (\ldots, t_{n+k}) \\ \sup t_j 
+& \text{otherwise} \end{dcases}, \end{equation}
+
+These B-splines are normalized in the sense that they satisfy $\sum_{j} B_{j,k, \bm{t}} = 0$ on $I_{k, \bm{t}}$. The 
+definition De Boor uses is different from that previously used by Curry and Schoenberg in (\cite{CS66}) which is the 
+following
+
+\begin{deftn}
+  The $j^{th}$ B-spline of Curry and Schoenberg is
+  \begin{equation}
+    M_{j,k,\bm{t}}(t) = k [t_j, \ldots, t_{j+k}]{(\cdot-t)}_+^{k-1}
+  \end{equation}
+\end{deftn}
+
+These B-splines are closely related to the previously defined B-splines as $B_{j, k, \bm{t}} = \frac{t_{j+k}-t_j}{k} 
+M_{j,k,\bm{t}}$. In the following paragraphs we will focus on the properties of $B_{j,k,\bm{t}}$ as they can be written 
+more elegantly than with $M_{j,k,\bm{t}}$. However they can easily be translated in terms $M_{j,k,\bm{t}}$ given the 
+relation above. For the sake of completeness let at least mention that $M_{j,k,\bm{t}}$ have the property of being
+kernels for the divided difference operator (\cite{CS66}, eq\.  (1.5)) in the sense that for any function $f \in 
+\mathcal{C}^{(k)}$  we have 
+
+\begin{equation*}
+  [t_j, \ldots, t_{j+k}]f = \frac{1}{k!} \int_{t_j}^{t_{j+k}} M_{j,k,\bm{t}} f^{(k)}(t) dt
+\end{equation*}
+
+
+\subsection{Properties}
+
+\nocite{*}
+\printbibliography%
+%\bibliographystyle{unsrt}
+%\bibliography{xmpl}
+%\addcontentsline{toc}{section}{References}
+
+\end{document}

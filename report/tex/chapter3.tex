@@ -1,0 +1,710 @@
+\chapter{General properties of Hermite B-splines}\label{chapter3}
+
+In Chapter~\ref{chapter1} we presented the first general works on interpolation dating from Newton before laying the 
+foundations for the modern theory of splines. In Chapter~\ref{chapter2} we gave general results of existence and unicity 
+for solutions to the Hermite interpolation problem, most of them due to I.J Schoenberg. In Theorems~\ref{thm:LH-gamma} 
+and~\ref{thm:LH-p}, we saw that the solution is explicitly given by its Lagrange-Hermite expansion which is spanned by 
+the fundamental splines $L_0, \ldots, L_{r-1}$ (\ref{def:fundamental-r}). This expansion is on the one hand very 
+advantageous because its coefficients are exactly the samples of the function and its derivatives we wish to 
+interpolate. On the other hand, it may be numerically impractical for the reason that the fundamental splines are not 
+compactly supported in general. This led us to the introduction of Hermite B-splines, the Hermite equivalent to the 
+compactly supported B-splines $M_n, Q_n$ we introduced for the cardinal interpolation problem. In the specific case 
+where the order of the splines is exactly twice the multiplicity of the interpolation, these Hermite B-splines are just 
+rescaled versions of the fundamental splines. We saw that Hermite B-splines are a basis for some specific spline 
+subspaces but we yet have to conduct an extensive study of their properties. In this third and last chapter, we wish to 
+present the numerous good properties of these Hermite B-splines in order to convince the reader that they are a great 
+and effective tool for a lot of practical problems found in image analysis and computer-aided geometrical design. Most 
+of the work in this chapter is the result of my own research, which is split between two different aspects. On the one 
+hand, it took a lot of time to connect results found by different communities which, while having existed for decades, 
+seem to be largely ignored by practitioners interested in splines. This lack of a global picture of Hermite B-splines is 
+sometimes confusing and may lead some to publish theorems that are subcases of general results already known in more 
+abstract communities. I intend to partially bridge the gap between these communities by presenting general results 
+connected to the Hermite splines in a manner that is more familiar to practitioners. On the other hand, largely inspired 
+by the very recent paper (\cite{FAUU19}) by J. Fageot et al that formally investigates properties of cubic Hermite 
+splines, I dediced to push the investigation of the general properties of Hermite splines. Convinced that all the 
+results found at order $2$ and $4$ extend to the general case, I tried to extends the proofs to any order. 
+
+\section{Fourier transforms}
+
+\underline{Notations}
+\begin{enumerate}
+  \item $r, m \in \mathbb{N}^*$, $m \geq r$
+  \item $L_0:=L_{2m,r,0}, \ldots, L_{r-1}=L_{2m,r,r-1}$ are the \emph{fundamental} splines 
+    Definition~\ref{def:fundamental-r}.
+  \item $N_0:=N_{2m,r,0}, \ldots, N_{r-1}:=N_{2m,r,r-1}$ are the Hermite B-splines Definition~\ref{def:hbsplines}.
+  \item $\hat{\phi}$ is the Fourier transform of $\phi \in L^1, L^2$ or Schwartz space $\mathscr{S}$, $u$ denotes the 
+    frequency variable, $t$ the temporal variable
+\end{enumerate}
+
+\subsection{Lee's general formulas}
+
+The Fourier transform has become such a fundamental tool in signal processing that is hard to find a paper in this 
+community where it is not used. Characterizing a function in the frequency domain is very helpful for understanding its 
+properties in the time domain. In this perspective, the Fourier transform of Hermite B-splines will prove very useful 
+for characterizing their mathematical properties as well as for understanding their connections to other B-splines.  
+However, computing the Fourier transform for general $r$ of $L_0, \ldots, L_{r-1}$, or equivalently of $N_0, \ldots, 
+N_{r-1}$, is a difficult task for which no explicit formula has yet been reported. A formula in terms of Hankel 
+determinant of $r$-dimensional matrices exists though, which was established by S. Lee in his papers 
+(\cite{Lee76a},~\cite{Lee76b}) and will be useful for proving that some determinant does not vanish. In the case of 
+multiplicity $r=1$ the Fourier transforms of $N_0$ and $L_0$ can be computed as detailed in the following example. 
+
+\begin{example} The Fourier transform of the splines $N_0 := N_{2m, 1, 0}$ and $L_0 := L_{2m,1,0}$ for cardinal 
+  interpolation were known to Schoenberg in (\cite[Lecture 2, (1.8)]{Sch73},~\cite[(1.3)]{SS73}) and (\cite[Lecture 10, 
+  (1.11)]{Sch73}). More specifically, from Example~\ref{ex:N0}, we know that \begin{equation*}
+    N_0 = (2m-1)!M_{2m}
+  \end{equation*}
+  while the Fourier transform of $M_{2m}$ is given by item 3 of Proposition~\ref{prop:sch-B-splines}. Therefore, 
+  \begin{equation}
+    \forall u \in \mathbb{R}, \quad \hat{N}_0(u) = (2m-1)! {\left(\frac{2\sin(\frac{u}{2})}{u}\right)}^{2m}
+  \end{equation}
+
+  As for $L_0 = L_{2m,1,0}$, note once again that the Lagrange-Hermite expansion is exact for $M_{2m}$ that is 
+  \begin{equation*}
+    \forall t \in \mathbb{R}, \quad M_{2m}(t) = \sum_{k=-\infty}^{\infty} M_{2m}(k) L_0(t-k)
+  \end{equation*}
+  The Fourier transform of this mixed convolution is \begin{equation}\label{eq:mixed}
+    \hat{M}_{2m}(u) = \hat{M}_{d,2m}(u) \hat{L}_0(u)
+  \end{equation}
+  where \begin{align*} \hat{M}_{d, 2m}(u) &= \sum_{k=-\infty}^{\infty} M_{2m}(k) e^{-juk} \\
+    &= \sum_{k=-\infty}^{\infty} {\left(\frac{2 \sin(\frac{u+2k\pi}{2})}{u+2k\pi}\right)}^{2m}
+  \end{align*}
+  is the discrete Fourier transform written in two different ways using Poisson summation formula. This last series is 
+  the sum of positive terms and therefore can only vanish if the terms of the sum vanish altogether. However, for this 
+  to happen $u$ would need to be in $2\pi\mathbb{Z}$ say $u = 2l\pi$ but then the term $\frac{2 
+  \sin(\frac{u-2l\pi}{2})}{u-2l\pi}$ is 1 by definition. Therefore we can isolate $\hat{L}_0$ in (\ref{eq:mixed}) and 
+  write
+  \begin{equation}
+    \forall u \in \mathbb{R}, \quad \hat{L}_0(u) = \frac{u^{-2m}}{\displaystyle\sum_{k=-\infty}^{\infty} 
+    {(u+2k\pi)}^{-2m}}
+  \end{equation}
+  after some obvious simplifications.
+\end{example}
+
+Inspired by these formulas, Lee computed the Fourier transforms of ${(N_s)}_{s=0}^{r-1}$ and 
+${(L_{2m,r,s})}_{s=0}^{r-1}$ for general $r \in \mathbb{N}^*$. To express these we need to introduce
+
+\begin{deftn}[Hankel determinant]\label{def:Hankel}
+  The Hankel determinant of order $r$ for the sequence ${(a_n)}_n$, $H_r(a_n)$, is the determinant
+  \begin{equation}
+      H_r(a_n) = |\matr{H_r(a_n)}|
+   \end{equation}
+  where
+  \begin{equation*}
+    \matr{H_r(a_n)} = \begin{bmatrix} a_n & a_{n-1} & \hdots & a_{n-r+1} \\
+      a_{n-1} & a_{n-2} & \hdots & a_{n-r} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      a_{n-r+1} & a_{n-r} & \hdots & a_{n-2r+2}  
+    \end{bmatrix}
+  \end{equation*}
+\end{deftn}
+
+Lee defines the following additional quantities to express the Fourier transforms more compactly.
+\begin{enumerate}
+  \item $\forall u \in \mathbb{R}\setminus2\pi\mathbb{Z}, \quad \displaystyle \alpha_n(u) = \sum_{k=-\infty}^{\infty} 
+    {(u+2k\pi)}^{-n}$
+  \item Let $C^{\matr{H_r}(\bm{\alpha_n})}_0, \ldots, C_{r-1}^{\matr{H_r}(\bm{\alpha_n})}$ the columns of 
+    $\matr{H_r}(\bm{\alpha_n})$.  Let $C(u)$ the column vector \begin{equation}
+      C(u) = \begin{bmatrix} u^{-n} & u^{-n+1} & \hdots & u^{-n+r-1} \end{bmatrix}^T
+    \end{equation}
+    For $s=0, \ldots, r-1$,  define the matrix
+    \begin{equation*}
+      \matr{H_{r,s}}(\bm{\alpha}_n) = \begin{bmatrix} C_0^{\matr{H_r}({\bm{\alpha}}_n)} & \ldots & 
+	C_{s-1}^{\matr{H_r}({\bm{\alpha}}_n)} & C(u) & C_{s+1}^{\matr{H_r}({\bm{\alpha}}_n)} & \hdots & 
+	C_{r-1}^{\matr{H_r}({\bm{\alpha}}_n)}
+      \end{bmatrix}
+    \end{equation*}
+    and the \emph{modified} Hankel determinant
+    \begin{equation}\label{eq:modified-Hankel}
+    H_{r,s}(\alpha_n(u)) = |\matr{H_{r,s}}({\bm{\alpha}}_n(u))|
+  \end{equation}
+  \item $K(m,r) = {(-1)}^{m(r+1)} \frac{(2m-1)!(2m-2)!\ldots(2m-r)!}{1!2!\ldots(r-1)!}$
+\end{enumerate}
+
+Given these notations, Lee stated and proved the following theorem
+\begin{thm}[{\cite[Theorems 1, 2]{Lee76b}}]\label{thm:Lee}
+  The Fourier transform of the fundamental splines is
+  \begin{equation}\label{eq:Lee1}
+    \hat{L}_{2m,r,s}(u) = {(-j)}^{s} \frac{H_{r,s}(\alpha_{2m}(u))}{H_r(\alpha_{2m}(u))}
+  \end{equation}
+  and that of the Hermite B-splines is
+  \begin{equation}\label{eq:Lee2}
+    \hat{N}_s(u) = {(-j)}^s K(m,r) {\left(2 \sin \frac{u}{2} \right)}^{2m} H_{r,s}(\alpha_{2m}(u))
+  \end{equation}
+\end{thm}
+
+The proof is given by Lee in his paper (\cite{Lee76b}) but is short of details for readers not familiar with the 
+subject. It is therefore reproduced with additional details in Section~\ref{proof:Lee}. Let's finish this subsection 
+with a Lemma that will be useful for the next section.
+
+\begin{lem}\label{lem:Ns}
+  The Hermite B-splines $N_0, \ldots, N_{r-1}$ have continuous Fourier transforms $\hat{N}_0, \ldots, \hat{N}_{r-1}$ 
+  with the property that
+  \begin{equation*}
+    \forall s \in \llbracket0,r-1\rrbracket, \quad \hat{N}_s(u) = \mathcal{O}_{|u| \to \infty}\left( 
+    \frac{1}{u^{2m-r+1}}\right)
+  \end{equation*}
+\end{lem}
+
+\begin{proof}
+  The Fourier transforms of the Hermite B-splines are continuous as $N_0, \ldots, N_{r-1}$ are continuous and have 
+  compact support. Let $\matr{H_r(u)} := \matr{H_r}(\alpha_{2m}(u)), \matr{H_{r,s}(u)} := \matr{H_{r,s}}(\alpha_{2m}(u)) 
+  $ the Hankel matrices and $H_r(u), H_{r,s}(u)$ their determinant.  For $(i,j) \in {\llbracket0,r-1\rrbracket}^2$, let 
+  $H_r^{(i,j)}(u)$ the determinant of the matrix $\matr{H_r(u)}$ with $(i+1)^{th}$ row  and $(j+1)^{th}$ column deleted.  
+  Developing the determinant $H_{r,s}(u)$ around the $(s+1)^{th}$ column leads to
+  \begin{equation*}
+    H_{r,s}(u)  = \sum_{i=0}^{r-1} (-1)^{i+s+1} H_{r}^{(i, s+1)}(u) \frac{1}{u^{2m-i}}
+  \end{equation*}
+  Therefore, 
+  \begin{equation*}
+    \forall u \in \mathbb{R}, \forall s \in \llbracket0,r-1\rrbracket, \quad \hat{N}_s(u) = {(-j)}^s K(m,r) {\left(2 
+    \sin \frac{u}{2} \right)}^{2m} \sum_{i=0}^{r-1} (-1)^{i+s+1} H_{r}^{(i, s+1)}(u) \frac{1}{u^{2m-i}}
+  \end{equation*}
+  The functions $H_{r}^{(i, s+1)}(u)$ are $2\pi$-periodic as they are polynomial in quantities that are $2\pi$-periodic.  
+  Therefore there exists a global bound $M$ on these functions and the following holds
+  \begin{equation*}
+    \forall |u| \geq 1, \forall s \in \llbracket0,r-1\rrbracket, \quad |u^{2m-r+1}\hat{N}_s(u)| \leq 4^m K(m,r) M 
+  \end{equation*}
+\end{proof}
+
+\subsection{The case of compact fundamental splines}
+
+It is clear from the Definition~\ref{def:fundamental-r} that the fundamental splines $L_0, \ldots, L_{r-1}$ are 
+compactly supported when the order of the splines, $2m$, is exactly twice the multiplicity $r$ that is to say $m=r$.  
+From this point it is assumed that $m=r$ for the rest of this subsection.  In such a case, the scheme resulting from the 
+Hermite-Lagrange expansion (\ref{eq:LH}) becomes local in the sense that a change in the value of one data point has 
+only local consequences on the resulting function. On top of that, the scheme is now computationally efficient as the 
+infinite sum always reduces to a finite sum of fixed size at any evaluation point. In summary, (\ref{eq:LH}) with $m=r$ 
+provides us with an interpolating function that is such that: 
+
+\begin{enumerate}
+  \item its parameters are exactly the input
+  \item it can evaluated very efficiently at any point.  
+  \item it depends only locally on the input data
+\end{enumerate}
+
+In view of these features, the Hermite-Lagrange expansion (\ref{eq:LH}) is a perfect candidate for a practical solution 
+to a Hermite-type interpolation problem. The scheme has in fact additional good properties that we shall describe in the 
+coming sections but before that we need a formula for the Fourier transform of more practical usability than Lee's 
+formulas (\ref{eq:Lee1}) and (\ref{eq:Lee2}). Note first that $m=r$ simplifies the definition of fundamental splines in 
+the sense that for ${s=0, \ldots, r=1}$, $L_s$ is now the function that satisfies
+
+\begin{equation}
+  L_s(t) = \begin{dcases}
+    \frac{t^{s}}{s!} + a_{1,s}t^{r} + a_{2,s}t^{r+1} + \cdots + a_{r,s} t^{2r-1} & \text{if} \ 0 \leq t \leq 1 \\
+    0 & \text{if} \ t \geq 1 \\
+    {(-1)}^s L_s(-t)  & \text{if} \ t < 0
+  \end{dcases}
+\end{equation}
+with
+\begin{equation}
+  \begin{bmatrix}
+    a_{1,s} \\ a_{2,s} \\ \vdots \\ a_{r,s} 
+  \end{bmatrix}
+  =
+  {\begin{bmatrix}
+    \frac{r!}{r!} & \frac{(r+1)!}{(r+1)!} & \cdots & \frac{(2r-1)!}{(2r-1)!}  \\
+    \frac{r!}{(r-1)!} & \frac{(r+1)!}{r!} & \cdots & \frac{(2r-1)!}{(2r-2)!}  \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \frac{r!}{1!} & \frac{(r+1)!}{2!} & \cdots & \frac{(2r-1)!}{r!}  \\
+  \end{bmatrix}}^{-1}
+  \begin{bmatrix} -\frac{1}{s!} \\ \vdots \\ -\frac{1}{0!} \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+\end{equation}
+
+The following formulas are based on the empirical observation of repeated patterns in the first Fourier transform of the 
+compact fundamental splines $L_0, \ldots, L_{r-1}$ and have yet to be proven. 
+
+\begin{con}
+  In the particular case $m=r$, the Fourier transforms of the fundamental splines $L_0, \ldots, L_{r-1}$ are
+  \begin{equation}
+    \begin{split}
+      \hat{L}_{0}(u) &= \frac{(2r)!}{r!u^{2r}} \Big[ (\cos(u)-1) \sum_{k=1}^{\lfloor \frac{r+1}{2} \rfloor} 
+	\frac{(2r-2k)!}{(2k-2)!(r+1-2k)!} {(-1)}^k u^{2k-2} \\
+      &\quad + \sin(u) \sum_{k=1}^{\lfloor \frac{r}{2} \rfloor} \frac{(2r-1-2k)!}{(2k-1)!(r-2k)!} {(-1)}^k u^{2k-1} 
+    \Big]
+    \end{split}
+  \end{equation}
+  \begin{equation}
+    \begin{split}
+      \hat{L}_1(u) &= \frac{2r(2r-2)!j}{r!u^{2r}} \Big[\cos(u) \sum_{k=1}^{\lfloor \frac{r}{2} 
+	\rfloor}\frac{(2r^2-(2k+2)r+1)(2r-2-2k)!}{(2k-1)!(r-2k)!} {(-1)}^k u^{2k-1} \\
+      &\quad + \sum_{k=1}^{\lfloor \frac{r}{2} \rfloor}\frac{(2r^2-(2k+2)r+2k)(2r-2-2k)!}{(2k-1)!(r-2k)!} {(-1)}^k 
+    u^{2k-1} \\
+      &\quad + \sin(u) \sum_{k=1}^{\lfloor \frac{r+1}{2} \rfloor} \frac{(2r^2-(2k+1)r+1)(2r-2k-1)!}{(2k-2)!(r+1-2k)!} 
+    {(-1)}^{k+1} u^{2k-2} \Big]
+    \end{split}
+  \end{equation}
+\end{con}
+
+\section{Hermite B-splines \& Riesz-Schauder basis}
+
+We adopt the following notations in this section.
+\begin{itemize}
+  \item $r, p \in \mathbb{N}^*$
+  \item $\mathbb{K}$ designates the field $\mathbb{R}$ of real numbers or the field $\mathbb{C}$ of complex numbers.
+  \item $I$ is a set of indices
+  \item $\ell^p(I)$ denotes all collections $\bm{c} \in \mathbb{K}^{I}$ such that \begin{equation*}
+      \sum_{k \in I} c_k^p < \infty
+    \end{equation*}
+  \item ${\left(\ell^p(I)\right)}^r$ denotes all $r$-uplet of sequences $\bm{c}=\left(\bm{c_{0}},\ldots 
+    \bm{c_{r-1}}\right)$ such that $\bm{c_{s}}$ is in $\ell^{p}(I)$.
+  \item $\mu$ is the Lebesgue measure on $\mathbb{R}$
+  \item $\mathscr{L}^p := \mathscr{L}^p(\mathbb{R}) := \mathscr{L}^p(\mathbb{R}, \mathbb{K})$ denotes all 
+    $\mu$-measurable functions $f: \mathbb{R} \to \mathbb{K}$ such that \begin{equation*}
+      \int_{-\infty}^{\infty} f d\mu < \infty
+    \end{equation*}
+  \item $\mathcal{L}^p := \mathcal{L}^p(\mathbb{R}) := \mathcal{L}^p(\mathbb{R}, \mathbb{K})$ denote the quotient set 
+    $\mathscr{L}^p/R$ with $R$ the equivalence relation $f R g$ if $f = g$ $\mu$-a.e.
+  \item If $f: \mathbb{R} \to \mathbb{K}$ is a function, $\check{f}: \mathbb{R} \to \mathbb{K}$ is the opposite function 
+    i.e $\check{f}(t) = f(-t)$.
+\end{itemize} 
+
+The present Section will show that the Hermite B-splines $N_0, \ldots, N_{r-1}$ give rise to a Riesz-Schauder basis, a 
+property that is absolutely essential to guarantee safe and sound numerical implementations. It is also a property of a 
+high theoretical interest as to quote Ingrid Daubechies, ``a Riesz-Schauder basis is the next-best thing after an 
+orthogonal basis''. Before detailing further the benefits of using a Riesz-Schauder basis, let's define it.  
+\begin{deftn}[Riesz-Schauder basis]
+  Let $\mathcal{H}$ be a Hilbert space over the field $\mathbb{K}$.  A collection of functions ${\{\varphi_k\}}_{k \in 
+  I}$ of $\mathcal{H}$ is said to be a Riesz-Schauder basis for the space it spans if there exist positive constants $0 
+  < A \leq B$ such that
+  \begin{equation}\label{eq:def-Riesz}
+    \forall c \in \ell^2(I), \qquad A {\|c\|}_{\ell^2} \leq {\left\| \sum_{k \in I} c_k \varphi_k 
+    \right\|}_{\mathcal{H}} \leq B {\|c\|}_{\ell^2}
+  \end{equation}
+\end{deftn} 
+
+\begin{remark} 
+  \begin{enumerate} \item In practical cases, the set of indices $I$ will be the set of all integers $\mathbb{Z}$.  
+    \item The expression ``Riesz-Schauder basis'' is usually abbreviated ``Riesz basis''.  
+    \item If ${\{\varphi_k\}}_{k \in I}$ is a Riesz basis for $\Span{\{\varphi_k\}}_{k \in I}$, then it is a basis in 
+      the usual algebraic sense.  The Riesz basis condition indeed implies linear independence of the function as a 
+      linear combination of the $\varphi_k$ can only vanish if the coefficients of that combination also vanish.
+  \end{enumerate} 
+\end{remark} 
+
+
+It is numerically essential that the functions $\{L_s(\cdot-k)\}_{s\in \llbracket0,r-1\rrbracket, k \in \mathbb{Z}}$ or 
+equivalently, when $m=r$, that the functions $\{N_s(\cdot-k)\}_{s\in \llbracket0,r-1\rrbracket, k \in \mathbb{Z}}$ used 
+for representing solutions to the Hermite interpolation problem (\ref{eq:LH}) constitute a Riesz basis. Indeed, if that 
+is the case, the representation of the function is unique and stable. Unicity is straightforward while stability means 
+that a change in the sequence of coefficients, say  $\bm{\delta c}$, results in a comparative change in the function in 
+the sense that \begin{equation}
+  A {\|\bm{\delta c}\|}_{\ell^2} \leq {\left\| \sum_{k=-\infty}^{\infty} \delta c_k L_s(\cdot-k) 
+  \right\|}_{\mathcal{L}^2} \leq B {\|\bm{\delta c}\|}_{\ell^2}
+\end{equation} 
+
+The set $\mathcal{L}^{2}(\mathbb{R})$ endowed with the inner product 
+\begin{equation}\label{eq:inner-prod}
+  \langle f,g\rangle = \int_{-\infty}^{\infty} f\bar{g} d\mu 
+\end{equation}
+is a Hilbert space and it is this space that we shall use to write the Riesz basis property of Hermite B-splines.  One 
+should indeed observe that the functions $N_0, \ldots, N_{r-1}$ are in $\mathcal{L}^p$ as the functions $L_0, \ldots, 
+L_{r-1}$ themselves are in $\mathcal{L}^p$ following Theorem~\ref{thm:LH-p}. As $\mathcal{L}^p$ is a Hilbert space for 
+$p=2$, it is that space that we should consider.  Let's provide a series of general results on the Riesz basis property 
+that we shall use to prove that the Hermite B-splines form a Riesz-Schauder basis.  
+
+\subsection{Functions in \texorpdfstring{$\mathcal{L}^2$}{g}}\label{ssec:l2}
+
+Let $\varphi_0, \ldots, \varphi_{r-1}$ be functions in $\mathcal{L}^2$ such that the map 
+
+\begin{align}\label{def:mapK}
+  K: {(\ell^2)}^r &\longrightarrow  \mathcal{L}^2 \nonumber \\
+  \bm{c} &\longmapsto \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} c_{s,k} \varphi_s(\cdot-k)
+\end{align} is well-defined.  
+  
+Let's denote $\bm{\varphi}$ the collection of function ${\{\varphi_s(\cdot-k)| s \in \llbracket0, r-1\rrbracket, k \in 
+\mathbb{Z}\}}$. As we shall see in the next theorem, the Fourier transform is very helpful for characterizing the 
+properties of the functions in $\bm{\varphi}$ and in particular the Riesz basis property. For that, we will need the 
+Gram matrix as defined in
+\begin{deftn}[Gram matrix]
+  The Gram matrix for $(\varphi_0, \ldots, \varphi_{r-1})$ at $u \in \mathbb{R}$ is the $r \times r$ matrix
+  \begin{equation}
+    \matr{\hat{G}}(u) = (\matr{\hat{G}}_{i,j}(u))_{(i,j) \in {\llbracket0, r-1\rrbracket}^2}, \quad 
+    \matr{\hat{G}}_{i,j}(u) = \sum_{k=-\infty}^{\infty} \hat{\varphi}_i(u+2k\pi)\overline{\hat{\varphi}_j(u+2k\pi)}
+  \end{equation}
+\end{deftn}
+
+\begin{remark}
+  \begin{enumerate}
+    \item Why it is well-defined.
+    \item At any $u \in \mathbb{R}$, the matrix $\hat{G}(u)$ is hermitian and therefore has $r$ eigenvalues that we will 
+      note and order $\lambda_0(u) \leq \ldots \leq \lambda_{r-1}(u)$. Let's denote $\matr{D}(u) = \diag (\lambda_0(u), 
+      \ldots, \lambda_{r-1}(u))$ and $\matr{Q}(u)$ the unitary matrix such that
+      \begin{equation}\label{eq:spectral}
+	\matr{\hat{G}}(u) = \matr{Q}(u) \matr{D}(u) \matr{Q}(u)^*
+      \end{equation}
+  \end{enumerate}
+\end{remark} The following theorem is proved in (\cite[Theorem 2]{AldUns94}) for the case of a single generator 
+$\varphi$ ($r=1$), and in (\cite[Theorem 3.1]{GST93}) for the general case. It is interesting to note that  
+(\cite[Theorem 2]{AldUns94}) additionally proves which sequence $\bm{c}_{opt}(g)$ achieves the minimum squared-error 
+approximation $K(\bm{c}_{opt}(g))$ of a function $g \in \mathcal{L}^2$.
+
+\begin{thm}[{\cite[Theorem 3.1]{GST93}}]\label{thm:Riesz-Gram} The collection of functions $\bm{\varphi}$ is a Riesz 
+  basis with Riesz bounds $0 < A \leq B$ if and only if the eigenvalues of $\matr{\hat{G}}$ are essentially bounded by 
+  $A^2$ and $B^2$ i.e
+  \begin{equation} A^2 \leq \essinf_{u \in [-\pi, \pi]} \lambda_{0}(u) \leq \esssup_{u \in [-\pi, \pi]} \lambda_{r-1}(u) 
+    \leq B^2
+  \end{equation}
+\end{thm}
+
+The proof is reproduced here as it uses key ideas that help understand the theorem and may prove fruitful for other 
+proofs.
+\begin{proof}
+  \begin{enumerate}
+    \item
+      Let's first establish a relation between the $\mathcal{L}^2$ norm of $K(\bm{c})$ and the Gram matrix. For that, 
+      observe that the $\mathcal{L}^2$ norm is induced by the inner product (\ref{eq:inner-prod}) of the Hilbert space 
+      $\mathcal{L}^2$, hence the following
+      \begin{align*}
+	{\left\| \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} c_{s,k} \varphi_s(\cdot-k)\right\|}_{\mathcal{L}^2}^2 &= 
+	\left\langle  \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} c_{s,k} \varphi_s(\cdot-k), \sum_{l=-\infty}^{\infty} 
+	\sum_{t=0}^{r-1} c_{t,l} \varphi_t(\cdot-l) \right\rangle \\
+	& = \sum_{s,t=0}^{r-1} \sum_{k,l=-\infty}^{\infty}  c_{s,k} \left\langle \varphi_s, \varphi_t(\cdot-(l-k)) 
+	\right\rangle \overline{c_{t,l}}
+      \end{align*}
+      For $s \in \llbracket0, r-1\rrbracket$, let $\widehat{\bm{c_s}}$ be the discrete-time Fourier transform of $\bm{c_s}$ 
+      i.e
+      \begin{equation*}
+	\forall u \in \mathbb{R}, \qquad \widehat{\bm{c_s}}(u) = \sum_{k=-\infty}^{\infty} c_{s,k} e^{-juk}
+      \end{equation*}
+      For $(s,t) \in {\llbracket0, r-1\rrbracket}^2$, let $\bm{g_{s,t}}$ be the sequence ${\left(\langle \varphi_s, 
+      \varphi_t(\cdot-(k))\rangle\right)}_{k \in \mathbb{Z}}$ and let $\widehat{\bm{g_{s,t}}}$ be its discrete-time Fourier 
+      transform. The calculations above continue in the following manner,
+      \begin{align*}
+	{\left\| \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} c_{s,k} \varphi_s(\cdot-k)\right\|}_{\mathcal{L}^2}^2
+	& = \sum_{s,t=0}^{r-1} \sum_{l=-\infty}^{\infty}  \left(\bm{c_{s}}*\bm{g_{s,t}}\right)(l)\overline{\bm{c_{t}}(l)} \\
+	& = \sum_{s,t=0}^{r-1} \frac{1}{2\pi} \int_{-\pi}^{\pi}  \widehat{\bm{c_{s}}}(u)\widehat{\bm{g_{s,t}}}(u) 
+	\overline{\widehat{\bm{c_{t}}}(u)} du
+      \end{align*}
+      where in the last line we made use of Parseval's theorem for discrete-time and the property of Fourier transform on 
+      convolution product. It is now time to observe that, using Poisson's summation formula, for any $(s,t) \in 
+      {\llbracket0, r-1\rrbracket}^2$ and any $u \in \mathbb{R}$,
+      \begin{align*}
+	\widehat{\bm{g_{s,t}}}(u) &= \sum_{k=-\infty}^{\infty} \left(\langle \varphi_s, \varphi_t(\cdot-(k))\rangle\right) 
+	e^{-juk} \\
+	& = \sum_{k=-\infty}^{\infty} (\varphi_s * \check{\varphi_t})(k) e^{-juk} \\
+	& = \sum_{k=-\infty}^{\infty} \hat{\varphi_s}(u+2k\pi)\overline{\hat{\varphi_t}(u+2k\pi)} \\
+	& = \matr{\hat{G}_{s,t}}(u)
+      \end{align*}
+      Letting $\hat{\bm{c}}$ the $r$-dimensional row vector $\begin{bmatrix} \widehat{\bm{c_0}} & \hdots & 
+      \widehat{\bm{c_{r-1}}} \end{bmatrix}$ (slight abuse of notation as $\bm{c}$ is also a $r$-uplet of sequences), we 
+      eventually have
+      \begin{equation}\label{eq:rel-fourier}
+	{\left\| \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} c_{s,k} \varphi_s(\cdot-k)\right\|}_{\mathcal{L}^2}^2
+	= \frac{1}{2\pi} \int_{-\pi}^{\pi}  \widehat{\bm{c}}(u)\hat{\matr{G}}(u)\widehat{\bm{c}}^*(u) du
+      \end{equation}
+      which is the relation we sought to establish.  
+
+    \item 
+      Let $\bm{c} \in {(\ell^{2}(\mathbb{Z}))}^r$ and let $\bm{d} \in {(\ell^{2}(\mathbb{Z}))}^r$ defined in the Fourier 
+      domain by  
+      \begin{equation}\label{eq:dc}
+	\forall u \in \mathbb{R}, \qquad \widehat{\bm{d}}(u) = \widehat{\bm{c}}(u)\matr{Q}(u)
+      \end{equation}
+      with $\matr{Q}(u)$ the matrix from the spectral decomposition (\ref{eq:spectral}). As $\matr{Q(u)}$ is unitary, we 
+      have $\displaystyle \sum_{s=0}^{r-1} |\widehat{c_s}|^2 = \sum_{s=0}^{r-1} |\widehat{d_s}|^2$. Combining it with 
+      Parseval theorem leads to
+      \begin{equation*}
+      {\|\bm{c}\|}_{{(\ell^2)}^r}^2 = {\|\bm{d}\|}_{{(\ell^2)}^r}^2 = \sum_{s=0}^{r-1} \frac{1}{2\pi} \int_{-\pi}^{\pi} 
+      |\widehat{d_s}(u)|^2 du
+      \end{equation*}
+      As $\matr{Q}$ is invertible everywhere, equation (\ref{eq:dc}) is a one-to-one correspondence in 
+      ${(\ell^2(\mathbb{Z}))}^r$ and therefore,
+      \begin{align*}
+	&\forall \bm{c} \in {(\ell^2(\mathbb{Z}))}^r, \qquad A {\|\bm{c}\|}_{{(\ell^2)}^r} \leq {\left\| 
+	\sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} c_{s,k} \varphi_s(\cdot-k) \right\|}_{\mathcal{L}^2} \leq B 
+	{\|\bm{c}\|}_{{(\ell^2)}^r} \\
+	  &  \iff \\
+	  & \forall \bm{d} \in {(\ell^{2}(\mathbb{Z}))}^r, \quad A^2 \sum_{s=0}^{r-1} \int_{-\pi}^{\pi} 
+	  |\widehat{d_s}(u)|^2 du \leq \sum_{s=0}^{r-1} \int_{-\pi}^{\pi} |\widehat{d_s}(u)|^2 \lambda_s(u) du \leq B^2 
+	  \sum_{s=0}^{r-1} \int_{-\pi}^{\pi} |\widehat{d_s}(u)|^2 du
+      \end{align*}
+      This last equation is equivalent to 
+      \begin{equation*} A^2 \leq \essinf_{u \in [-\pi, \pi]} \lambda_{0}(u) \leq \esssup_{u \in [-\pi, \pi]} 
+	\lambda_{r-1}(u) \leq B^2
+      \end{equation*}
+    \end{enumerate}
+%  $\implies$ Suppose the collection of functions $\bm{\varphi}$ is a Riesz basis with bounds $0 < A \leq B$, that is to 
+%  say (\ref{eq:def-Riesz-r}) holds. Suppose by contradiction that $\esssup_{u \in [-\pi, \pi]} \lambda_{r-1}(u) > B^2$.  
+%  Then there exists ${B'}^2 > B^2$ and $E \subset [-\pi, \pi]$ such that $\mu(E) > 0$ and \begin{equation*}
+%    \forall u \in E, \quad \lambda_{r-1}(u) \geq B'^{2}
+%  \end{equation*}
+%  Let $\bm{c}\in {(\ell^{2}(\mathbb{Z}))}^r$ defined in the Fourier domain by 
+%  \begin{equation*}
+%    \forall u \in \mathbb{R}, \qquad \widehat{\bm{c}}(u) = \begin{bmatrix} 0 & \hdots & 0 & 1 \end{bmatrix} 
+%    \matr{Q}^*(u) \chi_{E}(u)
+%  \end{equation*}
+%  Then,
+%  \begin{align*}
+%    \frac{1}{2\pi} \int_{-\pi}^{\pi}  \widehat{\bm{c}}(u)\hat{\matr{G}}(u)\widehat{\bm{c}}^*(u) du &= \frac{1}{2\pi} 
+%    \int_{E} \lambda_{r-1}(u)du  \\
+%    &\geq \frac{\mu(E)}{2\pi}B'^{2}
+%  \end{align*}
+%  while from Parseval theorem we have
+%  \begin{align*}
+%    {\|\bm{c}\|}_{{(\ell^2(\mathbb{Z}))}^r}^2 &= \sum_{s=0}^{r-1} \frac{1}{2\pi} \int_{-\pi}^{\pi} 
+%    |\widehat{\bm{c_s}}(u)|^2 du \\
+%    &= \frac{\mu(E)}{2\pi}
+%  \end{align*}
+%  Combining these with (\ref{eq:rel-fourier}), we have
+%  \begin{equation*}
+%    {\left\| \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} c_{s,k} \varphi_s(\cdot-k)\right\|}_{\mathcal{L}^2} \geq {B'} 
+%    {\|\bm{c}\|}_{{(\ell^2(\mathbb{Z}))}^r} 
+%  \end{equation*}
+%  which contradicts our hypothesis of Riesz basis for with upper bound $B$. Assuming similarly that  $\essinf_{u \in 
+%  [-\pi, \pi]} \lambda_{0}(u) < A^2$ leads to a contradiction. Therefore, the eigenvalues of $\matr{G}$ are essentially 
+%  bounded by $A^2$ and $B^2$ respectively.
+\end{proof}
+
+The following Proposition links the Riesz basis property to a property of the map $K$.
+\begin{prop}\label{prop:Riesz-K}
+  The collection of functions $\bm{\varphi}$ is a Riesz basis if and only if the map $K$ defined in (\ref{def:mapK}) is 
+  a homeomorphism (continuous isomorphism with continuous inverse) onto a subspace of $\mathcal{L}^2$.
+\end{prop}
+\begin{proof}
+  $\implies$ Suppose $\exists 0 < A \leq B$ such that
+  \begin{equation}\label{eq:def-Riesz-r}
+    \forall \bm{c} \in {(\ell^2(\mathbb{Z}))}^r, \qquad A {\|\bm{c}\|}_{{(\ell^2)}^r} \leq {\left\| 
+    \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} c_{s,k} \varphi_s(\cdot-k) \right\|}_{\mathcal{L}^2} \leq B 
+    {\|\bm{c}\|}_{{(\ell^2)}^r}
+  \end{equation}
+  Then clearly $K(\bm{c}) = 0$ if and only if $\bm{c} = 0$ i.e $K$ is injective. $K$ is thus a bijection on the subspace 
+  $K\left({(\ell^2)}^r\right)$. As $K$ is a linear function on the vector space ${(\ell^2)}^r$, the following holds
+  \begin{equation*}
+    K \ \text{continuous} \ \iff \exists \vertiii{K} \ \text{such that} \qquad \forall \bm{c} \in {(\ell^2)}^r, 
+    \|K(c)\|_{\mathcal{L}^2} \leq \vertiii{K} {\|\bm{c}\|}_{{(\ell^2)}^r}
+  \end{equation*}
+  The rhs is true by hypothesis with $\vertiii{K}=B$ and therefore $K$ is continuous. Similarly, $K^{-1}$ is linear and 
+  continuous with $\vertiii{K^{-1}} = A^{-1}$. \\
+
+  $\impliedby$ Assume that $K$ is a homeomorphism. Reversing the arguments just given, the continuity of $K$ and 
+  $K^{-1}$ ensures the existence of $A = \vertiii{K^{-1}}^{-1}$, $B=\vertiii{K}$ such that (\ref{eq:def-Riesz-r}) holds.  
+\end{proof}
+
+\subsection{Regular functions in \texorpdfstring{$\mathcal{L}^1$}{g}}
+
+In practice, the functions we shall consider are more than functions in $\mathcal{L}^2$ which simplifies the 
+requirements for having a Riesz basis. More precisely, consider the functions $\varphi_0, \ldots, \varphi_{r-1}$ such 
+that each $\varphi_s$ is in $L^1$ and is \emph{regular} in the sense that $\hat{\varphi_s}$ is continuous and satisfies 
+${\hat{\varphi}_s(u) = o_{|u| \to \infty}\left(\frac{1}{|u|}\right)}$. It may not be clear yet why this is more precise 
+than considering functions in $\mathcal{L}^2$ so we state and prove in (\ref{proof:lemmal1l2}) the following result.
+\begin{lem}\label{lemma:l1l2}
+  If $f \in \mathcal{L}^1(\mathbb{R})$ is such that $\hat{f} \in \mathcal{L}^2(\mathbb{R})$ then $f \in \mathcal{L}^2$.
+\end{lem}
+
+By hypothesis, the functions $\varphi_{0}, \ldots, \varphi_{r-1}$ are such that $\hat{\varphi}_s(u) = o_{|u|\to 
+\infty}\left(\frac{1}{|u|}\right)$ which implies that $\hat{\varphi}_s \in \mathcal{L}^2$. As a consequence of 
+Lemma~\ref{lemma:l1l2}, the functions $\varphi_{0}, \ldots, \varphi_{r-1}$ are all in $\mathcal{L}^2$ which means that 
+all results of Subsection~\ref{ssec:l2} are valid. \textbf{Is the map $K$ well-defined?} The continuity of the Fourier 
+transforms combined with Proposition~\ref{prop:Riesz-K} and Theorem~\ref{thm:Riesz-Gram} yields the following 
+result.
+
+\begin{prop}[{\cite[Corollary 3.1]{GST93}}]\label{prop:K-Gram}
+  The map $K$ defined by (\ref{def:mapK}) is an homeomorphism if and only if the Gram matrix $\hat{\matr{G}}$ is 
+  positive definite everywhere.
+\end{prop}
+
+\begin{proof}
+  As the the functions $\hat{\varphi}_s$ are continuous, the eigenvalues $\lambda_0, \ldots, \lambda_{r-1}$ of 
+  $\hat{\matr{G}}$ are continuous and $2\pi$-periodic functions.  
+
+  $\implies$ Suppose that $K$ is a homeomorphism. Then by Theorem~\ref{thm:Riesz-Gram}, there exists $0 < A \leq B$ such 
+  that the Gram matrix $\hat{\matr{G}}$ has eigenvalues essentially bounded by $A^2$ and $B^2$. However the eigenvalues 
+  are continuous so that the bounds hold \emph{everywhere} which in turn implies that $\hat{\matr{G}}$ is positive 
+  definite \emph{everywhere}.
+
+  $\impliedby$ Suppose the Gram matrix is positive definite everywhere. The functions $\lambda_0, \ldots, \lambda_{r-1}$ 
+  are then strictly positive and continuous on the compact $[-\pi, \pi]$. As any continuous function on a compact 
+  reaches its bounds, there exists $0 < A \leq B$ such that
+  \begin{equation*}
+    A^2 = \inf_{u \in [-\pi, \pi]} \lambda_0(u) \leq \sup_{u \in [-\pi, \pi]} \lambda_{r-1}(u) = B^2
+  \end{equation*}
+  By $2\pi$-periodicity this holds everywhere. As a consequence of Theorem~\ref{thm:Riesz-Gram} and 
+  Proposition~\ref{prop:Riesz-K},  $K$ is a homeomorphism.
+\end{proof}
+
+Here is an other and final result for characterizing the Riesz basis property.
+\begin{prop}[{\cite[Theorem 3.2]{GST93}}]\label{prop:Gram-H}
+  Let $u \in \mathbb{R}$. The Gram matrix $\hat{\matr{G}}(u)$ is positive definite if and only if the infinite matrix
+  \begin{equation}
+    \hat{\matr{Z}}(u) = {\left(\hat{\varphi}_s(u+2k\pi)\right)}_{s \in \llbracket0,r-1\rrbracket, k \in \mathbb{Z}}
+  \end{equation}
+  has linearly independent rows.
+\end{prop}
+
+\begin{proof}
+  Let $u \in \mathbb{R}$. Observe that the Gram matrix $\hat{\matr{G}}(u)$ is related to $\hat{\matr{Z}}(u)$ by
+  \begin{equation*}
+    \hat{\matr{G}}(u) = \hat{\matr{Z}}(u) \hat{\matr{Z}}(u)^*
+  \end{equation*}
+  Therefore, for any $\bm{v} \in \mathbb{C}^r$, we have
+  \begin{equation*}
+    \bm{v}\hat{\matr{G}}(u)\bm{v}^* = \sum_{k=-\infty}^{\infty} \left| \sum_{s=0}^{r-1} v_s
+    \hat{\varphi}_s(u+2k\pi)\right|^2
+  \end{equation*}
+  Then,
+  \begin{align*}
+    \hat{\matr{G}}(u) \ \text{positive definite} \ &\iff \forall v \in \mathbb{C}^r\setminus\{0\}, \quad 
+    \sum_{k=-\infty}^{\infty} \left| \sum_{s=0}^{r-1} v_s \hat{\varphi}_s(u+2k\pi)\right|^2  > 0 \\
+    & \iff \forall v \in \mathbb{C}^r\setminus\{0\}, \exists k \in \mathbb{Z}, \quad \sum_{s=0}^{r-1} v_s 
+    \hat{\varphi}_s(u+2k\pi) \neq 0 \\
+    & \iff \text{rows of $\hat{\matr{Z}}(u)$ are linearly independent}
+  \end{align*}
+\end{proof}
+
+In Theorem~\ref{thm:Lee} an exact formula for the Fourier transform of the Hermite B-splines was found. This formula 
+however is unnecessarily complex because the constant term ${(-j)}^s K(m,r)$ does not affect the Riesz basis property.  
+More precisely, the following technical lemma holds.
+
+\begin{lem}\label{lem:eqbasis}
+  Let $\varphi_0, \ldots, \varphi_{r-1} \in \mathcal{L}^2$ such that $\bm{\varphi} := \{\varphi_s(\cdot-k) | s \in 
+  \llbracket0, r-1\rrbracket, k \in \mathbb{Z}\}$ is a Riesz basis for the subspace $V$ of $\mathcal{L}^2$ it spans.  
+  Let $\gamma_0, \ldots, \gamma_{r-1}$ non-zero complex numbers and define \begin{equation*}
+    \forall s \in \llbracket0,r-1\rrbracket, \quad \tilde{\varphi}_s = \gamma_s \varphi_s
+  \end{equation*}
+  Then the collection of functions $\bm{\tilde{\varphi}} := \{\tilde{\varphi_s}(\cdot-k) | s \in \llbracket0, 
+  r-1\rrbracket, k \in \mathbb{Z}\}$ is a Riesz basis for $V$.
+\end{lem}
+
+\begin{proof}
+  Let $\bm{c} \in {(\ell^2)}^r$ and let $\tilde{\bm{c}} \in {(\ell^2)}^r$ defined by $\tilde{\bm{c_s}} = \gamma_s 
+  \bm{c_s}$ for $s \in \llbracket0,r-1\rrbracket$. As $\bm{\varphi}$ is a Riesz basis there exist constants $0 < A \leq 
+  B$ such that
+  \begin{equation*}
+    A {\|\tilde{\bm{c}}\|}_{{(\ell^2)}^r}\leq {\left\| \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} c_{s,k} 
+    \tilde{\varphi}_s(\cdot-k) \right\|}_{\mathcal{L}^2} = {\left\| \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} 
+    \tilde{c}_{s,k} \varphi_s(\cdot-k) \right\|}_{\mathcal{L}^2} \leq B{\|\tilde{\bm{c}}\|}_{{(\ell^2)}^r}
+  \end{equation*}
+  Observe now that
+  \begin{align*}
+    {\|\tilde{\bm{c}}\|}_{{(\ell^2)}^r}^2 &= \sum_{s=0}^{r-1} \sum_{k=-\infty}^{\infty} \|\tilde{c_{s,k}}\|^2 \\
+    &= \sum_{s=0}^{r-1} |\gamma_s|^2 \sum_{k=-\infty}^{\infty} \|\tilde{c_{s,k}}\|^2
+  \end{align*}
+  which implies that
+  \begin{equation*}
+    \min_{s=0, \ldots, r-1} |\gamma_s| {\|{\bm{c}}\|}_{{(\ell^2)}^r} \leq {\|\tilde{\bm{c}}\|}_{{(\ell^2)}^r}
+   \leq \max_{s=0, \ldots, r-1} |\gamma_s| {\|{\bm{c}}\|}_{{(\ell^2)}^r}
+  \end{equation*}
+\end{proof}
+
+From Lemma~\ref{lem:Ns}, the Hermite B-splines $N_0, \ldots, N_{r-1}$ are continuous and \emph{regular} i.e they satisfy 
+the assumptions we previously had on $\bm{\varphi}$. As a consequence all results of the Subsection
+holds. These results allows us to prove that $\bm{N} := \{N_{s}| s\in \llbracket0,r-1\rrbracket, k \in \mathbb{Z}\}$ is 
+a Riesz basis, a result that it is central to our work.
+
+\begin{thm}
+  The collection of Hermite B-splines $\bm{N} := \{N_{s}| s\in \llbracket0,r-1\rrbracket, k \in \mathbb{Z}\}$ is a Riesz 
+  basis for the subspace of $\mathcal{L}^2$
+  \begin{equation*}
+    V_{\bm{N}} = K_{\bm{N}}\left({(\ell^2)}^r\right)
+  \end{equation*}
+  with $K_{\bm{N}}$ the map
+  \begin{align*}
+    {(\ell^2)}^r & \longrightarrow  \mathcal{L}^2 \\
+    \bm{c} & \longmapsto \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} c_{s,k} N_s(\cdot-k)
+  \end{align*}
+\end{thm}
+
+\begin{proof}
+  \begin{enumerate}
+    \item Given Lemma~\ref{lem:eqbasis}, it is equivalent to prove that the functions $\tilde{N}_0, \ldots, 
+      \tilde{N}_{r-1}$ defined in the Fourier domain by
+      \begin{equation*}
+	\widehat{\tilde{N}}(u) = {\left(2\sin \frac{u}{2}\right)}^{2m} H_{r,s}(\alpha_{2m}(u))
+      \end{equation*}
+    are such that $\bm{\tilde{N}} := \{\tilde{N}_s(\cdot-k) | s \in \llbracket0, r-1\rrbracket, k \in \mathbb{Z}\}$ is a 
+    Riesz basis.
+    \item To prove that $\bm{\tilde{N}}$ is a Riesz basis, we shall prove that the infinite matrix 
+      $\hat{\matr{Z}}_{\bm{\tilde{N}}}$ given by
+      \begin{equation*}
+	\forall u \in \mathbb{R}, \quad \hat{\matr{Z}}_{\bm{\tilde{N}}}(u) = 
+	{\left(\widehat{\tilde{N}}_s(u+2k\pi)\right)}_{s \in \llbracket0,r-1\rrbracket, k \in \mathbb{Z}}
+      \end{equation*}
+      has linearly independent rows everywhere. Then, the successive application of 
+      Propositions~\ref{prop:Riesz-K},~\ref{prop:K-Gram} and~\ref{prop:Gram-H} will prove the desired result. 
+
+    \item  Let $u \in  \mathbb{R}\setminus{2\pi\mathbb{Z}}$, $s \in \llbracket0,r-1\rrbracket$. Let $\matr{H_r(u)} := 
+      \matr{H_r}({\bm{\alpha}}_{2m}(u)), \matr{H_{r,s}(u)} := \matr{H_{r,s}}({\bm{\alpha}}_{2m}(u))$ the Hankel and 
+      modified Hankel matrices for $\bm{\alpha}$ and $H_{r}(u), H_{r,s}(u)$ the associated determinants.  For $(i,j) \in 
+      {\llbracket0,r-1\rrbracket}^2$, let $H^{(i,j)}_r(u)$ the determinant of the submatrix of $\matr{H_r(u)}$ with the 
+      $(i+1)^{th}$ row and the $(j+1)^{th}$ column deleted.  Developing the determinant, the Fourier transform of 
+      $\tilde{N}_{s}$ at u is
+      \begin{equation*}
+	\widehat{\tilde{N}}_s(u) =\left(2\sin \frac{u}{2}\right)^{2m} \sum_{i=0}^{r-1} {(-1)}^{i+s} H_r^{(i,s)}(u) 
+	\frac{1}{u^{2m-i}}
+      \end{equation*}
+      Let's rewrite this with the help of the transpose of the comatrix.
+      \begin{align*}
+	\left[\com \matr{H_r(u)}^T \begin{bmatrix} \frac{1}{u^{2m}} \\ \vdots \\ \frac{1}{u^{2m-r+1}} 
+	\end{bmatrix}\right]_s &= \sum_{i=0}^{r-1} \left[\com \matr{H_r(u)}^T\right]_{s,i} \frac{1}{u^{2m-i}} \\
+	&= \sum_{i=0}^{r-1} {(-1)}^{i+s} H_r^{(i,s)}(u) \frac{1}{u^{2m-i}} \\
+	&= \widehat{\tilde{N}}_s(u)
+    \end{align*}
+    From (\ref{eq:relHrPi}), the determinant $H_r(u)$ can only vanish if $\Pi_{2m-1,r}(e^{ju})$ vanish which does not 
+    happen for $u \in  \mathbb{R}\setminus{2\pi\mathbb{Z}}$ as none of the roots of $\Pi_{2m-1,r}$ has modulus 1.  
+    Consequently, $\matr{H_r}(u)$ is invertible and ${\matr{H_r}(u)}^{-1} = \frac{1}{H_r(u)} \com \matr{H_r}(u)^T$.  
+    Eventually, the following holds
+    \begin{equation*}
+      \begin{bmatrix} \widehat{\tilde{N}}_0(u) \\ \vdots \\ \widehat{\tilde{N}}_{r-1}(u) \end{bmatrix} = \left(2\sin 
+      \frac{u}{2}\right)^{2m} {\matr{H_r}(u)}^{-1} H_r(u) \begin{bmatrix} \frac{1}{u^{2m}} \\ \vdots \\ 
+      \frac{1}{u^{2m-r+1}} \end{bmatrix}
+    \end{equation*}
+    Rewriting this equation at $2\pi$-translations of $u$ we have
+    \begin{equation*}\scriptstyle
+      \begin{bsmallmatrix} \widehat{\tilde{N}}_0(u) & \hdots & \widehat{\tilde{N}}_0(u+2(r-1)\pi)  \\ \vdots & \ddots & 
+      \vdots \\ \widehat{\tilde{N}}_{r-1}(u) & \hdots & \widehat{\tilde{N}}_{r-1}(u + 2(r-1)\pi) \end{bsmallmatrix} = 
+      \left(2\sin \frac{u}{2}\right)^{2m} {\matr{H_r}(u)}^{-1} H_r(u) \begin{bmatrix} \frac{1}{u^{2m}} & \hdots &  
+      \frac{1}{{(u+2(r-1)\pi)}^{2m}} \\ \vdots & \ddots & \vdots \\ \frac{1}{u^{2m-r+1}} & \hdots & 
+    \frac{1}{{(u+2(r-1)\pi)}^{2m-r+1}} \end{bmatrix}
+    \end{equation*}
+    The Vandermondian matrix on the right has full rank and therefore so does the matrix on the left. Noticing that the 
+    matrix on the left is a submatrix of $\hat{\matr{Z}}_{\bm{\tilde{N}}}(u)$,  we conclude that 
+    $\hat{\matr{Z}}_{\bm{\tilde{N}}}(u)$ must have independent rows at all $u \in \mathbb{R}\setminus{2\pi\mathbb{Z}}$.
+  \end{enumerate}
+\end{proof}
+
+\subsection{Vectorial sequences of coefficients}
+
+\section{Support and approximation}
+
+\begin{example}
+In the Fourier domain the basis functions are expressed by
+\begin{align*}
+  \hat{L}_0(u) &= \int_{\mathbb{R}} \phi_1(t) e^{-jut} dt = \frac{-12}{u^4}(u\sin(u) + 2\cos(u) - 2) \\
+  \hat{L}_1(u) &= \int_{\mathbb{R}} \phi_2(t) e^{-jut} dt = \frac{-4j}{u^4}(u\cos(u) - 3\sin(u) + 2u) \\
+\end{align*}
+Define $\rho_{D^4}, \rho_{D^3}$ the Green's functions (\ref{def:Green}) of the operators $D^4, D^3$. They are given in 
+the Fourier domain by
+\begin{align*}
+  \hat{\rho}_{D^4}(u) &= \frac{1}{(ju)^4} \\
+  \hat{\rho}_{D^3}(u) &= \frac{1}{(ju)^3} \\
+\end{align*}
+Let $\matr{L} = \begin{bmatrix} L_0 \\ L_1 \end{bmatrix}$, $\bm{\rho} = \begin{bmatrix} \rho_{D^4} \\ \rho_{D^3} 
+\end{bmatrix}$.  Then,
+\begin{equation*}
+  \forall u \in \mathbb{R}, \qquad \hat{\matr{L}}(u) = \hat{\matr{R}}(u) \hat{\bm{\rho}}(u), \quad \hat{\bm{\rho}}(u) = 
+  \hat{\matr{S}}(u) \hat{\matr{L}}(u)
+\end{equation*}
+with $\hat{\matr{S}}=\hat{\matr{R}}^{-1}$ the inverse of $\hat{\matr{R}}$. Decomposing we have
+\begin{align*}
+  \hat{\rho}_{D^4} &= \hat{s_{0,0}} \hat{L}_0 + \hat{s_{0,1}} \hat{L}_1, \\
+  \rho_{D^4} &= s_{0,0} * L_0 + s_{0,1} * L_0.
+\end{align*}
+
+\begin{remark}
+  The convolutions above are are mixed convolutions, because $s_{0,0}, s_{0,1} : \mathbb{Z} \to \mathbb{C}$ and $L_{0}, 
+  L_{1} : \mathbb{R} \to \mathbb{C}$.  Mixed convolution is defined as
+  \begin{equation*}
+    s_{0,0} * L_0 (t) = \sum_{k \in \mathbb{Z}} s_{0,0}[k] L_0(t-k).  
+  \end{equation*}
+    The property of Fourier transform over a convolution product holds.
+\end{remark}
+
+As the cubic splines are generated by ${(\rho_{D^4}(.-k))}_{k \in \mathbb{Z}}$ and the quadratic are generated by 
+${(\rho_{D^2}(.-k))}_{k \in \mathbb{Z}}$, cubic and quadratic splines are reproduced by cubic Hermite splines.
+
+In the same fashion, cubic B-splines $\beta^3_+ = \Delta^4_+ \rho_{D^4}$ and quadratic B-splines $\beta^2_+ = \Delta^3_+ 
+\rho_{D^3}$ are readily expressed as finite combinations of $L_0$ and $L_1$.
+\end{example}
+
+
+

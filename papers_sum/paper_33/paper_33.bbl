@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{Mallat}
+S.Mallat.
+\newblock Multiresolution approximations and wavelet orthonormal bases of
+  ${L}^2(\mathbb{R})$.
+\newblock pages 69--87, 1989.
+
+\bibitem{DeBoor}
+Carl de~Boor.
+\newblock {\em A practical guide to splines}.
+\newblock Springer, revised edition, 2001.
+
+\end{thebibliography}

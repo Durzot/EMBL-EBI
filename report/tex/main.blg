@@ -1,0 +1,83 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: main.aux
+The style file: biblatex.bst
+A level-1 auxiliary file: chapter2.aux
+A level-1 auxiliary file: chapter3.aux
+A level-1 auxiliary file: appendixA.aux
+A level-1 auxiliary file: appendixB.aux
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: main-blx.bib
+Database file #2: zot.bib
+Reallocated field_info (elt_size=4) to 10004 items from 5000.
+Warning--I'm ignoring aldroubi_oblique_1996's extra "pages" field
+--line 377 of file zot.bib
+Warning--I didn't find a database entry for "schoenberg_cardinal_1973:1"
+Warning--I didn't find a database entry for "FAUU19"
+Warning--I didn't find a database entry for "Lee76a"
+Warning--I didn't find a database entry for "Lee76b"
+Warning--I didn't find a database entry for "Sch73"
+Warning--I didn't find a database entry for "SS73"
+Warning--I didn't find a database entry for "AldUns94"
+Warning--I didn't find a database entry for "GST93"
+Warning--I didn't find a database entry for "Sch72b"
+Warning--I didn't find a database entry for "LeeSh76"
+Warning--I didn't find a database entry for "LS73"
+Biblatex version: 3.8
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+You've used 51 entries,
+            6268 wiz_defined-function locations,
+            1720 strings with 45665 characters,
+and the built_in function-call counts, 334726 in all, are:
+= -- 17250
+> -- 16888
+< -- 2307
++ -- 15900
+- -- 11951
+* -- 23433
+:= -- 36316
+add.period$ -- 0
+call.type$ -- 51
+change.case$ -- 796
+chr.to.int$ -- 1254
+cite$ -- 100
+duplicate$ -- 33675
+empty$ -- 28393
+format.name$ -- 3311
+if$ -- 60348
+int.to.chr$ -- 0
+int.to.str$ -- 170
+missing$ -- 0
+newline$ -- 2442
+num.names$ -- 2509
+pop$ -- 16129
+preamble$ -- 1
+purify$ -- 1032
+quote$ -- 0
+skip$ -- 9886
+stack$ -- 0
+substring$ -- 29079
+swap$ -- 11345
+text.length$ -- 1840
+text.prefix$ -- 51
+top$ -- 1
+type$ -- 1722
+warning$ -- 0
+while$ -- 4154
+width$ -- 0
+write$ -- 2392
+(There were 12 warnings)

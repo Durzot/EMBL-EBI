@@ -1,0 +1,53 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: paper_33.aux
+The style file: unsrt.bst
+Database file #1: xmpl.bib
+I was expecting a `,' or a `}'---line 15 of file xmpl.bib
+ :     
+ :     volume = {315},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--empty journal in Mallat
+You've used 2 entries,
+            1791 wiz_defined-function locations,
+            459 strings with 3723 characters,
+and the built_in function-call counts, 438 in all, are:
+= -- 40
+> -- 8
+< -- 1
++ -- 4
+- -- 2
+* -- 18
+:= -- 68
+add.period$ -- 6
+call.type$ -- 2
+change.case$ -- 2
+chr.to.int$ -- 0
+cite$ -- 3
+duplicate$ -- 26
+empty$ -- 46
+format.name$ -- 2
+if$ -- 104
+int.to.chr$ -- 0
+int.to.str$ -- 2
+missing$ -- 3
+newline$ -- 13
+num.names$ -- 2
+pop$ -- 11
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 14
+stack$ -- 0
+substring$ -- 20
+swap$ -- 8
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 4
+width$ -- 3
+write$ -- 23
+(There was 1 error message)

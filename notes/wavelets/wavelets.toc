@@ -1,0 +1,4 @@
+\babel@toc {english}{}
+\contentsline {section}{\numberline {I}A cardinal spline approach to wavelets}{1}
+\contentsline {subsection}{\numberline {I.1}Main results}{2}
+\contentsline {section}{\numberline {II}Goodman's papers}{3}

@@ -1,0 +1,643 @@
+\chapter{The Hermite interpolation problem}\label{chapter2}
+
+From a historical perspective, the interpolation problem was intially stated as finding an interpolation function at 
+equally-spaced locations, as described in Chapter~\ref{chapter1}. Later on, as the interest in interpolation grew among 
+mathematicians, a number of more general formulas were indentified to cover fairly arbitrary point configurations.  
+However, configurations with repeated interpolation point locations remained largely unexplored until the general 
+problem formulated by Hermite in 1877~\cite{hermite_1877}. There, Hermite sets the task of finding a polynomial of 
+degree $n-1$ that satisfies a total of $n$ interpolating conditions in the form of consecutive derivatives at distinct 
+locations.  Theorem~\ref{thm:unique_pol} states that there exists a unique such polynomial, and we discussed how the 
+interpolating polynomial can be written in \emph{Newton form}, using the extended divided difference operator. However,
+the result does not extend to the problem of interpolating at an infinite number of locations, even when only values and 
+not derivatives are to be reproduced, as the degree of the interpolating polynomial would then be infinite. Another 
+approach to the problem, as previously mentioned at the end of Section~\ref{sec:splines}, is to break it down to an 
+infinite number of finite interpolation problems. In that setting, the focus is restricted to a subset of the 
+conditions, defining a \emph{piece} of the interpolant, before joining pieces in a smooth fashion.  This is the essence 
+of splines, which are fundamental in our formulation of solutions to the so-called \emph{cardinal Hermite interpolation 
+problem}.
+
+\section{Schoenberg's theorems}
+
+We here introduce the fundamental results of Schoenberg on the general problem of interpolating a function and a certain 
+number of consecutive derivatives on the integer grid. Schoenberg dedicated a good part of his life to his work on 
+splines, starting from his landmark paper~\cite{schoenberg_contributions_1946}, and continued with a series of papers 
+among 
+which~\cite{schoenberg_cardinal_1969},~\cite{schoenberg_cardinal_1972a},~\cite{schoenberg_cardinal_1972b},~\cite{lipow_cardinal_1973} 
+and~\cite{schoenberg_cardinal_1973} are of particular relevance to our work. This section is highly inspired by his work 
+to which we will refer a lot.  An elegant compilation Schoenberg's work on splines can be found 
+in~\cite{schoenberg_cardinal_1973:1}, which contains 10 lectures, each presenting one specific aspect of splines while 
+laying the foundations for the lectures that follows. We start by stating the notations that we will use throughout this 
+chapter.
+
+\begin{itemize}
+  \itemsep0em
+  \item $r, m, n \in \mathbb{N}^*$, $r \geq m$;
+  \item $\mathbb{Z}_r = {\{ t_j=k | kr \leq j < k(r+1) \}}_{j \in \mathbb{Z}}$ is the set of integers repeated $r$ 
+    times;
+  \item $\mathscr{S}_{n}$ are the Schoenberg's cardinal splines of \emph{order} $n$    
+    (Definition~\ref{def:card-splines});
+  \item $\mathscr{S}_{n, \mathbb{Z}_r}$ are the De Boor's splines of order $n$ with knots on $\mathbb{Z}_r$ 
+    (Definition~\ref{def:gen-splines});
+  \item $\bm{y}^{(0)}, \ldots, \bm{y}^{(r-1)}$ are sequences of real numbers.
+\end{itemize}
+
+\subsection{The cardinal Hermite interpolation problem}
+
+\begin{deftn}[C.H.I.P, {\cite[(10)-(12)]{lipow_cardinal_1973}}]
+  The $r$ sequences of real numbers $\bm{y}^{(0)}, \ldots, \bm{y}^{(r-1)}$ being prescribed, the cardinal Hermite 
+  interpolation problem (C.H.I.P) for the vector space $\mathcal{V}$, ($\bm{y}^{(0)}, \ldots, \bm{y}^{(r-1)}, 
+  \mathcal{V}$), is the problem of finding a function $S \in \mathcal{V}$
+  that agrees with the sequences $\bm{y}^{(0)}, \ldots, \bm{y}^{(r-1)}$ in the sense that
+  \begin{equation}\label{def:chip}
+    \forall \rho \in \llbracket0,r-1\rrbracket, \quad \forall k \in \mathbb{Z}, \quad S^{(\rho)}(k) = y^{(\rho)}_k
+  \end{equation}
+\end{deftn}
+\noindent In non-mathematical words, a C.H.I.P aims at interpolating an unknown function for which we only have samples 
+of its values and possibly its derivatives on a uniformly-spaced grid. Such questions arise in signal processing and 
+image nalysis, where the uniform grid is the array detector of a camera and the samples are the pixels, all of which 
+form an image. An image is thus only a discretized version of an underlying continuous reality that we would like to 
+approximate from the pixels. One such continuous reality could, for instance, be the surface of a cell, which, when 
+successfully modelled, can increase our understanding of its mechanical and biological properties.\\
+
+In Chapter~\ref{chapter1}, the space of cardinal splines of order $n$, $\mathscr{S}_n$, was defined as those functions 
+that are polynomials of order $n$ on all intervals $(k, k+1)$ for $k \in \mathbb{Z}$ and that belong to the class 
+$\mathcal{C}^{n-2}$. It is possible and relevant for the Hermite interpolation problem to consider similar functions 
+with less degrees of continuity at the joining points.
+\begin{deftn}[{\cite[Lecture 5]{schoenberg_cardinal_1973-1}}]
+  The set $\mathscr{S}_{n, r}$ of cardinal splines of \emph{order} $n$ and \emph{multiplicity} $r$ denotes all functions 
+  $S$ such that
+  \begin{enumerate}
+    \item $S \in \Pi_{<n}$ on $(k, k+1)$ for $k \in \mathbb{Z}$;
+    \item $S \in \mathcal{C}^{n-r-1}$.
+  \end{enumerate}
+  At times, it is convenient to consider the splines halfway between the integers, that is,
+  \begin{equation*}
+    \mathscr{S}^*_{n,r} = \{S | S(\cdot + \frac{1}{2}) \in \mathscr{S}_{n,r}\}.
+  \end{equation*}
+\end{deftn}
+
+\begin{remark}
+  This new set of splines connects to the sets defined in Definition~\ref{def:ppol-cont},~\ref{def:gen-splines}
+  \begin{equation*}
+    \mathscr{S}_{n,r} = \mathscr{S}_{n, \mathbb{Z}_r} = \Pi_{<n, \mathbb{Z}, \bm{\nu}},
+  \end{equation*}
+  where $\bm{\nu}$ is the constant sequence with value $n-r$. Also, splines of order $n$ for the particular case of 
+  multiplicity $r=1$ are cardinal splines as in Definition~\ref{def:card-splines}, i.e,
+  \begin{equation*}
+    \mathscr{S}_n = \mathscr{S}_{n,1}.
+  \end{equation*}
+\end{remark}
+\noindent Solutions for the C.H.I.P~\ref{def:chip} are readily obtained in the form of functions in $S_{n,r}$ or $S_{n, 
+r}^*$ as expressed in the following lemma.
+\begin{lem}\label{lemma:manifold}
+  \begin{enumerate}
+    \item The Hermite interpolation problem~\ref{def:chip} with $\mathcal{V}=\mathscr{S}_{n,r}$ has infinitely many 
+      solutions that form a linear manifold of dimension $n-2r$.
+    \item The Hermite interpolation problem~\ref{def:chip} with $\mathcal{V}=\mathscr{S}_{n,r}^*$ has infinitely many 
+      solutions that form a linear manifold of dimension $n-r$.
+  \end{enumerate}
+\end{lem}
+
+The proof is given in Appendix~\ref{chapter:annexA}, extending Schoenberg's proof of (\cite[Lemma 1.1, Lecture 
+4]{schoenberg_cardinal_1973-1}) for cardinal interpolation, which is none other than cardinal Hermite interpolation for 
+$r=1$. An immediate corollary of this lemma for the sequences to be interpolated that vanish identically is obtained as 
+follows.
+
+\begin{lem}\label{lemma:linear-space}
+  Define 
+  \begin{align}\label{def:ringsplines}
+    \mathring{\mathscr{S}}_{n, r} &= \{S \in \mathscr{S}_{n,r}| S^{(\rho)}(k) = 0, \rho=0, \ldots, r-1, k \in 
+    \mathbb{Z}\}; \\
+    \mathring{\mathscr{S}}_{n,r}^* &= \{S \in \mathscr{S}_{n,r}^*| S^{(\rho)}(k) = 0, \rho=0, \ldots, r-1, k \in 
+    \mathbb{Z}\}.
+  \end{align}
+  Then, $\mathring{\mathscr{S}}_{n, r},  \mathring{\mathscr{S}}_{n, r}^*$ are linear spaces with
+  \begin{equation}
+    \dim \mathring{\mathscr{S}}_{n,r} = n-2r, \quad \dim \mathring{\mathscr{S}}_{n,r}^* = n-r.
+  \end{equation}
+\end{lem}
+
+\begin{proof}
+  The proof is immediate using Lemma~\ref{lemma:manifold}. Indeed, $\mathring{\mathscr{S}}_{n,r}$ is exactly the set of 
+  solutions to the C.H.I.P ($0, \ldots, 0, \mathscr{S}_{n,r}$), which is not only a linear manifold but also a linear 
+  space as it contains the trivial spline. Furthermore, it has dimension $n-2r$. A similar reasoning applies to 
+  $\mathring{\mathscr{S}}_{n,r}^*$.
+\end{proof}
+
+\subsection{Spline interpolant to sequences of power growth}
+
+Let $\gamma \geq 0$ be a nonnegative real number and let
+\begin{align}
+  \mathcal{Y}^{\gamma} &= \{\bm{y} \in \mathbb{R}^{\mathbb{Z}} | y_k = \mathcal{O}_{|k| \to \infty}({|k|}^{\gamma})\},\\
+  \mathscr{S}_{n, r}^{\gamma} &= \{S \in \mathscr{S}_{n,r} | S(t) = \mathcal{O}_{|t| \to \infty}({|t|}^{\gamma})\},
+\end{align}
+be respectively the spaces of power growth sequences and power growth splines with power $\gamma$.  As mentioned by in 
+after (\cite[(2.1)]{schoenberg_cardinal_1973-1}), application of Markov's theorem on bounds shows that all derivatives 
+of $S \in \mathscr{S}_{n,r}^{\gamma}$ satisfy the same decay condition. This is something Schoenberg most probably 
+noticed after publishing (\cite{lipow_cardinal_1973}) as, in the latter, he defines $\mathscr{S}_{n, r}^{\gamma}$ as the set of splines 
+whose derivatives up to $r-1$ are of power growth $\gamma$. \\
+
+From now on we assume that $n=2m$ is an even number with $m \geq r$. This is the choice made by Lipow and Schoenberg n 
+(\cite{lipow_cardinal_1973}) in order to avoid rewriting known results with slightly different notations.  Indeed, all 
+results for even values of $n$ are easily extended to the case of odd values of $n$ using the spline space $S_{n,r}^*$ 
+and all subsequently defined sets as we did in Lemma~\ref{lemma:manifold}.  This lemma also shows that the 
+C.H.I.P~\ref{def:chip} has an infinite number of solutions in the form of splines. However, if we consider functions in 
+the set $\mathscr{S}_{2m,r}^{\gamma}$ of splines with power growth $\gamma$, the set of solutions to ($\bm{y^{(0)}}, 
+\ldots, \bm{y^{(r-1)}}, \mathscr{S}_{2m,r}^{\gamma}$) reduces to a unique element provided that the sequences satisfy 
+the same power growth. This is the topic of the following theorem, which is the main result and is central to the theory 
+of Hermite interpolation
+
+\begin{thm}[{\cite[Theorems 1,4]{lipow_cardinal_1973}}]\label{thm:LH-gamma}
+  The C.H.I.P ($\bm{y}^{(0)}, \ldots, \bm{y}^{(r-1)}, \mathscr{S}_{2m,r}^{\gamma})$ has a unique solution if and only if 
+  $\bm{y}^{(0)}, \ldots, \bm{y}^{(r-1)}$ are in  $\mathcal{Y}^{\gamma}$. In that case, the solution is explicitly given 
+  by the Lagrange-Hermite expansion
+  \begin{equation}\label{eq:LH}
+    S(t) = \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} y_k^{(s)} L_s(t-k)
+  \end{equation}
+  where $L_0, \ldots, L_{r-1}$ are the fundamental splines as defined in Definition~\ref{def:fundamental-r}. This 
+  expansion converges absolutely and locally uniformly.
+\end{thm}
+\noindent The full proof is provided in~\cite{lipow_cardinal_1973} and~\cite[Lecture 5]{schoenberg_cardinal_1973-1}. We 
+hereafter give a sketch of the proof and refer the reader to~\cite{lipow_cardinal_1973} for details. 
+  
+\begin{proof}[Proof sketch]
+  \textbf{(Unicity)} We start by noticing that the difference of two solutions $S$ belongs to 
+  $\mathring{\mathscr{S}}_{2m, r}^{\gamma}$.  From Lemma~\ref{lemma:linear-space}, this set is a linear space of 
+  dimension $2m-2r$. The $2m-2r$ ``eigensplines'' $\{S_1, \ldots, S_{2m-2r}\}$ (Definition~\ref{def:eigsplines-r}) form 
+  a basis of this linear space (\cite[Lemma 3, Lecture 5]{schoenberg_cardinal_1973-1}). As a consequence, there exist 
+  coefficients $c_1, \ldots, c_{2m-2r}$ such that
+  \begin{equation}\label{eq:diff-expansion}
+    S = \sum_{j=1}^{2m-2r} c_j S_{j}.
+  \end{equation}
+  Eigensplines behaving towards infinity as~\cite[(5.16), (5.17)]{lipow_cardinal_1973}
+  \begin{align}
+    0 &< \overline{\lim}_{x \to -\infty} \frac{|S_{j}(x)|}{|\lambda_{j}|^x} < \infty \quad j=1, \ldots, m-r, \\
+    0 &< \overline{\lim}_{x \to \infty} \frac{|S_{j}(x)|}{|\lambda_{j}|^x} < \infty \quad j=m-r+1, \ldots, 2m-2r,
+  \end{align}
+  and $S(t) = \mathcal{O}_{|t|\to\infty}(|t|^{\gamma})$ having power growth $\gamma$ at infinity, all the coefficients 
+  must vanish and so does $S$.  \\
+
+  \textbf{(Existence)} An explicit solution is constructed using an expansion in terms of \emph{fundamental} splines 
+  ${L_s := L_{2m,r,s}}$ for $s \in \llbracket0,r-1\rrbracket$ (Definition~\ref{def:fundamental-r}). They are defined as 
+  bounded functions such that $L_s$ and $s$ have the same parity and
+  \begin{equation*}
+    L_s(t) = \begin{dcases} P_s(t) & \text{if} \ 0 \leq t \leq 1, \\
+    \sum_{j=1}^{m-r} c_{j,s} S_j(t) & \text{if} \ t \geq 1, \end{dcases}
+  \end{equation*}
+  with
+  \begin{equation*}\scriptstyle
+    P_s(t) = \begin{dcases}\scriptstyle \frac{1}{s!}t^s + a_{1,s}t^r + a_{2,s}t^{r+2} + \cdots + a_{m-r+1,s}t^{2m-r} + 
+      a_{m-r+2,s} t^{2m-r+1} + \cdots + a_{m,s} t^{2m-r} & \text{if $2|(r-s)$} \\
+      \scriptstyle\frac{1}{s!}t^s + a_{1,s}t^{r+1} + a_{2,s}t^{r+3} + \cdots + a_{m-r,s}t^{2m-r-1} + a_{m-r+1,s} 
+      t^{2m-r} + \cdots + a_{m,s} t^{2m-r} & \text{otherwise},
+   \end{dcases}
+  \end{equation*}
+  where the $2m-r$ unknowns $a_{1,s}, \ldots, a_{m,s}, c_{1,s}, \ldots, c_{m-r,s}$ defining $L_s$ are obtained as the 
+  unique solution of the linear system of $2m-r$ equations
+  \begin{equation*}
+    \forall \rho \in \llbracket0,2m-r-1\rrbracket, \qquad P_s^{(\rho)}(1) =\sum_{j=1}^{m-r} c_{j,s} S_j^{(\rho)}(1).
+  \end{equation*}
+  The solution is unique because the associated homogeneous system (removing the $\frac{1}{s!}t^s$) is non-singular.  
+  Indeed, if it were to be singular, there would exist a non trivial bounded spline in $\mathscr{S}_{2m,r}^{0}$
+  that vanishes with all its derivatives up to order $r-1$. However, from the proof of unicity we know that there can be 
+  at most one such spline. The trivial spline being one of of them leads to a contradiction.\\
+
+  A solution to the C.H.I.P ($\bm{y}^{(0)}, \ldots, \bm{y}^{(r-1)}, \mathscr{S}_{2m,r}^{\gamma})$ is then given by
+  \begin{equation*}
+    S(t) = \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} y_k^{(s)} L_s(t-k),
+  \end{equation*}
+  since, by construction, the \emph{fundamental} splines $L_s$ are in $\mathscr{S}_{2m,r}^0 \subset 
+  \mathscr{S}_{2m,r}^{\gamma}$ and satisfy
+  \begin{equation}\label{eq:fund-prop}
+    \forall \rho \in \llbracket0,r-1\rrbracket, \qquad \forall k \in \mathbb{Z}, \quad L_s^{(\rho)}(k) = 
+    \delta_{k}\delta_{s-\rho}.
+  \end{equation}
+  This completes the proof.
+\end{proof}
+
+These results have been extended to the cases of sequences in $l^p$ for $1 \leq p \leq \infty$, where the interpolating 
+spline is a function in the set 
+\begin{equation*}
+  \mathcal{L}^p_r = \{F:\mathbb{R} \to \mathbb{C}| F^{(\rho)} \in \mathcal{L}^p(\mathbb{R}, \mathbb{C}), \rho=0, \ldots, 
+  r-1\}.
+\end{equation*}
+
+\begin{thm}[{\cite[Theorems 2,4]{lipow_cardinal_1973}}]\label{thm:LH-p} Let $1 \leq p \leq \infty$. The C.H.I.P 
+  ($\bm{y}^{(0)}, \ldots, \bm{y}^{(r-1)}, \mathscr{S}_{2m,r}\cap L^p_r)$ has a unique solution if and only if 
+  $\bm{y}^{(0)}, \ldots, \bm{y}^{(r-1)}$ are in  $l^p$. In that case, the solution is explicitly given by the 
+  Lagrange-Hermite expansion
+  \begin{equation}
+    S(t) = \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} y_k^{(s)} L_s(t-k).
+  \end{equation}
+  This expansion converges absolutely and locally uniformly.
+\end{thm}
+
+\section{Hermite B-splines}
+
+We refer to as \emph{generators} functions that span a given linear space in the usual algebraic sense.  This set of 
+functions can be infinite as we shall see. In some cases, it is itself generated as all integer translates of a finite 
+set of functions, to which we shall also refer to as \emph{generators} by extension. In that sense, the set of functions 
+arising from the Whittaker-Shannon interpolation formula, expressed as
+\begin{equation*}
+  SW = \{y(t) = \sum_{k=-\infty}^{\infty} y_k \sinc(t-k) | y_k \in \mathcal{Y}\}
+\end{equation*}
+with $\mathcal{Y}$ all real or complex sequences satisfying $\displaystyle\sum_{k=-\infty, k\neq0}^{\infty} 
+|\frac{y_k}{k}|<\infty$ is generated by the infinite set of functions ${\{\sinc(\cdot-k)\}}_{k \in \mathbb{Z}}$. This 
+infinite set of functions is itself generated by integer translates of the single function $\{\sinc\}$. We shall thus 
+refer to $\sinc$ as a generator for the space $SW$. In that sense also, the $r$ fundamental splines $\{L_0, \ldots, 
+L_{r-1}\}$ are generators for the linear space
+\begin{equation}\label{eq:def-V}
+  V = \{S(t) = \sum_{k=-\infty}^{\infty} \sum_{s=0}^{r-1} c_{k,s} L_s(t-k) | c_0, \ldots, c_{r-1} \in 
+\mathbb{R}^{\mathbb{Z}}\}
+\end{equation}
+The functions appearing as infinite sums in (\ref{eq:def-V}) may not always be properly defined, in which case
+conditions must be set on sequences for the series to converge. From Theorem~\ref{thm:LH-gamma} and 
+Theorem~\ref{thm:LH-p}, we know that, if the sequences of coefficients are in $\mathcal{Y}^{\gamma}$ or in $l^p$, then 
+the series converges locally uniformly to a function in $S_{2m, r}^{\gamma}$ or $S_{2m, r}\cap L^p_r$ respectively. \\
+
+Many questions naturally arise about the properties of the generators and the properties of the generated functions. The 
+next section introduces the Hermite B-splines, closely related to $L_{2m,r,0}, \ldots, L_{2m, r, r-1}$, while an 
+extensive study of their properties is postponed until Chapter~\ref{chapter3}.
+
+\subsection{Definition from fundamental splines}
+
+The Hermite B-splines were first introduced in an attempt to extend the B-spline representation existing in the set 
+$\mathscr{S}_n$ of splines of order $n$ to the set $\mathscr{S}_{n,r}$ of splines of order $n$ and multiplicity $r$.   
+As was the case in the previous section, we continue to only consider even values of $n$ with $n=2m$.
+
+\begin{deftn}[Hermite B-splines,{~\cite[Definition 1]{schoenberg_cardinal_1973}}]\label{def:hbsplines}
+  The Hermite B-splines are the $r$ elements $N_{2m,r,0}, \ldots, N_{2m,r,r-1}$ of $\mathscr{S}_{2m,r}$ defined by 
+  \begin{equation}\label{eq:def-hbsplines}
+    N_{2m,r,s}(t) = \sum_{k=-(m-r)}^{m-r} c_k L_{2m,r,s}(t-k),
+  \end{equation}
+  with $c_k$ the coefficients of the Euler-Frobenius polynomial of multiplicity $r$ (Definition~\ref{def:EF-r}).
+\end{deftn}
+
+\begin{example}\label{ex:N0}
+  Consider the case of multiplicity 1, \textit{i.e} $r=1$, in order to see how Hermite B-splines relate to $M_{2m}$, 
+  B-splines of $S_{2m}$. As $M_{2m}$ is supported in $(-m,m)$, the sequence ${\bm{y} = {(M_{2m}(k))}_{k \in 
+  \mathbb{Z}}}$ has at most $2m-1$ non zero elements and is hence bounded. From Theorem~\ref{thm:LH-gamma}, the 
+  Lagrange-Hermite expansion for the bounded sequence $\bm{y}$ defines the unique bounded element in $\mathscr{S}_{2m,1} 
+  = \mathscr{S}_{2m}$ that interpolates $\bm{y}$.  As $M_{2m}$ itself is one such element, unicity implies that this 
+  Lagrange-Hermite expansion equals $M_{2m}$ everywhere, meaning that \begin{equation}\label{eq:expansion-M2m}
+    \forall t \in \mathbb{R}, \qquad M_{2m}(t) = \sum_{k=-(m-1)}^{m-1} M_{2m}(k) L_0(t-k).
+  \end{equation}
+  From Definition~\ref{def:EF} of the Euler-Frobenius polynomial, we have that
+  \begin{equation*}
+    \Pi_{2m}(t) = (2m-1)! \sum_{k=-(m-1)}^{m-1} Q_{2m}(k+m) t^{k+m-1}.
+  \end{equation*}
+  However, from (\ref{eq:def-EF-r}), $(2m-1)!Q_{2m}(k+m)=c_k$. From (\ref{eq:cbspline}), ${Q_{2m}(k+m) = M_{2m}(k)}$.  
+  Consequently, multiplying (\ref{eq:expansion-M2m}) by $(2m-1)! $ and replacing $(2m-1)!M_{2m}(k)$ by $c_k$ leads to
+  \begin{equation*}
+    \forall t \in \mathbb{R}, \quad (2m-1)!M_{2m}(t) = N_{2m,1,0}(t).
+  \end{equation*}
+\end{example}
+The central B-spline $M_{2m}$ of order $2m$ is localized in the sense that it is supported within the compact set 
+$[-m,m]$. Therefore, so is $N_{2m,1,0}$. The following lemma extends this observation to all Hermite B-splines of 
+general multiplicity $r$.
+
+\begin{lem}[{\cite[Lemma 2]{schoenberg_cardinal_1973}}]\label{lemma:supp-hbsplines}
+  The Hermite B-splines $N_{2m,r,0}, \ldots, N_{2m,r,r-1}$ have their support in
+  \begin{equation*}
+    [-(m-r+1), m-r+1].
+  \end{equation*}
+  Moreover, for $s \in \llbracket0,r-1\rrbracket$, $N_{2m,r,s}$ has the same parity as $s$.
+\end{lem}
+The proof can be found in~\cite{schoenberg_cardinal_1973} and is reproduced in~\ref{proof:supp-hbsplines}. 
+
+\subsection{Hermite B-splines form a basis}
+
+The ``B'' in B-splines stands for basis. Therefore, the names of $N_{2m,r,0}, \ldots, N_{2m,r,r-1}$ suggest that they 
+form a basis of some spline spaces together with their integer translates. This result is true, and we shall prove that, 
+for $s \in \llbracket0,r-1\rrbracket$, $N_{2m,r,s}$ and its translates form a basis for the subspace
+\begin{equation}\label{def:subspace-s}
+  \mathscr{S}_{2m,r}^{(s)} = \{ S \in \mathscr{S}_{2m,r} | S^{(\rho)}(k) = 0, \rho \in \{0, \ldots, r-1\}\setminus 
+  \{s\}, k \in \mathbb{Z}\}.
+\end{equation}
+Let $s \in \llbracket0,r-1\rrbracket$. Observe first that $N_{2m,r,s} \in \mathscr{S}_{2m,r}^{(s)}$. Indeed, combining 
+(\ref{eq:fund-prop}) and (\ref{eq:def-hbsplines}) shows that
+\begin{equation*}
+  \forall \rho \in \llbracket0,r-1\rrbracket, \forall k \in \mathbb{Z}, \qquad N_s^{(\rho)}(k) = \delta_{s-\rho} 
+  \sum_{l=-(m-r)}^{m-r} c_k \delta_{l-k}.
+\end{equation*}
+Thus, only derivatives of order $s$ of $N_{2m,r,s}$ may be non-zero on the integer grid. The definition 
+(\ref{def:subspace-s}) indicates that $\mathscr{S}_{2m,r}^{(s)}$ is invariant by integer shift. Therefore, all integer 
+translates of $N_{2m,r,s}$ are also in that subspace. The set $\mathscr{S}_{2m,r}^{(s)}$ being a linear space, any 
+function $S$ of the form
+\begin{equation}\label{eq:lc-hbsplines}
+  S = \sum_{k=-\infty}^{\infty} c_{k} N_s(\cdot-k)
+\end{equation}
+is also in $\mathscr{S}_{2m,r}^{(s)}$, so that
+\begin{equation*}
+  \Span \{N_s(\cdot-k) | k \in \mathbb{Z} \} \subseteq \mathscr{S}_{2m,r}^{(s)}.
+\end{equation*}
+The function given by (\ref{eq:lc-hbsplines}) is well-defined for any sequence of coefficients since, at any real $t$,
+the value $N_{2m,r,s}(t-k)$ does not vanish only for a finite number of integers $k$.  \\
+
+It remains to be shown that any spline $S \in \mathscr{S}_{2m,r}^{(s)}$ can also be written as (\ref{eq:lc-hbsplines}) 
+for a unique sequence $\bm{c}$. If that is the case, then $\{N_{2m,r,s}(\cdot-k) | k \in \mathbb{Z}\}$ is a basis for 
+$\mathscr{S}_{2m,r}^{(s)}$ and the names ``Hermite B-splines'' is justified. In order to be able to prove that, 
+Schoenberg and Sharma assume that the polynomial $\Pi_{2m,r}$ is irreducible over the rational field~\cite[Assumption 
+1]{schoenberg_cardinal_1973}. This assumption is most probably true but is too complex compared to the arguments used so 
+far and is therefore slightly unsatisfying. From there, one can then show that $\{N_{2m,r,s}(\cdot-k) | k \in 
+\mathbb{Z}\}$ are locally linearly independent, meaning that that the relation 
+\begin{equation*}
+  \sum_{k=-(2m-2r+1)}^{0} c_k N_s(t-k) = 0, \quad  -(m-r+1) \leq t \leq -(m-r) 
+\end{equation*}
+can only hold if all the coefficients vanish as
+\begin{equation*}
+  c_{-(2m-2r+1)} = \cdots = c_0 = 0
+\end{equation*}
+It was however show~\cite{lee_b-splines_1975} that this assumption is not needed and the local linear independence always holds.
+\begin{lem}[{\cite[Lemma 1]{lee_b-splines_1975}}]\label{lemma:lee73}
+  For every $s \in \llbracket0, r-1\rrbracket$, the $2m-2r+2$ polynomials
+  \begin{equation*}
+    N_{2m,r,s}, N_{2m,r,s}(\cdot+1), \ldots, N_{2m,r,s}(\cdot+2m-2r+1)
+  \end{equation*}
+  are linearly independent over $\left(-(m-r+1), -(m-r)\right)$.
+\end{lem}
+
+The proof consists in establishing that the determinant of the matrix of an homogeneous system of equations is non-zero, 
+which is quite technical. We refer to~\cite{lee_b-splines_1975} for details. \\
+
+The following theorem can now be established and concludes our discussion.
+\begin{thm}[{\cite[Theorem 3]{schoenberg_cardinal_1973}}]
+  Every $S \in \mathscr{S}_{2m,r}^{(s)}$ admits a unique representation of the form
+  \begin{equation}\label{eq:expansion-Ns}
+    S = \sum_{k=-\infty}^{\infty} a_k N_{2m,r,s}(\cdot-k).
+  \end{equation}
+\end{thm}
+
+\begin{proof} For $s\in \llbracket0,r-1\rrbracket$, let $N_s := N_{2m,r,s}$.
+  \begin{enumerate}
+    \item Let $S_0 \in \mathscr{S}_{2m,r}^{(s)}$ be such that $S_0(t) = 0$ for $t < 0$. Let $R_s$ be the forward Hermite 
+      B-spline, \textit{i.e}, $R_s(t) = N_s(t-(m-r+1))$, so that $R_s$ is supported in $(0, 2m-2r+2)$. Let $a_0 = 
+      \frac{S^{(s)}(1)}{R_s^{(s)}(1)}$. Consider the function
+      \begin{equation*}
+	S_1 = S_0 - a_0 R_s.
+      \end{equation*}
+      By construction, the function $S_1$ is in $\mathscr{S}_{2m,r}^{(s)} \subset \mathcal{C}^{2m-r-1}$ and vanish 
+      identically on $(-\infty, 0)$.  Expanding it about 0 in its Taylor series shows that the order $2m$ polynomial 
+      ${S_1}_{|(0,1)}$ can be written as
+      \begin{equation*}
+	S_1(t) = \sum_{k=2m-r}^{2m-1} \alpha_{k} t^k, \quad 0 < t < 1
+      \end{equation*}
+      From the definition (\ref{def:subspace-s}) of $\mathscr{S}_{2m,r}^{(s)}$, $S_1^{(\rho)}(1) = 0$ for $\rho=0, 
+      \ldots, r-1, \rho \neq s$ but also $S_1^{(s)}(1) = 0$ by construction of $S_1$. These $r$ vanishing derivatives at 
+      $1$ can only hold if the coefficients $\alpha_{k}$ vanish altogether, that is, $S_1$ vanishes on $(0,1)$.  
+      Considering $a_1 = \frac{S_1^{(s)}(2)}{R_s^{(s)}(1)}$, and the function
+      \begin{equation*}
+	S_2 = S_1 - a_1 R_s(\cdot-1),
+      \end{equation*}
+      we see that $S_2$ vanishes on $(1,2)$ and by extension and $(-\infty, 2)$. Continuing in like manner, we have
+      \begin{equation*}
+	S_0 = \sum_{k=0}^{\infty} a_k R_s(\cdot-k),
+      \end{equation*}
+      with the coefficients ${(a_k)}_{k \geq 0}$ uniquely determined. \\
+    \item Let $S \in \mathscr{S}_{2m,r}^{(s)}$. As 
+      \begin{equation*}
+	R_s(t), \ldots, R_s(t+2m-2r+1), \qquad 0 \leq t \leq 1,
+      \end{equation*}
+      are linearly independent on $(0,1)$ (Lemma~\ref{lemma:lee73}), there exist unique coefficients $a_{-2m+2r-1}, 
+      \ldots, a_0$ such that
+      \begin{equation*}
+	S(t) = \sum_{k=-(2m-2r+1)}^{0} a_k R_s(t-k), \qquad 0 < t < 1,
+      \end{equation*}
+      Indeed, $S_{|(0,1)}$ is a polynomial of order $2m$ satisfying 
+      \begin{equation*}
+	S^{(\rho)}(0) = S^{(\rho)}(1) = 0, \qquad \rho=0, \ldots, r-1, \rho \neq s.
+      \end{equation*}
+      This make a total of $2r-2$ constraints. As a consequence, the set of all polynomial or order $2m$ satisfying 
+      these constraints is a linear space of dimension $2m-2r+2$. As the $2m-2r+2$ B-splines $R_s$ are linearly 
+      independent and satisfy the constraints, they span that linear space. \\ 
+
+      Now, the function
+      \begin{equation*}
+	S_0(t) = S(t) - \sum_{k=-(2m-2r+1)}^{0} a_k R_s(t-k)
+      \end{equation*}
+      vanishes on $[0,1]$. Let,
+      \begin{equation*}
+	S_1(t) = \begin{dcases} S_0(t) &  \text{if} \ t \geq 1 \\
+	  0 & \text{otherwise}
+	\end{dcases},
+	\quad
+	S_2(t) = \begin{dcases} S_0(t) &  \text{if} \ t \leq 0 \\
+	  0 & \text{otherwise}
+	\end{dcases}.
+      \end{equation*}
+      Applying the first case shows that 
+      \begin{equation*}
+	S_1(t) = \sum_{k=1}^{\infty} a_k R_s(t-k), \quad S_2(t) = \sum_{k=-\infty}^{-(2m-2r+2)} a_k R_s(t-k)
+      \end{equation*}
+      for unique coefficients ${(a_k)}_k$. Putting all pieces together, and defining $b_k = a_{k-(m-r+1)}$ we have that
+      \begin{equation*}
+	\forall t \in \mathbb{R}, \quad S(t) = \sum_{k=-\infty}^{\infty} b_k N_s(t-k).
+      \end{equation*}
+  \end{enumerate}
+\end{proof}
+
+\section{Applications to bio-image analysis}
+
+The past decade saw a multiplication in the number of images recorded and in the number of acquisition techniques.  As a 
+consequence, the need for automatic image analysis tools grew significantly in many research communities. More 
+precisely, shape-modelling is of particular interest for many purposes, going from image segmentation to interactive 
+modelling of curves and surfaces. In all applications of shape-modelling there is a need for intuitive user interaction, 
+which is best achieved when the representation is interpolatory. Domains related to interactive curves or shape modelling 
+include computer graphics, biomedical imaging, industrial design, modelling of animated surfaces, etc.  Shape-modelling 
+techniques can be categorized between discrete and continuous methods.  Discrete methods include polygonal meshes and 
+subdivision schemes, which allow to locally refine shapes, but are poorly suited for theoretical modelling.  
+Continuous-domain methods in contrast offer good theoretical properties. They usually consist of Bézier shapes or 
+splines-based models. The most used splines-based method is the NURBS model, but it generally cannot be smooth and 
+interpolatory at the same time. We refer to as \emph{active contour} a computational tool for detecting and outlining 
+objects in digital images.  We hereafter present splines-based active contours models, with applications to biomedical 
+imaging or computer graphics, that are practically convenient and theoretically powerful. \\
+
+In an ideal setting, the basis functions generating the active contour are smooth, compactly supported, interpolatory 
+and allow to vary the resolution of the constructed shape.  
+
+\subsection{Modelling of 2D contours}\label{ssec:2d}
+
+\subsubsection{Hermite polynomial}
+
+In 2016, V.Uhlmann et al\@. published a paper~\cite{uhlmann_hermite_2016} that presents practical use-cases and good 
+practical properties of the Hermite fundamental splines $L_0 := L_{4,2,0}$ and $L_1 := L_{4,2,1}$ for active contour 
+modelling.  More precisely, if $r[0], \ldots, r[M-1]$, $r'[0], \ldots, r'[M-1]$ are $M$ measurements of the value and 
+first derivative value of a M-periodic closed 2D curve, a good interpolatory model for the curve is the Lagrange-Hermite 
+expansion~\ref{eq:LH}, that is,
+\begin{align*}
+  \forall t \in \mathbb{R}, \qquad r(t) &= \sum_{k=-\infty}^{\infty} r[k] L_0(t-k) + r'[k] L_1(t-k) \\
+  &= \sum_{k=0}^{M-1} r[k] L_{0,per}(t-k) + r'[k] L_{1,per}(t-k) \end{align*}
+with $L_{0,per}, L_{1,per}$ the M-periodizations of the functions $L_0, L_1$ respectively.  
+
+\begin{remark}
+  \begin{enumerate}
+    \item In contrast to the expansion~\ref{eq:LH}, the terms in front of the fundamental splines are not scalars but 2D 
+      vectors. The formula above is in fact short for the interpolation of each coordinate separately $(r_1(t), r_2(t)) 
+      = r(t)$, \textit{i.e},
+      \begin{align*}
+	\forall t \in \mathbb{R}, \qquad r_1(t) &= \sum_{k=0}^{M-1} r_1[k] L_{0, per}(t-k) + r_1'[k] L_{1,per}(t-k) \\
+	\qquad r_2(t) &= \sum_{k=0}^{M-1} r_2[k] L_{0,per}(t-k) + r_2'[k] L_{1,per}(t-k)
+      \end{align*}
+    \item In the vocabulary of active contour modelling, the $(r[k],r'[k])_{k \in \llbracket0,M-1\rrbracket}$ are called 
+      the \emph{control points} at the \emph{knots} $(k)_{k \in \llbracket0,M-1\rrbracket}$ respectively.
+    \item The set of all functions that are can be written as linear combinations of ${\{L_{4,2,0}(\cdot-k), 
+      L_{4,2,1}(\cdot-k)\}}_{k \in \mathbb{Z}}$ are called \emph{cubic Hermite splines}.
+  \end{enumerate}
+\end{remark}
+
+The functions $L_0$ and $L_1$ are explicitly given by
+\begin{equation}
+    L_0(t) = \begin{dcases}
+      1-3|t|^2 + 2|t|^3 &\text{for } 0 \leq |t| \leq 1,\\
+      0 &\text{for } 1 < |t|,\\
+    \end{dcases} \quad
+    \hfill
+    L_1(t) = \begin{dcases}
+      t(|t|^2-2|t|+1) &\text{for } 0 \leq |t| \leq 1,\\
+      0 &\text{for } 1 < |t|.\\
+    \end{dcases}
+\end{equation}
+The graphs of these functions are displayed in Figure~\ref{fig:fund-r2-m2}. They are by definition Hermite splines of 
+order 4 and multiplicity $2$. On top of that, the functions $L_0$, $L_1$ are: compactly supported with support of size 
+2; $\mathcal{C}^1$ continuous; interpolatory with multiplicity 2 (value and derivative value) at integers; capable of 
+reproducing cubic and quadratic splines; a partition of unity; a Riesz basis with Riesz bounds $A, B = 
+(210^{\frac{-1}{2}}, B)$~\cite{uhlmann_hermite_2016}.
+
+\subsubsection{Hermite exponential}
+
+In 2015, Conti et al\@. presented in~\cite{conti_ellipse-preserving_2015} practical uses of a non-polynomial Hermite 
+active contour model. The study in the paper was motivated by the observation that usual spline-based deformable models  
+were unable to reproduce shapes as elementary as ellipses. More precisely, a lot of control points are needed to 
+satisfyingly approximate ellipses. In contrast, in~\cite{conti_ellipse-preserving_2015}, authors devised a new Hermite 
+interpolation scheme that perfectly reproduce ellipses but also retain attractive properties of cubic Hermite splines.  
+\\
+
+Let $\varphi_1, \varphi_2$ be the new basis functions. In order to have a Hermite interpolatory scheme, it is enough to 
+choose the basis functions $\varphi_1, \varphi_2$ so that
+\begin{equation*}
+  \forall k \in \mathbb{Z}, \forall \rho \in \{0,1\}, \qquad \varphi_1^{(\rho)}(k) = \delta_{\rho}\delta_k, \quad 
+  \varphi_2^{(\rho)}(k) = \delta_{\rho-1}\delta_k.
+\end{equation*}
+
+In order to reproduce ellipses from $M$ control points, the space spanned by ${\{\varphi_0(\cdot-k), 
+\varphi_1(\cdot-k)\}_{k \in \mathbb{Z}}}$ should include the cosinus and sinus functions at frequency $\frac{1}{M}$, 
+\textit{i.e},
+\begin{align*}
+  \cos (wt) &= \sum_{k=-\infty}^{\infty} \cos (wk) \varphi_1(t-k) - w \sin (wk) \varphi_2(t-k), \\
+  \sin (wt) &= \sum_{k=-\infty}^{\infty} \sin (wk) \varphi_1(t-k) + w \cos (wk) \varphi_2(t-k),
+\end{align*}
+with $w = \frac{2\pi}{M}$.
+
+The following functions were found to satisfy all the requirements,
+\begin{align*}
+  \varphi_{1, w}(x) &=
+  \begin{dcases}
+    g_{1,w} = a_1(w) + b_1(w)x + c_1(w) e^{jwx} + d_1(w)e^{-jwx} &\text{for } x \geq 0 \\
+    g_{1, w}(-x) &\text{for } x < 0\\
+  \end{dcases}, \\
+  \varphi_{2, w}(x) &=
+  \begin{dcases}
+    g_{2, w}(x) =  a_2(w) + b_2(w)x + c_2(w) e^{jwx} + d_2(w)e^{-jwx} &\text{for } x \geq 0 \\
+    -g_{2, w}(-x) &\text{for } x < 0\\
+  \end{dcases},
+\end{align*}
+with $a_1(w), \ldots, d_1(w), a_2(w), \ldots, d_2(w)$ as in~\cite[(2), (3), (4)]{conti_ellipse-preserving_2015}.
+
+The graphs of these functions are displayed in Figure~\ref{fig:conti_phi_12}.
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\textwidth]{conti_phi_12.png}
+  \caption{Graphs of $\varphi_{1,w}, \varphi_{2,w}$ for $w=\frac{2\pi}{3}$}\label{fig:conti_phi_12}
+\end{figure}
+
+The functions $\varphi_1, \varphi_2$ are exponential splines (Definition~\ref{def:exponential-spline}). On top of that, 
+the functions $\varphi_1$, $\varphi_2$ are: compactly supported with support of size 2; $\mathcal{C}^1$ continuous; 
+interpolatory with multiplicity 2 (value and derivative value) at integers; capable of reproducing cubic and quadratic 
+exponential splines; a partition of unity; a Riesz basis~\cite{conti_ellipse-preserving_2015}.
+ 
+\subsection{Modelling of 3D, sphere-like surfaces}
+
+In order to represent surfaces, an additional continuous parameter is required. Compared to the Section~\ref{ssec:2d}, 
+the 2D contour $r$ depending on the parameter $t$ is replaced by the 3D surface $\sigma$ depending on the parameters 
+$(u,v)$. The sphere is an elementary surface that appears very often in biology. As a consequence, we shall require that 
+our deformable models in 3D can satisfyingly approximate the sphere and surfaces that have a sphere-like topology.  A 
+continuous  parametrization of the sphere is given by
+\begin{equation*}
+  \forall(u, v) \in {[0,1]}^2, \qquad \sigma(u,v) = \begin{bmatrix} \cos(2\pi u)\sin(\pi v) \\ \sin(2\pi u)\sin(\pi v) 
+  \\ \cos(\pi v) \end{bmatrix}
+\end{equation*}
+The sphere has the good property of having a parametrization that is separable in $(u,v)$ i.e it can be written as the 
+Schur product
+\begin{equation*}
+  \forall(u, v) \in {[0,1]}^2, \qquad \sigma(u,v) = \sigma_1(u) \otimes \sigma_2(v)
+\end{equation*}
+For such surfaces, the active contours of Section~\ref{ssec:2d} for 2D contours can be extended to 3D surfaces.  
+
+\subsubsection{Hermite exponential}
+
+Suppose that we have measurements ${(r[k])}_{k \in \llbracket0,M-1\rrbracket}, {(r'[k])}_{k \in 
+\llbracket0,M-1\rrbracket}$ of a $M$-periodic closed 2D curve or an open 2D curve. Then, from Conti et al's work 
+in~\cite{conti_ellipse-preserving_2015}, we know that the exponentials splines $\varphi_{1,w}, \varphi_{2,w}$ can be 
+used to interpolate these measurements. The corresponding parametrization of the 2D curve is
+\begin{equation*}
+  \forall t \in \mathbb{R}, \qquad  r(t) = \sum_{k=0}^{M-1} r[k] \varphi_{1,w,per}(t-k) + r'[k] \varphi_{2,w,per}(t-k),
+\end{equation*}
+for closed curves, or 
+\begin{align*}
+  \forall t \in [0, M-1] \in \mathbb{R}, \qquad r(t) &= \sum_{k=-\infty}^{\infty} r[k] \varphi_{1,w}(t-k) + r'[k] 
+  \varphi_{2, w}(t-k) \\
+  & = \sum_{k=0}^{M-1} r[k] \varphi_{1,w}(t-k) + r'[k] \varphi_{2, w}(t-k),
+\end{align*}
+for open curves. 
+
+Suppose that we have measurements of a 3D surface at $M_1$ locations on latitudes and $M_2+1$ location on meridians.  
+Let's see what measurements we need exactly to represent a sphere-like surface. Let $w_1 = \frac{2\pi}{M_1}, w_2 = 
+\frac{\pi}{M_2}$.  We know that, by construction, $\varphi_{1,w}, \varphi_{2,w}$ can exactly reproduce ellipses at at 
+pulsation $w$, \textit{i.e},
+\begin{align*}
+  \forall u \in [0, M_1] \quad \cos(w_1u) &= \sum_{k=-\infty}^{\infty} \cos (w_1k) \varphi_{1, w_1}(u-k) - w_1 \sin (w_1k) 
+  \varphi_{2, w_1} (u-k) \\
+  \forall v \in [0, 2M_2] \quad \cos(w_2v) &= \sum_{l=-\infty}^{\infty} \cos (w_2l) \varphi_{1, w_2}(v-l) - w_2 \sin (w_2l) 
+\varphi_{2, w_2} (v-l) \end{align*}
+For implementation purposes, the continuous parameters are normalized to lie on $[0,1]$ so that,
+\begin{align*}
+  \forall u \in [0, 1] \quad \cos(2\pi u) &= \sum_{k=-\infty}^{\infty} \cos (w_1k) \varphi_{1, w_1}(M_1u-k) - w_1 \sin 
+  (w_1k) \varphi_{2, w_1} (M_1u-k) \\
+  \forall v \in [0, 2] \quad \cos(\pi v) &= \sum_{l=-\infty}^{\infty} \cos (w_2l) \varphi_{1, w_2}(M_2v-l) - w_2 \sin 
+  (w_2l)
+\varphi_{2, w_2} (M_2v-l)
+\end{align*}
+
+Similar parametrizations hold for the sinus function but are omitted here. As a consequence, the four basis functions 
+$\varphi_{1,w_1}, \varphi_{2,w_1}, \varphi_{1,w_2}, \varphi_{2,w_2}$ should allows us to perfectly reproduce a sphere, 
+\textit{i.e},
+\begin{align*}
+  \forall (u, v) \in {[0,1]}^2, \qquad \sigma(u,v) &= \sum_{k=0}^{M_1-1} \sum_{l=0}^{M_2} c_1[k,l]\varphi_{1, w_1, 
+  per}(M_1u-k)\varphi_{1, w_2}(M_2v-l) \\
+  &+ \sum_{k=0}^{M_1-1} \sum_{l=0}^{M_2} c_2[k,l] \varphi_{1, w_1, per}(M_1u-k)\varphi_{2, w_2}(M_2v-l) \\
+  &+ \sum_{k=0}^{M_1-1} \sum_{l=0}^{M_2} c_3[k,l] \varphi_{2, w_1, per}(M_1u-k)\varphi_{1, w_2}(M_2v-l) \\
+  &+ \sum_{k=0}^{M_1-1} \sum_{l=0}^{M_2} c_4[k,l] \varphi_{2, w_1, per}(M_1u-k)\varphi_{2, w_2}(M_2v-l) \\
+\end{align*}
+where,
+{\footnotesize
+\begin{align*}
+  c_1[k,l]=\begin{bmatrix} \cos(w_1k)\sin(w_2l) \\ \sin(w_1k)\sin(w_2l) \\ \cos(w_2l) \end{bmatrix} &= 
+  \sigma(\frac{k}{M_1},\frac{l}{M_2}) & c_2[k,l]=\begin{bmatrix} w_2\cos(w_1k)\cos(w_2l) \\ w_2\sin(w_1k)\cos(w_2l) \\ 
+  -w_2\sin(w_2l) \end{bmatrix} &= \frac{1}{M_2}\frac{\partial \sigma}{\partial v}(\frac{k}{M_1}, \frac{l}{M_2}) \\
+  c_3[k,l]=\begin{bmatrix} -w_1\sin(w_1k)\sin(w_2l) \\ w_1\cos(w_1k)\sin(w_2l) \\ 0 \end{bmatrix} &= \frac{1}{M_1} 
+  \frac{\partial \sigma}{\partial u}(\frac{k}{M_1}, \frac{l}{M_2}) &
+  c_4[k,l]=\begin{bmatrix} -w_1w_2\sin(w_1k)\cos(w_2l) \\ w_1w_2\cos(w_1k)\cos(w_2l) \\ 0 \end{bmatrix} &= \frac{1}{M_1 
+  M_2} \frac{\partial^2 \sigma}{\partial u \partial v}(\frac{k}{M_1}, \frac{l}{M_2}),
+\end{align*}
+}%
+and,
+\begin{align*}
+    \varphi_{1,w_1,per} &= \sum_{k=-\infty}^{\infty} \varphi_{1,w_1}(\cdot-M_1k), & \varphi_{1,w_2,per} &= 
+    \sum_{k=-\infty}^{\infty} \varphi_{1,w_2}(\cdot-2M_2k), \\
+  \varphi_{2,w_1,per} &= \sum_{k=-\infty}^{\infty} \varphi_{2,w_1}(\cdot-M_1k), & \varphi_{2,w_2,per} &= 
+  \sum_{k=-\infty}^{\infty} \varphi_{2,w_2}(\cdot-2M_2k). \\
+\end{align*}
+
+
+
+\subsection{The problem of cross-derivatives}

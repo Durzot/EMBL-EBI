@@ -459,17 +459,19 @@ In order to treat the general case of non uniform spacing, let's adopt the follo
     $r_{M_1-1,j}$ while $r_{M_1, j}$ stands for $r_{0,j}$.
   \item For $i=0, \ldots, M_1-1$, $h_i$ denotes the spacing $u_{i+1}-u_i$ in the u direction with the previous 
     convention on indices outside $[0, M_1-1]$.
-  \item For $j=0, \ldots, M_2-1$, $l_j$ denotes the spacing $v_{j+1}-v_i$ in the v direction with no convention.
+  \item For $j=0, \ldots, M_2-1$, $l_j$ denotes the spacing $v_{j+1}-v_j$ in the v direction with no convention.
   \item For $i=0, \ldots, M_1-1, j=0, \ldots, M_2-1$, $I_{i,j}$ denotes the square $[\frac{i}{M_1}, 
     \frac{i+1}{M_1}]\times[\frac{j}{M_2}, \frac{j+1}{M_2}]$.
   \item $f_0^h(u) = 1-3u^2 + 2u^3, f_1^h(u) = 3u^2-2u^3$ and $g_0^h(u) = u{(u-1)}^2, g_1^h(u) = u^2(u-1)$ denote the 
-    Hermite polynomials at order 3.
+    Hermite polynomials at order 4.
   \item $f_0(u), f_0(v), f_1(u), f_1(v), g_0(u), g_0(v), g_1(u), g_1(v)$ are as defined in the article, where the 
-    dependence on $h_i$ and $l_j$ has been dropped for lighter notations but must no be forgotten.
+    dependence on $h_i$ and $l_j$ has been dropped for lighter notations but must not be forgotten.
   \item
     \begin{align*}
-      G_0 &= -\int_0^1 \int_0^1 g_0^h(u) g_0^h(v)H(u,v)dudv & G_1 &= -\int_0^1 \int_0^1 g_1^h(u) g_0^h(v)H(u,v)dudv \\
-      G_2 &= -\int_0^1 \int_0^1 g_0^h(u) g_1^h(v)H(u,v)dudv & G_3 &= -\int_0^1 \int_0^1 g_1^h(u) g_1^h(v)H(u,v)dudv
+      G_0 &= -176400\int_0^1 \int_0^1 g_0^h(u) g_0^h(v)H(u,v)dudv & G_1 &= -176400\int_0^1 \int_0^1 g_1^h(u) 
+      g_0^h(v)H(u,v)dudv \\
+      G_2 &= -176400\int_0^1 \int_0^1 g_0^h(u) g_1^h(v)H(u,v)dudv & G_3 &= -176400\int_0^1 \int_0^1 g_1^h(u) 
+      g_1^h(v)H(u,v)dudv
     \end{align*}
   \end{enumerate}
 
@@ -512,7 +514,7 @@ The linear Hermite polynomial surface can be rewritten in a similar way
 The minimization problem is
 
 \begin{equation*}
-  \min_{r_{i,j}} \sum_{i=1}^{M_1} \sum_{j=1}^{M_2} E_{i,j}
+  \min_{r_{i,j}} \sum_{i=0}^{M_1-1} \sum_{j=0}^{M_2-1} E_{i,j}
 \end{equation*}
 
 with \begin{equation*}
@@ -613,7 +615,7 @@ latitudes. The modification is simply a “periodization” of the first and las
 The sequence of optimal twist in the sense of minimal quadratic oscillation is solution to 
 
 \begin{equation}
-  (K \bigotimes L) R = 176400 C
+  (K \bigotimes L) R = C
 \end{equation}
 
 with $C = {[c_{0, 0}, \ldots, c_{M_1-1, 0}, \ldots, c_{0, M_2}, \ldots ,c_{M_1-1, M_2}]}^T$ and for $i=0, \ldots, M_1-1$

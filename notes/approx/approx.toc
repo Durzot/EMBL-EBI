@@ -1,0 +1,3 @@
+\babel@toc {english}{}
+\contentsline {section}{\numberline {I}Optimally supported}{1}
+\contentsline {section}{\numberline {II}Other ideas for the proof}{3}

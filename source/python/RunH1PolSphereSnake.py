@@ -7,11 +7,9 @@ Designed to be run in Python 3 virtual environment 3.7_vtk
 @version: July 16, 2019
 @author: Yoann Pradat
 """
-
 import argparse
 from snake.H1PolSphereSnake import H1PolSphereSnake
 from roi.ROI3DSnake import ROI3DSnake
-
 from snake3D.Snake3DNode import Snake3DNode
 import numpy as np
 
@@ -140,6 +138,7 @@ bar_r = np.empty((snake.M_1+1, snake.M_2+1), dtype=Point3D)
 
 # Compute matrices B_{i,j} i = 0, ..., M_1-1, j=0, ..., M_2-1
 B = np.empty((snake.M_1,snake.M_2), dtype=object)
+Q = np.empty((snake.M_1,snake.M_2), dtype=object)
 for i in range(snake.M_1):
     for j in range(snake.M_2):
         # Be aware of the successive rewriting of values
@@ -162,16 +161,21 @@ for i in range(snake.M_1):
         bar_r[i+1,j+1] = qty
         
         B[i,j] = np.empty((4,4), dtype=Point3D)
+        Q[i,j] = np.empty((4,4), dtype=Point3D)
         for s in range(4):
             for t in range(4):
                 if s >= 2 and t >= 2:
                     B[i,j][s,t] = -bar_r[i+s-2,j+t-2]
+                    Q[i,j][s,t] = r[i+s-2,j+t-2]
                 elif s >= 2:
                     B[i,j][s,t] = f[i+s-2,j+t] - bar_f[i+s-2,j+t]
+                    Q[i,j][s,t] = f[i+s-2,j+t]
                 elif t >= 2:
                     B[i,j][s,t] = g[i+s,j+t-2] - bar_g[i+s,j+t-2]
+                    Q[i,j][s,t] = g[i+s,j+t-2]
                 else:
                     B[i,j][s,t] = Point3D(0,0,0)
+                    Q[i,j][s,t] = p[i+s,j+t]
 
 # The energy on patch I_{i,j} is E_{i,j} = h_i l_j \int \int Tr(H(u,v) B_tilde{i,j})
 # Fu = [f_0(u), f_1(u), g_0(u), g_1(u)]
@@ -185,6 +189,18 @@ Fv = lambda v: np.array([[1-3*v**2 + 2*v**3],
                         [v*(v-1)**2/snake.M_2],
                         [v**2*(v-1)/snake.M_2]])
 H = lambda u,v: Fu(u).dot(Fv(v).T)
+
+h = 0.01
+for i in range(snake.M_1):
+    for j in range(snake.M_2):
+        I = 0
+        for u in np.r_[i/snake.M_1:(i+1)/snake.M_1:h]:
+            for v in np.r_[j/snake.M_2:(j+1)/snake.M_2:h]:
+                real_pt = Fu(4*u-i).T.dot(Q[i,j]).dot(Fv(4*v-j))[0,0]
+                linear_pt = Fu(4*u-i)[:2].T.dot(Q[i,j][:2, :2]).dot(Fv(4*v-j)[:2])[0,0]
+                I += (real_pt - linear_pt).norm()**2*h*h
+
+        print("estim oscillation %.3g vs compute oscillation %.3g" % (I, E[i,j]))
 
 # Compute energy on each patch
 B_tilde = np.copy(B)
@@ -219,9 +235,46 @@ for i in range(snake.M_1):
 # Inverse the system
 R = np.linalg.inv(M).dot(C)
 
-for j in range(snake.M_2+1):
-    for i in range(snake.M_1):
-        print("At i=%d, j=%d" % (i,j))
-        print("optimal twist %s" % (R[i+j*snake.M_1]/(snake.M_1*snake.M_2)))
-        print("real twist %s" % snake.coefs[i + j*snake.M_1 + 3*snake.M_1*(snake.M_2+1)])
-        snake.coefs[i + j*snake.M_1 + 3*snake.M_1*(snake.M_2+1)] = R[i+j*snake.M_1]/(snake.M_1*snake.M_2)
+#for j in range(snake.M_2+1):
+#    for i in range(snake.M_1):
+#        print("At i=%d, j=%d" % (i,j))
+#        print("optimal twist %s" % (R[i+j*snake.M_1]/(snake.M_1*snake.M_2)))
+#        print("real twist %s" % snake.coefs[i + j*snake.M_1 + 3*snake.M_1*(snake.M_2+1)])
+#        snake.coefs[i + j*snake.M_1 + 3*snake.M_1*(snake.M_2+1)] = R[i+j*snake.M_1]/(snake.M_1*snake.M_2)
+
+# update r on the grid
+for i in range(snake.M_1+1):
+    for j in range(snake.M_2+1):
+        # f[i,j] = c_3[i,j]/(h_il_j)
+        r[i,j] = R[i%snake.M_1+j*snake.M_1] 
+
+# Compute energy on each patch
+B_tilde = np.copy(B)
+E = np.zeros((snake.M_1,snake.M_2))
+for i in range(snake.M_1):
+    for j in range(snake.M_2):
+        for s in range(2,4):
+            for t in range(2,4):
+                B_tilde[i,j][s,t] += r[i+s-2,j+t-2]
+        
+        func = lambda u,v : np.trace(H(u,v).dot(B_tilde[i,j])).norm()**2
+        E[i,j], _ = integrate.dblquad(func, 0, 1, lambda x: 0, lambda x: 1)
+        E[i,j] /= snake.M_1*snake.M_2
+
+h = 0.01
+for i in range(snake.M_1):
+    for j in range(snake.M_2):
+        for s in range(4):
+            for t in range(4):
+                if s >= 2 and t >= 2:
+                    Q[i,j][s,t] = r[i+s-2,j+t-2]
+
+        I = 0
+        for u in np.r_[i/snake.M_1:(i+1)/snake.M_1:h]:
+            for v in np.r_[j/snake.M_2:(j+1)/snake.M_2:h]:
+                real_pt = Fu(4*u-i).T.dot(Q[i,j]).dot(Fv(4*v-j))[0,0]
+                linear_pt = Fu(4*u-i)[:2].T.dot(Q[i,j][:2, :2]).dot(Fv(4*v-j)[:2])[0,0]
+                I += (real_pt - linear_pt).norm()**2*h*h
+
+        print("estim oscillation %.3g vs compute oscillation %.3g" % (I, E[i,j]))
+

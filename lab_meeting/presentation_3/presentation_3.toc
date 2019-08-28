@@ -1,0 +1,14 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {english}{}
+\defcounter {refsection}{0}\relax 
+\beamer@sectionintoc {2}{Introduction}{3}{0}{1}
+\defcounter {refsection}{0}\relax 
+\beamer@sectionintoc {3}{I/ Polynomial interpolation (summary)}{6}{0}{2}
+\defcounter {refsection}{0}\relax 
+\beamer@sectionintoc {4}{II/ B-splines and Splines}{11}{0}{3}
+\defcounter {refsection}{0}\relax 
+\beamer@subsectionintoc {4}{1}{II/1 Definitions \& Properties}{11}{0}{3}
+\defcounter {refsection}{0}\relax 
+\beamer@subsectionintoc {4}{2}{II/2 The B-spline series}{19}{0}{3}
+\defcounter {refsection}{0}\relax 
+\beamer@sectionintoc {5}{III Applications}{28}{0}{4}

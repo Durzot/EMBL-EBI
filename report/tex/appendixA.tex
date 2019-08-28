@@ -1,0 +1,288 @@
+\chapter{Annex for proofs}\label{chapter:annexA}
+
+\section{Proof of Lemma~\ref{lemma:manifold}}
+\begin{proof} We reproduce here the proof given by Schoenberg with slightly more details. The main observation for the 
+  proof is that any $S \in \mathscr{S}_{n,r}$ can be uniquely written in the form
+  \begin{equation*}
+    S(t) = P(t) + \sum_{i=1}^{\infty} \sum_{s=0}^{r-1} c_i^{(s)} {(t-i)}_+^{n-1-s} + \sum_{i=-\infty}^0 \sum_{s=0}^{r-1} 
+    c_i^{(s)} {(-t+i)}_+^{n-1-s}
+  \end{equation*}
+  with $P \in \Pi_{<n}$. For that observe first that $S_{|(0,1)}$ is a polynomial of order $n$ and so $P = S_{|(0,1)}$ 
+  is uniquely defined.  Then looking at decreasing derivatives from $n-1$ to $n-r$ at a point in $(1,2)$, say $1.5$ for 
+  instance, determines uniquely the constants $c_1^{(s)}$ for $s=0, \ldots, r-1$ as these satisfy \begin{align*}
+    c_1^{(0)} (n-1)! &= S^{(n-1)}(1.5) - P^{(n-1)}(1.5) \\
+    c_1^{(0)} \frac{1}{2} \frac{(n-1)!}{1!} + c_1^{(1)} (n-2)! &= S^{(n-2)}(1.5) - P^{(n-2)}(1.5) \\
+    \vdots & \vdots \\
+    \sum_{s=0}^{r-1} c_1^{(s)} \frac{1}{2^{r-1-s}} \frac{(n-s-1)!}{(r-1-s)!} &= S^{(n-r)}(1.5) - P^{(n-r)}(1.5) \\
+  \end{align*}
+  Conversely, choosing ${\{c_1{(s)}\}}_{s=0, \ldots, r-1}$ as the unique solution to the system above provides us with a 
+  polynomial on $(1,2)$
+  \begin{equation*}
+    P(t) + \sum_{s=0}^{r-1} c_1^{(s)} {(t-1)}^{n-1-s}
+  \end{equation*} 
+  
+  that agrees with $S$ at $(\underbrace{1, \ldots, 1}_{n-r}, \underbrace{1.5, \ldots, 1.5}_r)$. As $S_{|(1,2)}$ is also 
+  a polynomial that satisfies the same conditions, unicity leads to 
+  \begin{equation*}
+    S_{|(1,2)}=P + \sum_{s=0}^{r-1} c_1^{(s)} {(\cdot-1)}^{n-1-s}
+  \end{equation*}
+
+  The same reasoning applies to $c_2^{(s)}, \ldots$ and $c_{-1}^{(s)}, \ldots$. Consider now that $P$ is chosen so that 
+  \begin{equation*}
+    \forall s=0, \ldots, r-1, \quad  P^{(s)}(0) = y^{(s)}_0, \quad P^{(s)}(1) = y^{(s)}_1
+  \end{equation*}
+  The constants $c_i^{(s)}$ are then uniquely determined by the interpolation conditions at $y^{(s)}_i$. This leaves 
+  $n-2r$ free degrees of freedom for $P$ hence the dimension of the manifold of solutions. \\
+
+  Similarly, any $S \in \mathscr{S}_{n,r}^{*}$ can be uniquely written in the form 
+  \begin{equation*}
+    S(t) = Q(t) + \sum_{i=1}^{\infty} \sum_{s=0}^{r-1} c_i^{(s)} {(t-\frac{2i-1}{2})}_+^{n-1-s} + \sum_{i=-\infty}^{0}
+      \sum_{s=0}^{r-1} c_i^{(s)} {(-t+\frac{2i-1}{2})}_+^{n-1-s}
+  \end{equation*}
+  with $Q$ a polynomial of order $n$ on $(\frac{-1}{2}, \frac{1}{2})$and the coefficients $c_i^{(s)}$ are determined by 
+  interpolation conditions once Q is chosen so that \begin{equation*}
+    \forall s=0, \ldots, r-1, \quad  Q^{(s)}(0) = y^{(s)}_0
+  \end{equation*}
+  This leaves $n-r$ free degrees of freedom for $Q$ hence the dimension of the manifold of solutions.
+\end{proof}
+
+\section{Proof of Lemma~\ref{lemma:supp-hbsplines}}\label{proof:supp-hbsplines}
+\begin{proof}
+  Let $s \in \{0, \ldots, r-1\}$ be fixed. The Hermite B-spline $N_s := N_{2m,r,s}$ is by definition
+  \begin{equation*}
+    N_s = \sum_{k=-(m-r)}^{m-r} c_k L_s(\cdot-k)
+  \end{equation*}
+  where $c_{-(m-r)}, \ldots, c_{m-r}$ are the coefficients of the Euler-Frobenius polynomial from 
+  Proposition~\ref{prop:EF-r} i.e
+  \begin{equation*}
+    \Pi_{2m-1,r}(t) = \sum_{k = -(m-r)}^{m-r} c_k t^{k+m-r}
+  \end{equation*}
+  Let $t > m-r+1$. Then $t-k > 1$ for all $k=-(m-r), \ldots, m-r$. However on $(1,\infty)$ the fundamental splines are 
+  expressed as linear combination of the $m-r$ decreasing eigensplines i.e
+  \begin{equation*}
+    L_s = \sum_{l=1}^{m-r} d_l S_l, \quad \text{on} \quad (1, \infty)
+  \end{equation*}
+  Therefore,
+  \begin{align*}
+    N_s(t) &= \sum_{l=1}^{m-r} d_l \sum_{k=-(m-r)}^{m-r} c_k S_l(t-k) \\
+    &= \sum_{l=1}^{m-r} d_l S_l(t) \sum_{k=-(m-r)}^{m-r} c_k \lambda_l^{-k} & &(S_l(t+1) = \lambda_l S(t))\\
+    &= \sum_{l=1}^{m-r} d_l S_l(t) \lambda^{-(m-r)} \sum_{k=-(m-r)}^{m-r} c_k \lambda_l^{k+m-r} & &(c_k = c_{-k}) \\
+    &= 0 & &(\Pi_{2m-1,r}(\lambda_l) = 0)
+  \end{align*}
+  
+  We have proved that $N_s$ vanishes on $(1, \infty)$. Let's prove that $N_s(-t) = {(-1)}^{s}N_s(t)$ for all $t$ and the 
+  proof of the Lemma will be complete.  For $t \in \mathbb{R}$,
+  \begin{align*}
+    N_s(-t) &= \sum_{k=-(m-r)}^{m-r} c_k L_s(-t-k) \\
+    &= \sum_{k=-(m-r)}^{m-r} {(-1)}^s c_k L_s(t+k)  & &(\text{$L_s$ has same parity as $s$}) \\
+    &= \sum_{k=-(m-r)}^{m-r} {(-1)}^s c_k L_s(t-k) & &(c_k = c_{-k})\\
+    &= {(-1)}^s N_s(t)
+  \end{align*}
+\end{proof}
+
+\section{Proof of Theorem~\ref{thm:Lee}}\label{proof:Lee}
+
+\begin{proof}
+  \begin{enumerate}
+    \item Let's first prove a property of the Hankel determinant that we will use later. For any sequence ${(a_n)}_n$ 
+      and any complex $\mu$ the following holds
+      \begin{equation}\label{prop:hankel}
+	H_r(a_n \mu^n) = \mu^{r(n-r+1)} H_r(a_n)
+      \end{equation}
+      This is easily proved using the Leibniz formula for the determinant as follows
+      \begin{align*}
+	H_r(a_n \mu^n) &= \sum_{\sigma \in \mathfrak{S}_r} \epsilon(\sigma) \prod_{j=1}^r \mu^{n-\sigma(j) - j+2} 
+	a_{n-\sigma(j)-j+2} \\
+	&= \mu^{rn-(\sum_{j=1}^r \sigma(j) + j) + 2r} \sum_{\sigma \in \mathfrak{S}_r} \epsilon(\sigma) \prod_{j=1}^r  
+	a_{n-\sigma(j)-j+2} \\
+	&= \mu^{rn-r(r+1) + 2r} \sum_{\sigma \in \mathfrak{S}_r} \epsilon(\sigma) \prod_{j=1}^r  a_{n-\sigma(j)-j+2} \\
+	&= \mu^{r(n-r+1)} H_r(a_n)
+      \end{align*}
+    \item Let $m, r \in \mathbb{N}^*$ such that $m \geq r$ and let $s \in \llbracket0, r-1\rrbracket$. The key 
+      observation for the proof of the Fourier transform of $L_{2m,r,s}$ is that the $(s+1)^{th}$ fundamental spline can 
+      be written as the integral of the $(s+1)^{th}$ exponential Euler-Hermite splines of order $2m$. Let $n=2m-1$k. By 
+      Definition~\ref{def:EEH}, the $(s+1)^{th}$ exponential Euler-Hermite splines of order $n$ for the base $\lambda$ 
+      ($\Pi_{n,r}(\lambda) \neq 0$) is given by
+      \begin{align}
+	S_{n+1,r,s}(x;\lambda) &= \frac{A_{n,r,s}(x; \lambda)}{A_{n,r,s}^{(s)}(x; \lambda)}, \quad 0 \leq x \leq 1 \\
+	S_{n+1,r,s}(x+1;\lambda) &= \lambda S_{n+1,r,s}(x;\lambda), \quad \forall x \in \mathbb{R}
+      \end{align}
+	
+    Consider the $r$ functions
+    \begin{equation}\label{eq:def-I}
+      I_{2m,r,s}(x) = \begin{dcases}
+	\frac{1}{2\pi} \int_0^{2\pi} S_{2m, r, s}(x;e^{ju}) du & \text{if $r$ even} \\
+	\frac{1}{2\pi} \int_{-\pi}^{\pi} S_{2m, r, s}(x;e^{ju}) du & \text{if $r$ odd} \\
+      \end{dcases}
+    \end{equation}
+    The functions $S_{2m,r,s}(\cdot;\lambda)$ being in $\mathscr{S}_{2m,r}^{(s)}$ so is $I_{2m,r,s}$. Given the 
+    properties of the derivatives of $S_{2m,r,s}$ at integers in Proposition~\ref{prop:snrs}, the following holds 
+    \begin{equation*}
+      \forall k \in \mathbb{Z}, \quad 
+      \begin{dcases}
+	I_{2m,r,s}^{(\rho)}(k) = 0 & \ \rho=0, \ldots, r-1, \rho \neq s,  \\
+	I_{2m,r,s}^{(s)}(k) = \delta_k &
+      \end{dcases}
+    \end{equation*}
+    
+    However there is only one element in $\mathscr{S}_{2m,r}$ that satisfies such conditions and that element is 
+    $L_{2m,r,s}$ by definition. As a consequence,
+    \begin{equation}
+      L_{2m,r,s} = I_{2m,r,s}, \quad s=0, \ldots, r-1
+    \end{equation}
+
+    \item From (\cite[(7.14)]{Sch72b}), the Euler-Frobenius polynomial can be written as 
+      \begin{equation}\label{eq:sch-an}
+	\frac{A_n(x;e^{ju})}{n!} = (e^{ju}-1)e^{-ju}e^{jux} \sum_{k=-\infty}^{\infty} \frac{e^{2j\pi kx}}{{(ju + 
+	2jk\pi)}^{n+1}}, \quad e^{ju} \neq 1, 0 \leq x \leq 1
+    \end{equation}
+
+    Using the multilinearity of the determinant $A_{n,r,s}$ (\ref{eq:def-anrs}) and using the equation 
+    (\ref{prop:hankel}), the numerator of $S_{n+1,r,s}$ can be written as 
+    \begin{align*}
+      A_{n,r,s}(x;e^{ju}) &= \frac{(e^{ju}-1)}{e^{ju}}e^{jux} \sum_{k=-\infty}^{\infty} e^{2j\pi kx}
+      \begin{vmatrix}
+	\frac{A_n(0;e^{ju})}{n!}  &  \hdots & \frac{1}{{(ju+2jk\pi)}^{n+1}} & \hdots &  
+	\frac{A_{n-r+1}(0;e^{ju})}{(n-r+1)!} \\
+	\vdots & & \vdots & & \vdots \\
+	\frac{A_{n-r+1}(0;e^{ju})}{(n-r+1)!}  & \hdots & \frac{1}{{(ju+2jk\pi)}^{n-r+2}} & \hdots &  
+	\frac{A_{n-2r+2}(0;e^{ju})}{(n-2r+2)!} \\
+      \end{vmatrix} \\
+      &= \frac{{(e^{ju}-1)}^r}{e^{jur}}e^{jux} {(-j)}^{s} j^{r(n-r+1)} \sum_{k=-\infty}^{\infty} e^{2j\pi kx} 
+      \Delta_{n+1,k,s}(u)
+    \end{align*}
+    with $\Delta_{n+1,k,s}(u)$ the Hankel determinant of order $r$ of $\alpha_{n+1}(u)$ with its ${(s+1)}^{th}$ column 
+    replaced by the vector
+    \begin{equation*}
+      \begin{bmatrix} \frac{1}{{(u+2k\pi)}^{n+1}} & \frac{1}{{(u+2k\pi)}^{n}} & \hdots & \frac{1}{{(u+2k\pi)}^{n-r+2}} 
+      \end{bmatrix}^T
+    \end{equation*}
+    Similarly, the denominator of $S_{n,r,s}$ can be written as 
+    \begin{align*}
+      A^{(s)}_{n,r,s}(0;e^{ju}) &= H_r\left(\frac{A_n(0;\lambda)}{n!}\right) \\
+      & = \frac{{(e^{ju}-1)}^r}{e^{jur}}{(-j)}^{r(n-r+1)} H_r(\alpha_{n+1}(u))
+    \end{align*}
+
+    As a consequence, \begin{equation}\label{eq:exp-s2mrs}
+      S_{n+1,r,s}(x;e^{ju}) = {(-j)}^s e^{jux} \sum_{k=-\infty}^{\infty}  e^{2j\pi kx} 
+      \frac{\Delta_{n+1,k,s}(u)}{H_r(\alpha_{n+1}(u))}
+    \end{equation}
+
+  \item Let now replace the expression (\ref{eq:exp-s2mrs}) into (\ref{eq:def-I}). The details are given for $r$ even as 
+    the calculations are similar for $r$ odd.
+    \begin{align*}
+      I_{2m,r,s}(x) &= \frac{1}{2\pi} \int_0^{2\pi} S_{2m, r, s}(x;e^{ju}) du \\
+      &= \frac{{(-j)}^s}{2\pi} \int_0^{2\pi} e^{jux} \sum_{k=-\infty}^{\infty}  e^{2j\pi kx} 
+      \frac{\Delta_{2m,k,s}(u)}{H_r(\alpha_{2m}(u))} du \\
+      &= \frac{{(-j)}^s}{2\pi} \sum_{k=-\infty}^{\infty} \int_0^{2\pi} e^{j(u+2k\pi) x}  
+      \frac{\Delta_{2m,k,s}(u)}{H_r(\alpha_{2m}(u+2k\pi))} du \quad (\alpha_{2m} \text{is $2\pi$-periodic}) \\
+      &= \frac{{(-j)}^s}{2\pi} \int_{-\infty}^{\infty} e^{jux} \frac{H_{r, s}(\alpha_{2m}(u))}{H_r(\alpha_{2m}(u))} du
+    \end{align*}
+
+    \item  Using the definition of Hermite B-splines
+    \begin{equation*}
+      N_s(x) = \sum_{k=-(m-r)}^{m-r} c_k L_{2m,r,s}(x-k)
+    \end{equation*}
+    and given the integral representation of $I_{2m,r,s} = L_{2m,r,s}$, the following holds
+    \begin{equation}
+      N_s(x) = \frac{{(-j)}^s}{2\pi} \int_{-\infty}^{\infty} e^{-ju(m-r)} \Pi_{2m-1,r}(e^{ju}) e^{jux} \frac{H_{r, 
+      s}(\alpha_{2m}(u))}{H_r(\alpha_{2m}(u))} du
+    \end{equation}
+
+    It was proven by Lee and Sharma in (\cite[Theorem 4]{LeeSh76}) that the following holds
+      \begin{equation}\label{eq:LeeSh}
+	H_r\left(\frac{\Pi_{n}(\lambda)}{n!}\right) = {(-1)}^{\lfloor \frac{r}{2}\rfloor} C(n,r) 
+	{(1-\lambda)}^{(r-1)(n-r+1)} \Pi_{n,r}(\lambda)
+    \end{equation}
+    with $C(n,r)$ the quantity
+    \begin{equation*}
+      C(n,r) = \frac{1!2!\ldots(r-1)!}{n!(n-1)!\ldots(n-r+1)!}
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+      \Pi_{2m-1,r}(e^{ju}) = {(-1)}^{\lfloor \frac{r}{2} \rfloor + m(r+1)} K(m,r) {(1-e^{ju})}^{-(r-1)(2m-r)} H_r\left( 
+      \frac{\Pi_{2m-1}(e^{ju})}{(2m-1)!} \right)
+    \end{equation*}
+    
+    From Proposition~\ref{prop:EF}, we have $\Pi_{n}(\lambda) = A_n(0;\lambda){(1-\lambda)}^n$.  Using this and 
+    (\ref{prop:hankel}), we have
+    \begin{equation*}
+      H_r\left(\frac{\Pi_{2m-1}(e^{ju})}{(2m-1)!}\right) = H_r\left(\frac{A_{2m-1}(0;e^{ju})}{(2m-1)!}\right) 
+      {(1-e^{ju})}^{r(2m-r)}
+    \end{equation*}
+    while we previously established
+    \begin{equation*}
+      H_r\left(\frac{A_{2m-1}(0;e^{ju})}{(2m-1)!}\right) = {(e^{ju}-1)}^{r}e^{-jur} {(-j)}^{r(2m-r)} 
+      H_r(\alpha_{2m} (u))
+    \end{equation*}
+    Combining the previous relations we have
+    \begin{equation}\label{eq:relHrPi}
+      \Pi_{2m-1,r}(e^{ju}) = {(-1)}^{\lfloor \frac{r}{2} \rfloor + m(r+1) + r} {(-j)}^{r(2m-r)} 
+      \frac{{\left(e^{ju}-1\right)}^{2m}}{e^{jur}} K(m,r) H_r(\alpha_{2m}(u))
+    \end{equation}
+
+    Eventually,
+    \begin{equation}
+      N_s(x) = \frac{{(-j)}^{s}}{2\pi} \int_{-\infty}^{\infty} e^{jux} {\left(2\sin \frac{u}{2}\right)}^{2m} K(m,r)   
+      H_{r,s}(\alpha_{2m}(u)) du
+    \end{equation}
+  \end{enumerate}
+\end{proof}
+
+\section{Proof of Lemma~\ref{lemma:l1l2}}\label{proof:lemmal1l2}
+
+\begin{proof}
+  \begin{enumerate}
+    \item
+      Let $f \in \mathcal{L}^1(\mathbb{R})$ such that $\hat{f} \in \mathcal{L}^2(\mathbb{R})$. Define $\phi(x) = 
+      \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}$ and $\phi_{\delta}(x) = \frac{1}{\delta}\phi(\frac{x}{\delta})$ for 
+      $\delta > 0$. Then $f_{\delta} = f*\phi_{\delta}$ is in $\mathcal{L}^1 \cap \mathcal{L}^2$ and $f_{\delta} 
+      \xrightarrow[\delta \to 0]{\mathcal{L}^1} f$. Indeed,
+      \begin{align*}
+	{\|f - f_{\delta}\|}_{\mathcal{L}^1} &= \int_{-\infty}^{\infty} |f(x)-f_{\delta}(x)| dx \\
+	&= \int_{-\infty}^{\infty} |f(x) - \int_{-\infty}^{\infty} f(x-y) \phi_{\delta}(y) dy |dx \\
+	&\leq \int_{-\infty}^{\infty} \left(\int_{-\infty}^{\infty} |f(x)-f(x-y)| dx\right) \phi_{\delta}(y)dy \\
+	&\leq \sup_{|y| \leq r} {\|f-f(\cdot-y)\|}_{\mathcal{L}^1} + 2 {\|f\|}_{\mathcal{L}^1} \int_{|y| > r} 
+	\phi_{\delta}(y)dy \\
+      \end{align*}
+      for some $r > 0$ arbitrary. Observe now that for $\epsilon > 0$, there exists $r_{\epsilon} > 0$ such that 
+      \begin{equation*}
+	\sup_{|y| \leq r_{\epsilon}} {\|f-f(\cdot-y)\|}_{\mathcal{L}^1} \leq \epsilon
+      \end{equation*}
+      and there exists $\delta_{\epsilon}$ such that 
+      \begin{equation*}
+	\forall \delta \leq \delta_{\epsilon}, \quad \int_{|y| > r_{\epsilon}} \phi_{\delta}(y) dy \leq  
+	\frac{\epsilon}{{\|f\|}_{\mathcal{L}^1}}
+      \end{equation*}
+    %  Therefore
+    %  \begin{equation*}
+    %    \forall \epsilon > 0, \exists \delta_{\epsilon}, \forall \delta \leq \delta_{\epsilon}, \qquad  {\|f - 
+    %    f_{\delta}\|}_{\mathcal{L}^1} \leq 3 \epsilon
+    %  \end{equation*}
+    
+    \item
+      Using Holder's inequality, one can prove that
+      \begin{equation*}
+	\forall 1 \leq p\leq \infty, \qquad g \in \mathcal{L}^1, h \in \mathcal{L}^p \implies  g*h \in \mathcal{L}^p
+      \end{equation*}
+      Therefore, as $\phi_{\delta} \in \mathcal{L}^1 \cap \mathcal{L}^2$, also $f*\phi_{\delta} \in \mathcal{L}^1 \cap 
+      \mathcal{L}^2$.  In the Fourier domain we have have $\hat{f_{\delta}}(u) = \widehat{f*\phi_{\delta}}(u) = 
+      \hat{f}(u)\hat{\phi_{\delta}}(u) = \sqrt{2\pi} \hat{f}(u) \phi(\delta u)$.  Considering $\delta = \frac{1}{k}$ for 
+      $k \in \mathbb{N}^*$ and noticing that $|\widehat{f_{1/k}}(u) - \sqrt{2\pi} \hat{f}(u)|^2 \xrightarrow[k \to 
+      \infty]{} 0$ while $|\widehat{f_{1/k}}(u) - \sqrt{2\pi} \hat{f}(u)|^2 \leq 4\pi |\hat{f}(u)|^2$, the dominated 
+      convergence theorem yields that \begin{equation*}
+	\widehat{f_{1/k}} \xrightarrow[k \to \infty]{\mathcal{L}^2}  \sqrt{2\pi} \hat{f}
+      \end{equation*}
+
+    \item
+      The sequence ${\left(f_{1/k}\right)}_{k \geq 1}$ is a sequence of elements of $\mathcal{L}^1\cap\mathcal{L}^2$ for 
+      which $\|\widehat{f_{1/k}}\|_{\mathcal{L}^2} = \sqrt{2\pi} \|f_{1/k}\|_{\mathcal{L}^2}$. As 
+      ${\left(\widehat{f_{1/k}}\right)}_{k \geq 1}$ is a Cauchy sequence in $\mathcal{L}^2$, so is 
+      ${\left(f_{1/k}\right)}_{k \geq 1}$. As $\mathcal{L}^2$ is complete, $f_{1/k} \xrightarrow[k \to 
+      \infty]{\mathcal{L}^2} \tilde{f}$ for some $\tilde{f} \in \mathcal{L}^2$. However we already kwow that $f_{1/k} 
+      \xrightarrow[k \to \infty]{\mathcal{L}^1} f$.  To conclude we use the result that convergence in $\mathcal{L}^p$ 
+      for some $1 \leq p \leq \infty$ implies convergence $\mu$-a.e for some subsequence.  Therefore $f=\tilde{f}$ 
+      $\mu$-a.e and $f$ is in $\mathcal{L}^2$.
+  \end{enumerate}
+\end{proof}
+ 

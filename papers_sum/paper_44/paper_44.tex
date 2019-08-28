@@ -1,0 +1,174 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{bm}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\newcustomtheorem{deftn}{Definition}
+\newcustomtheorem{prop}{Proposition}
+\newcustomtheorem{remark}{Remark}
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\Tr}{Tr}
+\DeclareMathOperator*{\sinc}{sinc} 
+\DeclareMathOperator*{\supp}{supp}
+\DeclareMathOperator*{\essinf}{ess\ inf}
+\DeclareMathOperator*{\esssup}{ess\ sup} 
+
+\usepackage[backend=bibtex, citestyle=authoryear, sorting=nyt]{biblatex} % Use the bibtex backend 
+\usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
+\usepackage{filecontents}
+
+\begin{filecontents}{xmpl.bib}
+@article{Sch73,
+  shorthand = {Sch73},
+  author = {Schoenberg, I.J.},
+  title = {Cardinal Spline Interpolation},
+  year = {1973},
+  journal = {CBMS-NSF Regional conference series in applied mathematics},
+}
+
+@article{LS76,
+  shorthand = {LS76},
+  author = {Lee, S.L. and Sharma, A.},
+  title = {Cardinal Lacunary Interpolation by g-splines. I. The characteristic polynomials.},
+  year = {1976},
+  journal = {Journal of Approximation theory},
+  volume = {16},
+  pages = {85-96},
+}
+\end{filecontents}
+
+\addbibresource{xmpl.bib} % The filename of the bibliography
+
+\begin{document}
+\title{Summary paper 44: Exponential Hermite-Euler splines}
+\author{Yoann Pradat}
+\maketitle
+
+This paper by S.Lee extends Schoenberg's exponential splines to the C.H.I.P, defining so-called exponential 
+Euler-Hermite splines. 
+
+\section{Introduction}
+
+\underline{Notations}
+\begin{enumerate}
+  \item $n, r$ positive integers with $n \geq 2r-1$
+  \item $\mathcal{S}_{n,r}$ cardinal splines of degree $n$, multiplicity $r$
+  \item $\displaystyle \Phi_n(x;t) = \sum_{k=-\infty}^{\infty} t^k Q_{n+1}(x-k)$ exponential Euler spline degree $n$ 
+    base $t$.
+  \item $\displaystyle \Pi_n(t) = n! \sum_{j=1}^n Q_n(j)t^{j-1}$ Euler-Frobenius polynomial. It has $n-1$ simples zeros
+    \begin{equation*}
+      \lambda_{n-1} < \cdots < \lambda_1 < 0
+    \end{equation*}
+  \item $\displaystyle \Pi_{n,r}(t) = {(-1)}^{m(r-1)}|\Delta_{r,d}(t)|$ Euler-Frobenius polynomial for multiplicity $r$.  
+    It has $2m-2r$ simples zeros
+    \begin{equation*}
+      \lambda_{2m-2r} < \cdots < \lambda_1 < 0
+    \end{equation*}
+  \item $A_n(x;t) = \frac{n!}{{(1-t^{-1})}^n} \Phi_n(x;t), \ 0\leq x\leq 1$ exponential Euler polynomial degree $n$.
+    \begin{align*}
+      \frac{t-1}{t-e^z}e^{xz} &= \sum_{n=0}^{\infty} \frac{A_n(x;t)}{n!}z^n \\
+      A_n(x;t) &= x^n + a_1(t) \binom{n}{1} + \cdots + a_n(t) \\
+      a_n(t) &= \frac{\Pi_n(t)}{{(t-1)}^n} 
+    \end{align*}
+  \item $\Phi_n(0;t) = \frac{{(1-t^{-1})}^n}{n!} A_n(0;t) = \frac{\Pi_n(t)}{n!}$
+  \item $S_n(x;\lambda) = \frac{\Phi_n(x;\lambda)}{\Phi_n(0;\lambda)}$ for $\lambda \not\in\{\lambda_1,\ldots, 
+    \lambda_{n-1}\}$ exponential Euler spline.
+  \item $S_j(x) = \Phi_n(x, \lambda_j)$ for $j=1, \ldots, n-1$, eigensplines. 
+    \begin{equation*}
+      \forall k \in \mathbb{Z}, S_j(k) = 0 
+    \end{equation*}
+\end{enumerate}
+
+As $S_n(x+1, \lambda) = \lambda S_n(x;\lambda)$ and $S_n(0;\lambda) = 1$, $S_n(\cdot, \lambda)$ interpolates 
+$\lambda^{\cdot}$ at integers. As an extensions, Lee proposes to define $S_{n,r}(\cdot, \lambda) \in \mathcal{S}_{n,r}$ 
+that interpolates $\lambda^{\cdot}$ up to $r-1$ at integers i.e $S_{n,r}^{(\rho)}(k) = \lambda^k {(\log 
+\lambda)}^{\rho}$.
+
+\section{The polynomial $A_{n,r,s}(x;\lambda)$}
+
+Let $s=0, \ldots, r-1$. Define
+\begin{equation}
+  A_{n,r,s}(x;\lambda) = \begin{vmatrix}
+    \frac{A_n(0;\lambda)}{n!} & \hdots & \frac{A_{n-s+1}}{(n-s+1)!} & \frac{A_n(x;\lambda)}{n!} & \hdots & 
+    \frac{A_{n-r+1}(0;\lambda)}{(n-r+1)!} \\
+    \vdots & & & \vdots & & \vdots \\
+    \frac{A_{n-r+1}(0;\lambda)}{(n-r+1)!} & \hdots & \frac{A_{n-r-s+2}}{(n-r-s+2)!} & \frac{A_n(x;\lambda)}{(n-r+1)!} & 
+    \hdots & \frac{A_{n-2r+2}(0;\lambda)}{(n-2r+2)!} \\
+  \end{vmatrix}
+\end{equation}
+
+As $\frac{A_n'(x;\lambda)}{n!} = \frac{A_{n-1}(x;\lambda)}{(n-1)!}$, one has that 
+\begin{equation*}
+  A^{(s)}_{n,r,s}(0; \lambda) = H_r(\frac{A_n(0;\lambda)}{n!})
+\end{equation*}
+with $H_r$ Hankel determinant of order $r$.
+
+From (\cite{LS76}, Theorem 4), the following holds
+\begin{equation*}
+  H_r(\frac{\Pi_n(\lambda)}{n!}) = {(-1)}^{[\frac{r}{2}]} C_{n,r} \Pi_{n,r}(\lambda)
+\end{equation*}
+
+\section{Exponential Euler-Hermite splines}
+
+The functions $S_{n,r,s}(x;\lambda)$ defined by 
+\begin{align*}
+  S_{n,r,s}(x;\lambda) &= \frac{A_{n,r,s}(x; \lambda)}{H_r(\frac{A_n(0;\lambda)}{n!})}, \quad 0 \leq x \leq 1 \\
+  S_{n,r,s}(x+1;\lambda) &= \lambda S_{n,r,s}(x;\lambda), \quad \forall x
+\end{align*}
+
+is such that
+\begin{align*}
+  S_{n,r,s}^{(\rho)}(k;\lambda)  &= 0, \quad \rho=0, \ldots, r-1, \rho \neq s \\
+  S_{n,r,s}^{(s)}(k, \lambda) &= \lambda^k
+\end{align*}
+
+so that $S_{n,r,s} \in \mathcal{S}_{n,r}^{(s)}$. 
+
+\begin{thm}{2.1}
+  The spline function 
+  \begin{equation*}
+    S_{n,r}(x;\lambda) = \sum_{s=0}^{r-1} {(\log \lambda)}^s S_{n,r,s}(x;\lambda)
+  \end{equation*}
+  interpolates $\lambda^{\cdot}$ up to $r-1$ at integers and belongs to $S_{n,r}$.
+\end{thm}
+
+Here is the representation of exponential Euler-Hermite splines in terms of B-splines.
+\begin{thm}{3.1}
+  The exponential Euler-Hermite spline $S_{2m-1, r, s}(x;\lambda)$ is represented in the Hermite B-splines basis as
+  \begin{equation*}
+    S_{2m-1,r,s}(x;\lambda) = \frac{1}{\Pi_{2m-1,r}(\lambda)} \sum_{k=-\infty}^{\infty} \lambda^k N_s(x+m-r-k)
+  \end{equation*}
+\end{thm}
+
+
+% Include all documents in the bibliography
+\nocite{*}
+\printbibliography%
+
+\end{document}
+
+

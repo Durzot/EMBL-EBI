@@ -1,0 +1,324 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{dsfont}
+\usepackage{stmaryrd}
+\usepackage{breqn}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+\newtheorem{deftn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{remark}{Remark}
+
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\essinf}{ess\ inf}
+\DeclareMathOperator*{\esssup}{ess\ sup}
+\DeclareMathOperator*{\Supp}{Supp}
+\DeclareMathOperator*{\com}{com}
+\DeclareMathOperator*{\Tr}{Tr} 
+
+\renewcommand{\thesection}{\Roman{section}} 
+
+\begin{document}
+\title{Approximation properties of Hermite B-splines}
+\author{Yoann Pradat}
+\maketitle
+\tableofcontents
+
+\section{Optimally supported}
+
+\underline{Notations}
+\begin{itemize}
+  \item $r \in \mathbb{N}^*$ is the number of derivatives interpolated
+  \item $\phi_s = L_{s-1}$, $s=0, \ldots, r-1$ are Schoenberg \emph{fundamental} splines that serve to expand solutions 
+    of C.H.I.P ($\bm{y}^{(0)}, \ldots, \bm{y}^{(r-1)}, \mathcal{S}_{2r,r} \cap \mathcal{S})$ with $\mathcal{S}$ a linear 
+    space, either $S_{2r,r}^{\gamma}$ or $L^p_r$.  $\phi_s$ is also equal to $\frac{1}{c_0} N_{s-1}$ where $N_s$ are the 
+    Hermite B-splines as defined by Schoenberg.
+\end{itemize}
+
+Following Theorem 3 of J.Fageot et al's paper \underline{Support and Approximation properties of Hermite splines}, we 
+hypothesize the following theorem
+
+\begin{thm}
+  Let $\varphi_1, \ldots, \varphi_r$ be $r$ compactly supported functions. We assume that
+  \begin{equation}\label{eq:system-time}
+    \begin{dcases}
+      \beta^{r+1}(t) = \sum_{i \in \mathbb{Z}} a_1^{(r+1)}(i) \varphi_1(t-i) + \cdots  + a_r^{(r+1)}(i) \varphi_r(t-i) 
+      \\
+      \vdots \\
+      \beta^{2r}(t) = \sum_{i \in \mathbb{Z}} a_1^{(2r)}(i) \varphi_1(t-i) + \cdots  + a_r^{(2r)}(i) \varphi_r(t-i) \\
+    \end{dcases}
+  \end{equation}
+  with reproduction sequences satisfying 
+  \begin{equation}\label{eq:condition}
+    \sum_{i \in \mathbb{Z}} |i|^{r+1}(|a_1^{(r+1)}(i)| + \cdots + |a_r^{(2r)}(i)|) < \infty
+  \end{equation}
+  Then, 
+  \begin{equation}
+    |\Supp\varphi_1| + \cdots |\Supp\varphi_r| \geq 2r
+  \end{equation}
+\end{thm}
+
+\begin{proof}
+  In the Fourier domain, (\ref{eq:system-time}) becomes
+  \begin{equation}\label{eq:system-fourier}
+    \begin{dcases}
+      \hat{\beta}^{r+1}(w) = {\left(\frac{1-e^{-jw}}{jw}\right)}^{r+1} = A_1^{(r+1)}(w) \hat{\varphi}_1(w) + \cdots  + 
+      A^{(r+1)}_r(w) \hat{\varphi}_r(w) \\
+      \vdots \\
+      \hat{\beta}^{2r}(w) =  {\left(\frac{1-e^{-jw}}{jw}\right)}^{2r}= A_1^{(2r)}(w) \hat{\varphi}_1(w) + \cdots  + 
+      A^{(2r)}_r(w) \hat{\varphi}_r(w) \\
+    \end{dcases}
+  \end{equation}
+
+  Now let \begin{equation}
+    \det(w) = \det A(w) = \begin{vmatrix}
+      A_1^{(r+1)}(w) & \hdots & A_r^{(r+1)}(w) \\
+      \vdots & \ddots & \vdots \\
+      A_1^{(2r)}(w) & \hdots & A_r^{(2r)}(w)
+    \end{vmatrix}
+  \end{equation}
+
+  Letting $B = {\com A}^T$ the transpose of the comatrix, the system (\ref{eq:system-fourier}) can be reversed as 
+  follows
+  \begin{equation}\label{eq:system-reversed-fourier}
+    \begin{dcases}
+      \det(w)\hat{\varphi}_1(w) = B_1^{(r+1)}(w) \hat{\beta}^{r+1}(w) + \cdots  + B_r^{(r+1)}(w) \hat{\beta}^{2r}(w) \\
+      \vdots \\
+      \det(w)\hat{\varphi}_{r}(w) = B_1^{(2r)}(w) \hat{\beta}^{r+1}(w) + \cdots  + B_r^{(2r)}(w) \hat{\beta}^{2r}(w) \\
+    \end{dcases}
+  \end{equation}
+
+  Let's first show that $\det(w) \neq 0$ when $w \not\in 2\pi \mathbb{Z}$. Suppose by contradiction that there exists 
+  $w_0$ not a multiple of $2\pi$ such that $\det (w_0) = 0$. By $2\pi$-periodicity we also have
+  \begin{equation*}
+    \det(w_0 + 2\pi m) = 0 \ \text{for} \ m=0, \ldots, r-1
+  \end{equation*}
+
+  Denote $\alpha_1, \ldots, \alpha_r$, the $r$ mutually distinct quantities $\frac{1-e^{-jw_0}}{jw_0}, \ldots, 
+  \frac{1-e^{-jw_0}}{j(w_0+2\pi(r-1))}$. From the first equation of the system (\ref{eq:system-reversed-fourier}) 
+  evaluated at $w_0$ and subsequent translates by multiples of $2\pi$ and the $2\pi$-periodicity of the discrete Fourier 
+  transforms $B_1^{(r+1)}, \ldots, B_r^{(r+1)}$ we have
+  \begin{equation}
+    \begin{bmatrix}
+      \alpha_1^{r+1} & \alpha_1^{r+2} & \hdots & \alpha_1^{2r} \\
+      \alpha_2^{r+1} & \alpha_2^{r+2} & \hdots & \alpha_2^{2r} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      \alpha_r^{r+1} & \alpha_r^{r+2} & \hdots & \alpha_r^{2r} \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      B_1^{(r+1)}(w_0) \\
+      B_2^{(r+1)}(w_0) \\
+      \vdots \\
+      B_r^{(r+1)}(w_0) \\
+    \end{bmatrix}
+    = 0
+  \end{equation}
+
+  The matrix on the left is Vandermondian and therefore has non-zero determinant. As a consequence $B_1^{(r+1)}, \ldots, 
+  B_r^{(r+1)}$ all vanish at $w_0$. A similar reasoning shows that $B_1^{(r+2)}, \ldots, B_r^{(r+2)}$, $\ldots, 
+  B_1^{(2r)}, \ldots, B_r^{(2r)}$ also vanish at $w_0$ which means that the matrix $B = {\com A}^T$ vanishes at $w_0$.  
+  It is a classical exercise to show that when the comatrix vanishes, the matrix has rank less than $r-2$. Looking into 
+  the system (\ref{eq:system-time}) at $w_0$ and subsequent translates by $2\pi$ leads to \begin{equation}
+    A(w_0) \begin{bmatrix}
+      \hat{\varphi}_1(w_0) & \hat{\varphi}_1(w_0+2\pi) & \hdots & \hat{\varphi}_1(w_0 + 2\pi(r-1)) \\
+      \hat{\varphi}_2(w_0) & \hat{\varphi}_2(w_0+2\pi) & \hdots & \hat{\varphi}_2(w_0 + 2\pi(r-1)) \\
+      \vdots & \vdots & \ddots & \vdots \\
+      \hat{\varphi}_r(w_0) & \hat{\varphi}_r(w_0+2\pi) & \hdots & \hat{\varphi}_r(w_0 + 2\pi(r-1)) \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      \alpha_1^{r+1} & \alpha_1^{r+2} & \hdots & \alpha_1^{2r} \\
+      \alpha_2^{r+1} & \alpha_2^{r+2} & \hdots & \alpha_2^{2r} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      \alpha_r^{r+1} & \alpha_r^{r+2} & \hdots & \alpha_r^{2r} \\
+    \end{bmatrix}^T
+  \end{equation}
+  Looking at the ranks shows the contradiction. Indeed the matrix-product on the left has rank less than the rank of  
+  $A(w_0)$ that is to say less than $r-2$ while the matrix on the right has full rank $r$. \\
+
+  Let now look at the behaviour of $\det(w)$ around 0. In virtue of condition (\ref{eq:condition}), the discrete Fourier 
+  transforms $A_1^{(r+1)}, \ldots, A_r^{(2r)}$ are all $r+1$ times differentiable. The determinant is then also $r+1$ 
+  times differentiable as it is polynomial in the coefficients of $A$. Expanding it around 0 leads to 
+
+  \begin{equation}\label{eq:taylor-det}
+    \det(w) = \det(0) + {\det(0)}^{(1)}w + \cdots + \frac{1}{(r+1)!} {\det(0)}^{(r+1)}w^{r+1} + o(w^{r+1})
+  \end{equation}
+
+  Suppose by contradiction that $\det(0) = \cdots = {\det(0)}^{(r+1)} = 0$.   Let $F(w) = \frac{1-e^{-jw}}{jw}$.  
+  Expanding $F$ in Taylor series at $0$ and $2\pi m$ for non-zero integer $m$ proves
+  \begin{align*}
+    F(w) &= 1 - \frac{j}{2}w + o_{w \to 0}(w) \\
+    F(w) &= \frac{1}{2\pi m}(w-2\pi m) + o_{w \to 2\pi m}((w-2\pi m))
+  \end{align*}
+
+  Letting $k \geq 1$ a positive integer and expanding $F^k$ in its Taylor series as we did for $F$ leads to
+  \begin{align*}
+    F^k(w) &= 1 - \frac{jk}{2}w + o_{w \to 0}(w) \\
+    F^k(w) &= \frac{{(w-2\pi m)}^{k}}{{(2\pi m)}^k} + o_{w \to 2\pi m}\left({(w-2\pi m)}^k\right)
+  \end{align*}
+
+  Given our assumption about $\det(w)$ and given its $2\pi$-periodicity we also have
+  \begin{align*}
+    \det(w) &= o_{w \to 0}(w^{r+1}) \\
+    \det(w) &= o_{w \to 2\pi m}\left({(w-2\pi m)}^{r+1}\right)
+  \end{align*}. 
+
+  Rewrite then the first equation of system (\ref{eq:system-reversed-fourier}) as follows
+  \begin{equation}\label{eq:1}
+    \frac{\det(w)}{F^{r+1}(w)} = B_1^{(r+1)}(w) + B_2^{(r+1)}(w) F(w) + \cdots + B_r^{(r+1)} F^{r-1}(w)
+  \end{equation}
+
+  For any integer $m$ non-zero, equation (\ref{eq:1}) can also be written as
+  \begin{align*}
+    o(1) &= \left(B_1^{(r+1)}(0) + {B_1^{(r+1)}}^{(1)}(0)(w-2\pi m) + \ldots \right) \\
+    & + \left(B_2^{(r+1)}(0) + {B_2^{(r+1)}}^{(1)}(0){(w-2\pi m)} + \ldots \right) \left(\frac{(w-2\pi m)}{2\pi m}  + 
+    o({(w-2\pi m)})\right) \\
+      &\vdots \\
+    & + \left(B_r^{(r+1)}(0) + {B_r^{(r+1)}}^{(1)}(0){(w-2\pi m)} + \ldots \right) \left(\frac{{(w-2\pi 
+    m)}^{r-1}}{{(2\pi m)}^{r-1}} + o({(w-2\pi m)}^{r-1})\right) \\
+  \end{align*}
+    
+  which can only happen if
+  \begin{equation}
+    B_1^{(r+1)}(0) = 0 
+  \end{equation}
+  Evaluating (\ref{eq:1}) at $0$ adds the following equation
+  \begin{equation}
+    B_2^{(r+1)}(0) + \cdots + B_r^{(r+1)}(0) = 0
+  \end{equation}
+    
+  Repeating the reasoning for the other lines in the system (\ref{eq:system-reversed-fourier}) gives the same results on 
+  $B^{(r+2)}, \ldots, B^{(2r)}$. As a consequence the first column of $B$ vanish at 0 and has rows summing to 0. However 
+  $B(0)$ is a comatrix and as such can only have rank $r$, $1$ or $0$ if $A(0)$ has rank $r$, $r-1$, $\leq r-2$ 
+  respectively. 
+
+%  Suppose by contradiction that $\det(0) = \cdots = {\det(0)}^{(2r-1)} = 0$.   Let $F(w) = \frac{1-e^{-jw}}{jw}$.  
+%  Expanding $F$ in Taylor series at $0$ and $2\pi m$ for non-zero integer $m$ proves
+%  \begin{align*}
+%    F(w) &= 1 - \frac{j}{2}w + o_{w \to 0}(w) \\
+%    F(w) &= \frac{1}{2\pi m}(w-2\pi m) + o_{w \to 2\pi m}((w-2\pi m))
+%  \end{align*}
+%
+%  Letting $k \geq 1$ a positive integer and expanding $F^k$ in its Taylor series as we did for $F$ leads to
+%  \begin{align*}
+%    F^k(w) &= 1 - \frac{jk}{2}w + o_{w \to 0}(w) \\
+%    F^k(w) &= \frac{{(w-2\pi m)}^{k}}{{(2\pi m)}^k} + o_{w \to 2\pi m}\left({(w-2\pi m)}^k\right)
+%  \end{align*}
+%
+%  Given our assumption about $\det(w)$ and given its $2\pi$-periodicity we also have
+%  \begin{align*}
+%    \det(w) &= o_{w \to 0}(w^{2r-1}) \\
+%    \det(w) &= o_{w \to 2\pi m}\left({(w-2\pi m)}^{2r-1}\right)
+%  \end{align*}. 
+%
+%  Rewrite then the first equation of system (\ref{eq:system-reversed-fourier}) as follows
+%  \begin{equation}\label{eq:1}
+%    \frac{\det(w)}{F^{r+1}(w)} = B_1^{(r+1)}(w) + B_2^{(r+1)}(w) F(w) + \cdots + B_r^{(r+1)} F^{r-1}(w)
+%  \end{equation}
+%
+%  For any integer $m$ non-zero, equation (\ref{eq:1}) can also be written as
+%  \begin{align*}
+%    o({(w-2\pi m)}^{r-2}) &= \left(B_1^{(r+1)}(0) + {B_1^{(r+1)}}^{(1)}(0)w + {B_1^{(r+1)}}^{(2)}(0)\frac{w^2}{2} + 
+%    \ldots \right) \\
+%    & + \left(B_2^{(r+1)}(0) + {B_2^{(r+1)}}^{(1)}(0)w + {B_2^{(r+1)}}^{(2)}(0)\frac{w^2}{2} + \ldots \right) 
+%    \left(\frac{(w-2\pi m)}{2\pi m}  + o({(w-2\pi m)})\right) \\
+%      &\vdots \\
+%    & + \left(B_r^{(r+1)}(0) + {B_r^{(r+1)}}^{(1)}(0)w + {B_r^{(r+1)}}^{(2)}(0)\frac{w^2}{2} + \ldots \right) 
+%    \left(\frac{{(w-2\pi m)}^{r-1}}{{(2\pi m)}^{r-1}} + o({(w-2\pi m)}^{r-1})\right) \\
+%  \end{align*}
+%    
+%  which can only happen if 
+%  \begin{equation}
+%    \begin{dcases}
+%      B_1^{(r+1)}(0) &= 0 \\
+%      {B_1^{(r+1)}}^{(1)}(0) + \frac{1}{2\pi m}{B_2^{(r+1)}}(0) &= 0 \\
+%      \frac{1}{2!}{B_1^{(r+1)}}^{(2)}(0) + \frac{1}{2\pi m}{B_2^{(r+1)}}^{(1)}(0) + \frac{1}{{(2\pi 
+%      m)}^2}{B_3^{(r+1)}}(0) &= 0 \\
+%      \vdots \\
+%      \frac{1}{(r-2)!}{B_1^{(r+1)}}^{(r-2)}(0) + \frac{1}{(r-3)!}\frac{1}{2\pi m}{B_2^{(r+1)}}^{(r-3)}(0) + \cdots + 
+%      \frac{1}{{(2\pi m)}^{r-2}}{B_{r-1}^{(r+1)}}(0) &= 0
+%  \end{dcases}
+%  \end{equation}
+%  As this holds for any non-zero integer $m$, all quantities involving coefficients of $B$ are zero which translate into
+%  \begin{equation}
+%    \begin{dcases}
+%      B_1^{(r+1)}(w) &= o_{w \to 0}(w^{r-2}) \\
+%      B_2^{(r+1)}(w) &= o_{w \to 0}(w^{r-3}) \\
+%      \vdots & \\
+%      B_{r-1}^{(r+1)}(w) &= o_{w \to 0}(1) \\
+%    \end{dcases}
+%  \end{equation}
+%  Evaluating (\ref{eq:1}) at $0$ yields $B_1^{(r+1)}(0) + \cdots + B_r^{(r+1)}(0) = 0$ adding the following equation
+%  \begin{equation}
+%    B_{r}^{(r+1)}(w) = o_{w \to 0}(1)
+%  \end{equation}
+%    
+%  Repeating the reasoning for the other lines in the system (\ref{eq:system-reversed-fourier}) gives the same results on 
+%  $B_s^{(r+2)}, \ldots, B_s^{(2r)}$. \\
+%
+%  There seems to be a shift in indices. If in condition (\ref{eq:condition}) we were to replace $2r-1$ by $2r$, then we 
+%  could push the Taylor expansion (\ref{eq:taylor-det}) of $\det(w)$ around to 0 to $2r$ and accordingly prove that
+%  $B_1^{(r+1)}(w) = o_{w \to 0}(w^{r-1})$ and so on. I don't know though if such an assumption is necessary.  
+
+\end{proof} 
+
+\section{Other ideas for the proof}
+
+Let's expand into higher orders. For that develop the exponential into its series allow to identify the derivatives of 
+$F$ in 0. Then, define $G(w) = \frac{w}{w+2\pi}$ so that
+\begin{equation}\label{eq:FG}
+  F(w+2\pi) = F(w) G(w)
+\end{equation}
+It is easy to show that for $p \geq 1$ one has $G^{(p)}(w) = \frac{2\pi p! {(-1)}^{p+1}}{{(w+2\pi)}^{p+1}}$. Applying 
+Leibniz's formula to (\ref{eq:FG}) and evaluating in $0$ provides the derivatives of $F$ at $2\pi$. All calculations 
+done, 
+
+\begin{align*}
+  F^{(p)}(0) &= \frac{{(-1)}^{p} j^p}{p+1}  \\
+  F^{(p)}(2\pi) &=  \sum_{q=1}^p \frac{p!j^p {(-1)}^{p+1}}{(p-q+1)!} \frac{1}{{(2\pi j)}^q}
+\end{align*}
+
+Let the sequences ${(a_{p,s})}_{p \in \mathbb{N}},{(b_{p,s})}_{p \in \mathbb{N}}$ defined by
+\begin{align*}
+  a_{p,0} &= \frac{{(-1)}^{p} j^p}{(p+1)!} \\
+  a_{p,s+1} &= \sum_{q=0}^p \binom{p}{q} a_{p-q,s} a_{q,0} \\
+  b_{p, 0} &= \sum_{q=1}^p \frac{j^p {(-1)}^{p+1}}{(p-q+1)!} \frac{1}{{(2\pi j)}^q} \\
+  b_{p,s+1} &= \sum_{q=1}^p \binom{p}{q} b_{p-q,s} b_{q,0}
+\end{align*}
+
+Then, the following Taylor expansions hold for any integers $s$ and $n$
+\begin{align}
+  F^s(w) &= \sum_{p=0}^{n} a_{p,s} w^p + o_{w \to 0}(w^{n}) \\
+  F^s(w) &= \sum_{p=0}^{n} b_{p,s} {(w-2\pi)}^p + o_{w \to 2\pi}({(w-2\pi)}^{n})
+\end{align}
+
+Note that $\nabla \det(A) = \com(A)$ so that $\det(w)' = \Tr (A'(w) B(w))$. 
+
+
+\end{document}
+
+

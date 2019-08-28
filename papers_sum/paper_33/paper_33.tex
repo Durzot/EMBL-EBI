@@ -1,0 +1,488 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{bm}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\newcustomtheorem{deftn}{Definition}
+\newcustomtheorem{prop}{Proposition}
+\newcustomtheorem{remark}{Remark}
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\Tr}{Tr}
+\DeclareMathOperator*{\sinc}{sinc} 
+\DeclareMathOperator*{\supp}{supp}
+\DeclareMathOperator*{\essinf}{ess\ inf}
+\DeclareMathOperator*{\esssup}{ess\ sup} 
+
+\begin{document}
+\title{Summary paper 33: Wavelets of multiplicity $r$}
+\author{Yoann Pradat}
+\maketitle
+
+\section{Introduction}
+
+This paper by T. Goodman applies the general theory that derive necessary and sufficient conditions for translates of 
+some functions $\phi_1, \ldots, \phi_r$, $\psi_1, \ldots, \psi_r$ to form a Riesz basis for $V_1$ in order to construct 
+spline wavelets with multiple knots. \\
+
+\underline{Notations}
+\begin{itemize}
+  \item ${l^2(\mathbb{Z})}^r = \{(s_1, \ldots, s_r) | s_j \in l^2(\mathbb{Z}), j=0, \ldots, r-1\}$
+\end{itemize}
+
+\begin{deftn}{1}
+  A \emph{multiresolution approximation} of multiplicity $r$ is a sequence of closed subspaces ${(V_m)}_{m \in 
+  \mathbb{Z}}$ of $L^2$ such that
+  \begin{enumerate}
+    \item $V_m \subset V_{m+1}$
+    \item $\bigcup_{m \in \mathbb{Z}} V_m$ is dense in $L^2$ and $\bigcap_{m \in \mathbb{Z}} V_m = \{0\}$
+    \item $f \in V_m \implies D_2f \in V_{m+1}$ with $D_a f(x) = f(ax)$
+    \item $f \in V_m \implies T_{2^{-m}n}f \in V_m$ for all $n \in \mathbb{Z}$ with $T_{\tau}f(x) = f(x-\tau)$
+    \item $\exists$ isomorphism $\mathcal{I}: V_0\to{l^2(\mathbb{Z})}^r$ which commutes with the action of $\mathbb{Z}$
+      i.e $\mathcal{I}T_k = t_k \mathcal{I}$ with $t_k$ the translation by $k$ on sequences of ${l^2(\mathbb{Z})}^r$.
+  \end{enumerate}
+\end{deftn}
+
+In his famous (among many) article\cite{Mallat}, Mallat has given a general construction of wavelets $\phi \in V_0$ and 
+$\psi \in W_0$ ($V_1 = V_0 \bigoplus W_0$) such that ${\{T_n \phi\}}_n, {\{T_n \psi \}}_n$ are orthonormal bases of 
+$V_0$ and $W_0$ respectively.  Furthermore
+\begin{align*}
+  \phi_{m,n} = \sqrt{2^m} \phi(2^m x-n) \quad (m,n) \in \mathbb{Z}^2 \\
+  \psi_{m,n} = \sqrt{2^m} \psi(2^m x-n) \quad (m,n) \in \mathbb{Z}^2 
+\end{align*}
+
+are orthonormal basis for $V_m$ and $W_m$ respectively ($V_{m+1} = V_m \bigoplus W_m$). Goodman refers to another of his 
+works \emph{Wavelets in wandering spaces} where he extended Mallat's results to multiresolution approximation of 
+multiplicity $r$. \\
+
+Cardinal $B$-splines generate a large class of simple multiresolution approximations. This was studied extensively by 
+Chu et Wang in \emph{A cardinal spline approach to wavelets} and \emph{A general framework of compactly supported 
+splines and wavelets}. The present papers has following contributions
+\begin{enumerate}
+  \item New general duality principle
+  \item Cardinal spline wavelets with multiple knots. They generate nonorthonormal Riesz spaces for the $V_m$. 
+  \item Considers special case $n=r-1$, $n=2r-1$ with $n$ the degree of spline functions
+\end{enumerate}
+
+\section{Wavelets for multiresolution approximations of multiplicity $r$}
+
+Note that $\{ f \in L^1, \hat{f} \in L^1\} \subsetneq L^1 \cap L^2$. Indeed if $\hat{f} \in L^1$, $\|f\|_{\infty} \leq 
+\frac{{\|\hat{f}\|}_{L^1}}{{(2\pi)}^d}$ and thus $f \in L^2$. However $\mathds{1}_{{[-1,1]}^d}$ is in $L^1 \cap L^2$ but 
+not in the first set.  Also if $f \in L^1$ is such that $\hat{f} \in L^2$ then $f \in L^2$. \\ 
+
+Fourier transform of $f \in L^2(\mathbb{R})$ is said to be regular if $\hat{f}$ is continuous and $\hat{f}(w) = 
+\mathcal{O}(|w|^{-1})$ as $|w| \to \infty$. This makes $\hat{f}$ a function in $L^2$. In fact, $\mathcal{F}$ is a 
+continuous automorphism of $L^2$ and therefore the simple fact of $f$ being in $L^2$ makes its Fourier transform an 
+element of $L^2$.  Is the author's condition stronger? \\
+
+Let $\phi = {(\phi_j)}_{j=1}^r \in L^2$ such that $\sum_{n \in \mathbb{Z}} s(n) T_n \phi_j \in L^2$ for any $(s(n)) \in 
+l^2$ and similarly let $\psi = {(\psi_j)}_{j=1}^r \in L^2$ such that $\sum_{n \in \mathbb{Z}} s(n) T_n \psi_j \in L^2$ 
+for any $(s(n)) \in l^2$.  $\phi_j$ and $\psi_j$ are \textbf{assumed to be regular}. \\
+
+\underline{Notations}
+\begin{itemize}
+  \item $V_0 = \text{span} \overline{\{ T_n \phi_j, n \in \mathbb{Z}, 1 \leq j \leq r\}}$
+  \item $V_1 = \{D_2 f, f\in V_0\}$, \textbf{assume} $V_0 \subset V_1$
+  \item \textbf{Assume} $\psi_j \in V_1$, $j=1, \ldots, r$.
+  \item $V_1 = V_0 \bigoplus W_0$
+  \item $\tilde{L}^2_{r\times r}(0, 2\pi)$ $r\times r$ matrices with entries $2\pi$-periodic and square-integrable.
+  \item $\tilde{\mathcal{C}}^2_{r\times r}(0, 2\pi)$ $r\times r$ matrices with entries $2\pi$-periodic and continuous.
+\end{itemize}
+
+As $\phi_j, \psi_j$ are elements of $V_1$ while $\{T_n D_2 \phi_j\}$ spans $V_1$, there exist matrices $P_n$ and $Q_n$ 
+such that
+
+\begin{align*}
+  \phi(x) &= 2 \sum_{n \in \mathbb{Z}} P_n \phi(2x-n) \\
+  \psi(x) &= 2 \sum_{n \in \mathbb{Z}} Q_n \phi(2x-n) \\
+\end{align*}
+
+Goodman then introduces $r\times r$ Gram matrices for $\phi$ and $\psi$ as
+
+\begin{align*}
+  \Phi_{jk}(u) &= \sum_{n\in \mathbb{Z}} \hat{\phi}_j(u+2n\pi) \overline{\hat{\phi}_k(u+2n\pi)} \\
+  \Psi_{jk}(u) &= \sum_{n\in \mathbb{Z}} \hat{\psi}_j(u+2n\pi) \overline{\hat{\psi}_k(u+2n\pi)}
+\end{align*}
+
+and the “dual-Gram” matrix
+
+\begin{equation*}
+  \Omega_{jk}(u) = \sum_{n\in \mathbb{Z}} \hat{\phi}_j(u+2n\pi) \overline{\hat{\psi}_k(u+2n\pi)}
+\end{equation*}
+
+$\Phi, \Psi$ are Hermitian matrices and so is $M = \begin{pmatrix} \Phi & \Omega \\ \Omega^* & \Psi \end{pmatrix}$.
+
+\begin{prop}{2.1}
+  The set $\{T_n\phi_j\}$ is a Riesz basis iif $\Phi$ is invertible, $\{T_n\psi_j\}$ is a Riesz-basis iif $\Psi$ is 
+  invertible and $\{T_n\phi_j, T_n\psi_j\}$ is a Riesz basis iif $M$ is invertible.
+\end{prop}
+
+The author claims that $\Phi, \Psi, \Omega$ are invertible iif the eigenvalues are bounded away from zero. First this is 
+not precise. It is invertibility everywhere or a.e? Same question for the boundedness away from 0? It is clear that 
+latter implies the former, i.e eigenvalues bounded away from zero everywhere (resp a.e) implies invertibility everywhere 
+(a.e). The converse implication is hard though. Invertibility everywhere (resp a.e) leads to eigenvalues strictly 
+positive everywhere (resp a.e) from which we cannot deduce boundedness away from 0 everywhere (resp a.e) in general. In 
+case the entries of the matrices are continuous functions of $u$, $\lambda_j(u)$ are also continuous and also
+$2\pi$-periodic. Then strict positivity everywhere leads to boundedness away from 0 everywhere (continuous function on 
+compact reaches its bounds) but the same does not apply to a.e case.  \\
+
+The article Goodman refers to is actually just saying in the case where $\phi_j, \psi_j$ are regular, $\Phi, \Psi$ are 
+invertible everywhere iif $\exists 0 < A \leq B$ such that $A \leq \lambda_j \leq B$ everywhere (equiv to a.e as 
+eigenvalues are continuous here) which is clear. \\
+
+Regarding lemma 2.1, we have
+\begin{align*}
+  \Phi(2u) &= \sum_{n \in \mathbb{Z}} \hat{\phi}(2u+2n\pi) {\hat{\phi}(2u+2n\pi)}^* \\
+  &= \sum_{n \in \mathbb{Z}} P(u+n\pi) \hat{\phi}(u+n\pi) {\hat{\phi}(u+n\pi)}^* {P(u+n\pi)}^* \\
+  &= P(u) \Phi(u) {P(u)}^* + P(u+\pi) \Phi(u+\pi) {P(u+\pi)}^*
+\end{align*}
+
+A similar expression holds for $\Psi(2u)$ with $P$ replaced  by $Q$ and for $\Omega(2u)$ with $P$ on the right only 
+replaced by $Q$.
+
+\begin{thm}{2.1}
+  The following are equivalent
+  \begin{enumerate}
+    \item $\{T_n \phi_j, T_n \psi_j\}$ forms a Riesz basis for $V_1$
+    \item $\begin{bmatrix} P(u) & P(u+\pi) \\ Q(u) & Q(u+\pi) \end{bmatrix}$ and $\Phi(u)$ are invertible.  
+  \end{enumerate}
+  If this holds, for any sequences of matrices $r\times r$ $(A_n), (B_n), (C_n)$ with FT $A(u), B(u), C(u)$ in 
+  $\tilde{L}^2_{r\times r}(0, 2\pi)$, we have
+  \begin{align}
+    &\sum_{n \in \mathbb{Z}} C_n \phi(2x-n) = \sum_{n \in \mathbb{Z}} A_n \phi(x-n) + B_n \psi(x-n) \\
+    & \iff \frac{1}{2} \begin{bmatrix} C(u) & C(u+2\pi) \end{bmatrix} = \begin{bmatrix} A(2u) & B(2u) 
+    \end{bmatrix}\begin{bmatrix} P(u) & P(u+\pi) \\ Q(u) & Q(u+\pi) \end{bmatrix}
+    \end{align}
+  If the first equivalence holds, $\Phi(u)$ and $\Psi(u)$ are positive definite and have inverses in 
+  $\tilde{\mathcal{C}}_{r\times r}(0, 2\pi)$.  Functions $\psi_j$ belongs to $W_0$ if and only if
+  \begin{equation}
+     P(u) \Phi(u) {Q(u)}^* + P(u+\pi) \Phi(u+\pi) {Q(u+\pi)}^* = 0
+  \end{equation}
+\end{thm}
+
+We \textbf{now assume} that $\{T_n \phi_j, T_n \psi_j\}$ forms a Riesz basis for $V_1$. The author choose sequences 
+$(G_n)$, $(H_n)$ so that for any integer $l$
+
+\begin{equation}
+  \phi(2x-l) = \sum_{n \in \mathbb{Z}} G_{2n-l} \phi(x-n) + \sum_{n \in \mathbb{Z}} H_{2n-l} \psi(x-n)
+\end{equation}
+
+I understand now where $2n$ subscript comes from. Even rank elements of $(G_n), (H_n)$ $(G^0, H^0)$, are used for 
+$\phi(2x)$, odd rank $(G^1, H^1)$ are used for $\phi(2x-1)$ i.e
+
+\begin{align}
+  \phi(2x) &= \sum_{n \in \mathbb{Z}} G_{2n} \phi_n(x) + H_{2n} \psi_n(x) \label{G0} \\
+  \phi(2x-1) &= \sum_{n \in \mathbb{Z}} G_{2n-1} \phi_n(x) + H_{2n-1} \psi_n(x) \label{G1}
+\end{align}
+
+Note that
+\begin{align*}
+  G(u) &= \sum_{n \in \mathbb{Z}} G_n e^{-iun} \\
+  G(u) + G(u+\pi) &= 2\sum_{n \in \mathbb{Z}} G_{2n} e^{-2iun} \\
+  &= 2G^0(2u) \\
+  G(u)-G(u+\pi) &= 2\sum_{n \in \mathbb{Z}} G_{2n-1} e^{-2iun+iu} \\
+  &= 2G^1(2u)e^{iu}
+\end{align*}
+
+and the same holds for $H$. Taking the Fourier transform of equations (\ref{G0}), (\ref{G1}) leads to
+\begin{align}
+  \frac{1}{2} \hat{\phi}(u) &= G^0(2u)P(u)\hat{\phi}(u) + H^0(2u)Q(u)\hat{\phi}(u) \\
+  \frac{1}{2} \hat{\phi}(u) e^{-iu} &= G^1(2u)P(u)\hat{\phi}(u) + H^1(2u)Q(u)\hat{\phi}(u)
+\end{align}
+
+\begin{thm}{2.2}
+  If $\{T_n \phi_j\}$, $\{T_n \psi_j\}$ are Riesz basis of $V_0$ and $W_0$ respectively, then $G$ and $H$ are given  by 
+  \begin{align*}
+    G(u) &= \Phi(u){P(u)}^*{\Phi(2u)}^{-1} \\
+    H(u) &= \Phi(u){Q(u)}^*{\Psi(2u)}^{-1}
+  \end{align*}
+\end{thm}
+
+\begin{proof}
+  Goodman claims that equations of equivalence of theorem 2.1 holds but \textbf{why}? Because $V_1 = V_0 \bigoplus W_0$.
+  The rest of the proof is simply assembling previous equations.
+\end{proof}
+
+\textbf{Assume} equivalence of theorem 2.1 holds. By the way \textbf{is it true that}
+
+\begin{equation*}
+  \{T_n \phi_j, T_n \psi_j\} \ \text{Riesz  basis for $V_1$} \ \iff \{T_n \phi_j\}, \{T_n \psi_j\} \ \text{Riesz  basis 
+  for $V_0, W_0$ respectively?}
+\end{equation*}
+
+Let $\tilde{\phi}, \tilde{\psi}$ in $V_1\times\cdots\times V_1$ defined in the Fourier domain by
+\begin{equation*}
+  \hat{\tilde{\phi}} = \Phi^{-1} \hat{\phi}, \quad \hat{\tilde{\psi}} = \Psi^{-1} \hat{\psi}
+\end{equation*}
+
+Then $\langle \phi_j, T_n \tilde{\phi}_k\rangle = \delta_{j,k} \delta_{n,0}$ that is $\phi$ and $\tilde{\phi}$ are dual 
+basis. Similarly $\tilde{\psi}$ is dual to $\psi$.  
+
+\begin{thm}{2.3} If $\{T_n \phi_j\}$, $\{T_n \psi_j\}$ are Riesz basis of $V_0$ and $W_0$ respectively, dual functions 
+  are such that
+  \begin{align*}
+    \tilde{\phi}(x) &= 2\sum_{n \in \mathbb{Z}} G_n^* \tilde{\phi}(2x-n) \\
+    \tilde{\psi}(x) &= 2\sum_{n \in \mathbb{Z}} H_n^* \tilde{\psi}(2x-n)
+  \end{align*}
+  and
+  \begin{equation}
+    \tilde{\phi}(2x-l) = \sum_{n \in \mathbb{Z}} P_{2n-l}^* \tilde{\phi}(x-n) + \sum_{n \in \mathbb{Z}} Q_{2n-l}^* 
+    \tilde{\psi}(x-n)
+  \end{equation}
+\end{thm}
+
+\section{Spline wavelets of multiplicity $r$}
+
+\underline{Notations}
+\begin{itemize}
+  \itemsep0em
+  \item $\zeta_{n,r}(S)$ space of spline functions of degree $n$ on $\mathbb{R}$ with knots multiplicity $r$ on set $S$.  
+    Note that $\zeta_{n, r}(\mathbb{Z}) = \$_{n+1, \mathbb{Z}_r}$ in De Boor's notation.
+  \item $V_0 = \zeta_{n, r}(\mathbb{Z}) \cap L_2$, $V_1 = \zeta_{n, r}(\frac{1}{2}\mathbb{Z}) \cap L_2$.
+  \item $W_0$ orthogonal complement to $V_0$ in $V_1$ i.e $V_1 = V_0 \bigoplus W_0$.
+  \item ${(t_i)}_{i \in \mathbb{Z}} = \mathbb{Z}_r$ with $t_i = j$ for $jr \leq i \leq (j+1)r-1$.
+  \item $N_i$ $i=0, \ldots, r-1$, B-spline in $\zeta_{n, r}(\mathbb{Z})$ with support in $[t_i, t_{i+n+1}]$ and knots at 
+    $t_i, \ldots, t_{i+n+1}$ normalized so that $\sum_i N_i^n = 1$. This is exactly De Boor's B-splines i.e
+    \begin{equation*}
+      N_i^n(t) = (t_{i+n+1}-t_i) [t_i,  \ldots, t_{i+n+1}] {(\cdot - t)}_+^{n} \ \text{or eq.} \ N_i^n(t) = B_{i, n+1, 
+      \mathbb{Z}_r}
+    \end{equation*}
+    From the work of De Boor (see $\cite{DeBoor}$ chapter XI), we know that ${\{N_i^n\}}_{i \in \mathbb{Z}}$ is a 
+    Riesz-basis for the infinite norm as for any bounded sequence ${(c_i)}_{i \in \mathbb{Z}}$ we have
+    \begin{equation*}
+      D_n^{-1} \|c\|_{\infty} \leq \|\sum_{i \in \mathbb{Z}} c_i N_i^n \|_{\infty} \leq \|c\|_{\infty}
+    \end{equation*}
+    \textbf{Does this also hold for $l^2, L^2$ norms?} Be aware that in infinite dimension $\|\|_{\infty}$ and 
+    $\|\|_{l^2}$ are not equivalent.
+  \item $U = \{f \in \zeta_{2n+1,r}(\frac{1}{2}\mathbb{Z}), f^{(i)}_{|\mathbb{Z}} = 0, i=0, \ldots, r-1\}$. \textbf{Is 
+    this a subset of $L_2$?} Following Schoenberg Hermite interpolation theorems, it is the case provided results extend 
+    to half-integer knots. More specifically, let ${(y_{\nu})}_{\nu \in \frac{1}{2}\mathbb{Z}}, \ldots, 
+    {(y^{(r-1)}_{\nu})}_{\nu \in \frac{1}{2}\mathbb{Z}}$ sequences on the half integers. Let ${(z^{(j)}_{\nu} = 
+    y^{(j)}_{\frac{\nu}{2}})}_{\nu \in \mathbb{Z}}$ sequences on the integers. Provided $z^{(j)} \in l_p$ for $j=0,
+    \ldots, r-1$, $\exists! L \in \zeta_{2m-1, r}(\mathbb{Z}) \cap \mathcal{L}_{p,r}$, $m \geq r$ such that $L$ 
+    interpolates $z^{(j)}$ and it is given by
+    \begin{equation*}
+      \forall x, \quad L(x) = \sum_{\nu \in \mathbb{Z}} \sum_{j=0}^{r-1} z^{(j)}_{\nu} L_{j}(x-\nu)
+    \end{equation*}
+
+    Note now that $D_2L \in \zeta_{2m-1, r}(\frac{1}{2}\mathbb{Z})$ and so do $D_2L_j$, $j=0, \ldots, r-1$.  
+    Consequently, 
+    
+    \begin{align*}
+      D_2L(x) &= \sum_{\nu \in \mathbb{Z}} \sum_{j=0}^{r-1} z^{(j)}_{\nu} L_{j}(2x-\nu) \\
+      &= \sum_{\nu \in \frac{1}{2}\mathbb{Z}} \sum_{j=0}^{r-1} z^{(j)}_{2\nu} L_{j}(2x-2\nu) \\
+      &= \sum_{\nu \in \frac{1}{2}\mathbb{Z}} \sum_{j=0}^{r-1} y^{(j)}_{\nu} D_2L_{j}(x-\nu) \\
+    \end{align*}
+
+    The $r$ null sequences ${(0)}_{i \in \frac{1}{2}\mathbb{Z}}$ being obviously in $l^2$, there exists a unique $L \in 
+    \zeta_{2m-1, r}(\frac{1}{2}\mathbb{Z}) \cap \mathcal{L}_{2,r}$ with $m \geq r$ that has vanishing $(r-1)$ first 
+    derivatives on $\frac{1}{2}\mathbb{Z}$. $U$ \textbf{is a subset of $L_2$} (and $L_p$ for any $p \geq 1$) provided 
+    $n+1 \geq r$ which is part of the assumptions.
+\end{itemize}
+
+\begin{thm}{3.1}
+  For each $i \in \mathbb{Z}$, $\exists! \psi_i \in W_0$ with support on $[t_i,\ldots, t_{i+2n+2-r}]$ and integer knots 
+  $t_i, \ldots, t_{i+2n+2-r}$. $\psi_i$ does not have smaller support nor a smaller set of knots.
+\end{thm}
+
+For that Goodman first constructs functions $\Psi_i$ in $U$.
+
+\begin{lem}{3.1}
+  For each $f \in W_0$ with $\supp f \subset [a,b]$, $\exists! g \in U$ with $\supp g \subset [a,b]$ such that 
+  $g^{(n+1)} = f$. Conversely, if $g \in U$ has support in $[a,b]$ then $g^{(n+1)}$ is in $W_0$.
+\end{lem}
+
+\begin{proof} Goodman says the proof is easy using integration by parts but $\textbf{I don't see that}$.
+\end{proof}
+
+\begin{thm}{3.2}
+  For each $i \in \mathbb{Z}$, $\exists! \Psi_i \in U$ with support on $[t_i,\ldots, t_{i+2n+2-r}]$ and integer knots 
+  $t_i, \ldots, t_{i+2n+2-r}$. $\Psi_i$ does not have smaller support nor a smaller set of knots.
+\end{thm}
+
+Normalization is chosen so that $\Psi_{i+r} = \Psi_{i}(\cdot - 1), i \in \mathbb{Z}$ and $\psi_i = \Psi_i^{(n+1)}$ gives 
+theorem 3.1.
+
+\section{Linear combinations of wavelets}
+
+\begin{thm}{4.1}
+  The sequence ${(\Psi_i)}_{i \in \mathbb{Z}}$ is locally linearly independent on any interval.
+\end{thm}
+
+\begin{cor}{4.1}
+  Any function $f \in U$ can be written uniquely in the form
+  \begin{equation*}
+    f = \sum_{i \in \mathbb{Z}} c_i \Psi_i
+  \end{equation*}
+  for some constants $c_i$. Moreover if support of $\Psi_i$ overlaps $(j, j+1)$ then
+  \begin{equation*}
+    |c_i| \leq K \| f_{|[j, j+1]} \|_{\infty}
+  \end{equation*}
+  with $K$ independent of $i,j$ and $f$.
+\end{cor}
+
+\begin{proof}
+  Goodman says that it is easily seen that $\zeta = \zeta_{2n+1,r}{(\frac{1}{2}\mathbb{Z})}_{|[j,j+M]}$ has dimension 
+  $2n+2+r(2M-1)$. I personally don't see this easily but following Curry-Schoenberg (see~\cite{DeBoor}, p97) theorem one 
+  can notice that
+  \begin{equation*}
+    \zeta_{2n+1,r}{(\frac{1}{2}\mathbb{Z})}_{|[j,j+M]} = {\Pi_{<2n+2, \frac{1}{2}\mathbb{Z}, \bm{\nu}}}_{|[j,j+M]}
+  \end{equation*}
+  with $\nu_j = 2n+2-r$ for all $j \in \mathbb{Z}$. Now we have
+  \begin{equation*}
+    {\Pi_{<2n+2, \frac{1}{2}\mathbb{Z}, \bm{\nu}}}_{|[j,j+M]} = {\Pi_{<2n+2, \frac{1}{2}\mathbb{Z}\cap[j,j+M], 
+    \bm{\nu}}}_{|[j,j+M]}
+  \end{equation*}
+  The latter is the space of piecewe polynomials of order $2n+2$ on the finite knot sequence 
+  $\frac{1}{2}\mathbb{Z}\cap[j,j+M]$ of $2M+1$ elements each with multiplicity $r$. From (see~\cite{DeBoor}, p84), a
+  basis of $2n+2 + r(2M-1)$ elements can be built for this space which is thus of dimension $2n+2 + r(2M-1)$. \\
+
+  The dimension of $\zeta_0 = U_{|[j,j+M]} = \{f_{|[j,j+M]} \in \zeta_{|[j,j+M]} | f^{(j)}_{|\mathbb{Z}\cap[j,j+M]} = 0, 
+  j=0,\ldots,r-1\}$ is $r(M+1)$ less than the dimension of $\zeta$ that is $2n+2+r(M-2)$. Functions $\Psi_i$ have 
+  support overlapping $[j,j+M]$ for $(j+2)r - 2n - 2 \leq i \leq (j+M)r-1$ that is $2n+2+r(M-2)$ of them. Functions 
+  ${\Psi_i}_{|[j,j+M]}$ for such $i$ are all in $\zeta_0$ and are linearly independent which makes 
+  ${\{{\Psi_i}_{|[j,j+M]}\}}_{(j+2)r - 2n - 2 \leq i \leq (j+M)r-1}$ a basis for $\zeta_0$. \\
+
+  Then \textbf{comes the magic}. Goodman deduces from the fact that ${\{{\Psi_i}_{|[j,j+1]}\}}_{(j+2)r - 2n - 2 \leq i 
+  \leq (j+1)r-1}$ is a basis for $\zeta_0$ and from the fact that norms on finite dimension spaces are equivalent to get 
+  that $\exists K > 0$ such that
+  \begin{equation*}
+    \forall f \in U, \quad \max_{(j+2)r - 2n - 2 \leq i \leq (j+1)r-1} |c_i| \leq K \|f_{|[j,j+1]}\|_{\infty}
+  \end{equation*}
+\end{proof}
+
+\begin{thm}{4.2}
+  The sequence ${(\psi_i)}_{i=-\infty}^{\infty}$ is locally linearly independent on any interval $(j, j+M)$ for any $j$ 
+  and $M$ such that $r(M+1) \geq n+1$.
+\end{thm}
+
+\begin{cor}{4.2}
+  For integers j, M with $M \geq 1$,
+  \begin{equation}
+    {W_0}_{|[j,j+M]} = \left\{f \in \zeta_{n,r}(\frac{1}{2}\mathbb{Z}) | \int_{-\infty}^{\infty} fg = 0, g \in 
+    \zeta_{n,r}(\mathbb{Z}), \supp g \subset [j, j+M] \right\}
+  \end{equation}
+\end{cor}
+
+\begin{cor}{4.3}
+  Any function in $W_0$ can be uniquely written $\sum_{i \in \mathbb{Z}} c_i \psi_i$ for some constants $c_i$.
+\end{cor}
+
+\begin{cor}{4.4}
+  The functions ${\{\psi_i\}}_{i=-\infty}^{\infty}$ form a Riesz basis for $W_0$.
+\end{cor}
+
+\begin{proof} Let $M$ such that $r(M+1) \geq n+1$. ${\psi_i}_{|[j,j+M]}$ for $l=(j+2)r-2n-2 \leq i \leq L=(j+M)r-1$ form 
+  a basis for ${W_0}_{|[j,j+M]}$. Goodman \textbf{claims then there exists constants $A,B$ independent of $j$ such that 
+  for any $f = \sum_{i \in \mathbb{Z}} c_i \psi_i$ in $W_0$ we have}
+  \begin{equation*}
+    A \int_{j}^{j+M} f^2 \leq \sum_{i=l}^L c_i^2 \leq B \int_{j}^{j+M} f^2
+  \end{equation*}
+  \textbf{Where does that come from}???
+\end{proof}
+
+\section{Construction of the wavelets}
+
+$\Psi_i$ with support in $[0,T] = [t_i, t_{i+2n+2-r}]$ is an element of $\zeta_{2n+1,r}(\frac{1}{2}\mathbb{Z})$ and can 
+be written
+\begin{equation*}
+  \Psi_i(x) = \sum_{j=0}^{(T-1)r} c_j N_{i+j}^{2n+1}(2x)
+\end{equation*}
+
+$(T-1)r+1$ coefficients $c_j$ are determined by the conditions $(T-1)r$ conditions $\Psi_i^{(j)}(k) = 0$ for $j=0, 
+\ldots, r-1$, $k = 1, \ldots T-1$ and by a normalisation condition. \\
+
+Consider the case $r = n+1$. Note then that
+\begin{equation*}
+  t_i = 0, \quad t_{i+2n+2-r} = t_{i+r} = 1, \quad \text{for} \ i=0, \ldots, r-1
+\end{equation*}
+
+i.e $T=1$. Then 
+
+\begin{equation}
+  \Psi_i(x) = N_i^{2n+1}(2x) \quad i=0, \ldots, n
+\end{equation}
+
+In De Boor's notation we have $N_j^{2n+1}(t) = B_{j, 2n+2, \mathbb{Z}_{n+1}}(t) = (t_{j+2n+2} - t_j)[t_j, \ldots, 
+t_{j+2n+2}]{(\cdot - t)}_+^{2n+1}$. Be aware that the recurrence relationship of De Boor's B-splines does not transpose 
+directly to the $N_j^n$ as varying $n$ implies varying the sequences of knots whereas in De Boor's relation the sequence 
+of knots is assumed to be fixed. \\
+
+Remember that $\psi$ is related to $\Psi$ by $\psi_i = \Psi_i^{(n+1)}$ and also $\Psi_{i+r} = \Psi_i(\cdot - 1)$.\\
+
+\underline{Case $n=0, r=1$} \mbox{} \\
+Then
+\begin{align*}
+  \Psi_0(x) &= N_0^1(2x) = \begin{dcases} 2x & 0 \leq x < \frac{1}{2} \\ 2-2x & \frac{1}{2}\leq x < 1 \end{dcases} \\
+  \psi_0(x) &= \begin{dcases} 2 & 0 \leq x < \frac{1}{2} \\ -2 & \frac{1}{2} \leq x < 1 \end{dcases}
+\end{align*}
+ 
+However applying Goodman's relation (5.4) leads to $\psi_0(x) = N_0^0(2x) - N_0^0(2x-1) = \begin{dcases} 1 & 0 \leq x < 
+\frac{1}{2} \\ -1 & \frac{1}{2} \leq x < 1 \end{dcases}$. A factor $2$ is missing.
+
+\underline{Case $n=1, r=2$}
+
+In that case we have $\Psi_j(x) = N_j^3(2x) = B_{j, 4, \mathbb{Z}_2}(2x)$, $j=0,1$. Let's compute the latter. Note $I_j 
+= [j, j+1]$
+
+\begin{align*}
+  B_{2j, 1} &= 0 & B_{2j+1,1}(t) &= \begin{dcases} 1 & I_j \end{dcases} \\
+  B_{2j, 2}  &= \begin{dcases} j+1-t & I_j \end{dcases} & B_{2j+1, 2}  &= \begin{dcases} t-j & I_j \end{dcases} \\
+  B_{2j, 3} & = \begin{dcases} 2(j+1-t)(t-j) & I_j \end{dcases} & B_{2j+1, 3}  &= \begin{dcases} {(t-j)}^2 & I_j \\ 
+  {(j+2-t)}^2 & I_{j+1} \end{dcases} \\
+  B_{2j, 4} & = \begin{dcases} \frac{1}{2}(5(j+1-t)+1){(t-j)}^2 & I_j \\ \frac{1}{2}{(j+2-t)}^3 & I_{j+1} \end{dcases} & 
+  B_{2j+1,4}  &= \begin{dcases} \frac{1}{2}{(t-j)}^3 & I_j \\ \frac{1}{2}(5(t-j-1)+1){(j+2-t)}^2 & I_{j+1} \end{dcases}
+\end{align*}
+
+Consequently,
+\begin{align*}
+  \Psi_0(x) &= \begin{dcases} 4(3-5x)x^2 & 0 \leq x < \frac{1}{2} \\ 4{(1-x)}^3 & \frac{1}{2}\leq x < 1 \end{dcases} \\
+  \Psi_1(x) &= \begin{dcases} 4x^3 & 0 \leq x < \frac{1}{2} \\ 4(5x-2){(1-x)}^2 & \frac{1}{2}\leq x < 1 \end{dcases} \\
+  \psi_0(x) &= \begin{dcases} 24(1-5x) & 0 \leq x < \frac{1}{2} \\ 24(1-x) & \frac{1}{2}\leq x < 1 \end{dcases} \\
+  \psi_1(x) &= \begin{dcases} 24x & 0 \leq x < \frac{1}{2} \\ 24(5x-4) & \frac{1}{2}\leq x < 1 \end{dcases}
+\end{align*}
+
+
+Again relation (5.4) leads to $a_{0,0} = 2, a_{0,1} = -3, a_{1,0}=0, a_{1,1} = -1$ and 
+
+\begin{align*}
+  \psi_0(x) &= 2N_0^1(2x) - 3N_1^1(2x) - N_0^1(2x-1) = \begin{dcases} 2 - 10x & 0 \leq x < \frac{1}{2} \\ 2 - 2x & 
+  \frac{1}{2} \leq x < 1 \end{dcases} \\
+  \psi_1(x) &= -N_1^1(2x) + 3N_0^1(2x-1) - 2N_1^1(2x-1) = \begin{dcases} 2x & 0 \leq x < \frac{1}{2} \\ -10x + 8 & 
+  \frac{1}{2} \leq x < 1 \end{dcases} \\
+\end{align*}
+
+A factor 12 or -12 is missing.
+
+\section*{}
+\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{xmpl}
+\addcontentsline{toc}{section}{References}
+
+\end{document}
+
+

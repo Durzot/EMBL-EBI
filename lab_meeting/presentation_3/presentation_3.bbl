@@ -1,0 +1,230 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{anyt/global//global/global}
+  \entry{Bo01}{book}{}
+    \name{author}{1}{}{%
+      {{hash=dBC}{%
+         prefix={de},
+         prefixi={d\bibinitperiod},
+         family={Boor},
+         familyi={B\bibinitperiod},
+         given={Carl},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Springer}%
+    }
+    \strng{namehash}{BCd1}
+    \strng{fullhash}{BCd1}
+    \field{shorthand}{Bo01}
+    \field{label}{Bo01}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Bo01}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{edition}{Revised edition}
+    \field{title}{A practical guide to splines}
+    \field{year}{2001}
+  \endentry
+
+  \entry{Bo73}{article}{}
+    \name{author}{1}{}{%
+      {{hash=dBC}{%
+         prefix={de},
+         prefixi={d\bibinitperiod},
+         family={Boor},
+         familyi={B\bibinitperiod},
+         given={Carl},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BCd1}
+    \strng{fullhash}{BCd1}
+    \field{shorthand}{Bo73}
+    \field{label}{Bo73}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Bo73}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{pages}{269\bibrangedash 276}
+    \field{title}{The quasi-interpolant as a tool in elementary polynomial
+  spline theory}
+    \field{journaltitle}{J. Approx. Theory}
+    \field{year}{1973}
+  \endentry
+
+  \entry{Bo76}{article}{}
+    \name{author}{1}{}{%
+      {{hash=dBC}{%
+         prefix={de},
+         prefixi={d\bibinitperiod},
+         family={Boor},
+         familyi={B\bibinitperiod},
+         given={Carl},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BCd1}
+    \strng{fullhash}{BCd1}
+    \field{shorthand}{Bo76}
+    \field{label}{Bo76}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Bo76}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{pages}{1\bibrangedash 47}
+    \field{title}{Splines as linear combinations of B-splines. A survey.}
+    \field{volume}{2}
+    \field{journaltitle}{J. Approx. Theory}
+    \field{year}{1976}
+  \endentry
+
+  \entry{CS66}{article}{}
+    \name{author}{1}{}{%
+      {{hash=HCIS}{%
+         family={H.B\bibnamedelima Curry},
+         familyi={H\bibinitperiod\bibinitdelim C\bibinitperiod},
+         given={I.J\bibnamedelima Schoenberg},
+         giveni={I\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HCIS1}
+    \strng{fullhash}{HCIS1}
+    \field{shorthand}{CS66}
+    \field{label}{CS66}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{CS66}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{pages}{71\bibrangedash 107}
+    \field{title}{On Pólya frequency functions IV: the fundamental spline
+  functions and their limits}
+    \field{volume}{17}
+    \field{journaltitle}{J. Analyse Math.}
+    \field{year}{1966}
+  \endentry
+
+  \entry{Ma70}{article}{}
+    \name{author}{1}{}{%
+      {{hash=MMJ}{%
+         family={Marsden},
+         familyi={M\bibinitperiod},
+         given={M.\bibnamedelima J.},
+         giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MMJ1}
+    \strng{fullhash}{MMJ1}
+    \field{shorthand}{Ma70}
+    \field{label}{Ma70}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Ma70}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{pages}{7\bibrangedash 42}
+    \field{title}{An identity for spline functions with applications to
+  variation-diminishing spline approximation}
+    \field{volume}{3}
+    \field{journaltitle}{J. Approx. Theory}
+    \field{year}{1970}
+  \endentry
+
+  \entry{Ri69}{book}{}
+    \name{author}{1}{}{%
+      {{hash=RT}{%
+         family={Rivlin},
+         familyi={R\bibinitperiod},
+         given={T.},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Blaisdell}%
+    }
+    \strng{namehash}{RT1}
+    \strng{fullhash}{RT1}
+    \field{shorthand}{Ri69}
+    \field{label}{Ri69}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Ri69}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{title}{An introduction to the approximation of functions}
+    \field{year}{1969}
+  \endentry
+
+  \entry{Sc46}{article}{}
+    \name{author}{1}{}{%
+      {{hash=SI}{%
+         family={Schoenberg},
+         familyi={S\bibinitperiod},
+         given={I.J},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SI1}
+    \strng{fullhash}{SI1}
+    \field{shorthand}{Sc46}
+    \field{label}{Sc46}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Sc46}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{pages}{45\bibrangedash 99}
+    \field{title}{Contributions to the problem of approximation of equidistant
+  data by analytic functions: part A}
+    \field{volume}{4}
+    \field{journaltitle}{Quarterly of Applied mathematics}
+    \field{year}{1946}
+  \endentry
+
+  \entry{Un99}{article}{}
+    \name{author}{1}{}{%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{UM1}
+    \strng{fullhash}{UM1}
+    \field{shorthand}{Un99}
+    \field{label}{Un99}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Un99}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \field{pages}{22\bibrangedash 38}
+    \field{title}{Splines: A perfect fit for signal and image processing}
+    \field{volume}{16}
+    \field{journaltitle}{IEEE}
+    \field{year}{1999}
+  \endentry
+\enddatalist
+\endinput

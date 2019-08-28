@@ -1,0 +1,611 @@
+\chapter{The splines zoo}\label{chapter:annexB}
+
+This appendix aims at putting in one place all the splines that we have encountered in the litterature in order to catch 
+a glimpse of their broad diversity and in order to facilitate comparisons. If relevant, connections will be made between 
+the different notations and definitions.  In order to have a presentation as coherent as possible, we will stick to the 
+following notation rules.
+
+\begin{enumerate}
+  \item $n$ or $m$ related quantities denote the \emph{order} of the spline, not to be confused with the \emph{degree}.  
+  \item $r$ denotes the multiplicity of the interpolation or in other words the order up to which derivatives are 
+    reproduced.
+  \item $j,s$ are used for the running index from $0$ to $r-1$
+  \item $i,k,l$ are used for running integers
+  \item $j$ is used for the purely imaginary number
+  \item Calligraphed letters as $\mathscr{S}$ or $\mathcal{C}$ denote functional sets
+  \item Bold lowercase letters as $\bm{c}$ denote sequences or vectors
+  \item Bold uppercase letters as $\bm{M}$ denote matrices
+\end{enumerate}
+
+
+\section{Polynomial splines}
+
+\subsection{General B-splines}
+
+\begin{deftn}[\cite{Sch73}, Lecture 1, p2]
+  The general B-spline of order $n$ with knots $t_0 < \cdots < t_n$ is
+  \begin{equation}\label{def:sch-gen-bspline}
+    M(t;t_0, \ldots, t_n) = n[t_0, \ldots, t_n]{(\cdot - t)}_+^{n-1}
+  \end{equation}
+\end{deftn}
+
+\begin{prop}
+  \begin{enumerate}
+    \item (Peano's theorem) For any $f \in \mathcal{C}^n$, 
+      \begin{equation*}
+	[t_0, \ldots, t_n]f = \frac{1}{n!}\int_{t_0}^{t_n} M(t;t_0, \ldots, t_n)f^{(n)}(t)dt
+      \end{equation*}
+  \end{enumerate}
+\end{prop}
+
+\subsection{Cardinal splines}
+
+\begin{deftn}[B-splines equidistant knots,~\cite{Sch73}, Lecture 2]
+  The forward $B$-spline of order $n$ is
+  \begin{equation*}
+    Q_n(t) = n[0, 1, \ldots, n]{(\cdot-t)}_{+}^{n-1}
+  \end{equation*}
+  and the central $B$-spline of order $n$
+  \begin{equation*}
+    M_n(t) = n\left[\frac{-n}{2}, \frac{-n}{2}+1, \ldots, \frac{n}{2}\right]{(\cdot-t)}_{+}^{n-1} = Q_n(t+\frac{n}{2})
+  \end{equation*}
+\end{deftn}
+
+\subsection{Exponential splines}
+
+\begin{deftn}[Exponential spline,~{\cite[(4.15), Lecture 2]{Sch73}}]
+  Let $t \neq 0, t \neq 1$. The exponential spline of degree $n$ for the base $t$ is the function defined by
+  \begin{equation}
+    \Phi_n(x;t) = \sum_{k=-\infty}^{\infty} t^k Q_{n+1}(x-k)
+  \end{equation}
+  It belongs to the space $\mathscr{S}_{n+1}$.
+\end{deftn}
+
+\begin{prop}
+  The exponential spline satisfies
+  \begin{enumerate}
+    \item $\Phi_n(x+1;t) = t\Phi_n(x;t)$, $\forall x,t$
+    \item $\Phi_n^{(n)}(x;t) = {(1-t^{-1})}^n$, for $0 < x < 1$
+  \end{enumerate}
+\end{prop}
+
+\begin{deftn}[Euler-Frobenius polynomial,~{\cite[(1.7), Lecture 3]{Sch73}}]\label{def:EF}
+  The $n^{th}$ Euler-Frobenius polynomial is
+  \begin{equation}
+    \Pi_n(t) = n! \sum_{j=1}^n Q_n(j)t^{j-1}
+  \end{equation}
+  It belongs to the linear space $\Pi_{<n}$ and has $n-1$ simple zeros in reciprocal pairs
+  \begin{equation*}
+    \lambda_{n-1} < \cdots < \lambda_1 < 0
+  \end{equation*}
+\end{deftn}
+
+\begin{deftn}[Exponential Euler polynomial,~{\cite[(1.2), Lecture 3]{Sch73}}]\label{def:EE}
+  The exponential Euler polynomial of degree $n$ is
+  \begin{equation}
+    A_n(x;t) = \frac{n!}{{(1-t^{-1})}^n} \Phi_n(x;t), \ 0\leq x\leq 1
+  \end{equation}
+\end{deftn}
+
+\begin{prop}\label{prop:EF}
+  The exponential Euler polynomial satisfies
+  \begin{align*}
+    \frac{t-1}{t-e^z}e^{xz} &= \sum_{n=0}^{\infty} \frac{A_n(x;t)}{n!}z^n \\
+    A_n(x;t) &= x^n + a_1(t) \binom{n}{1} + \cdots + a_n(t), \quad a_n(t) = \frac{\Pi_n(t)}{{(t-1)}^n} \end{align*}
+\end{prop}
+
+\begin{deftn}[Exponential Euler spline,~{\cite[(5.4), Lecture 3]{Sch73}}]
+  The exponential Euler spline of degree $n$ for base $\lambda$ is
+  \begin{equation}
+    S_n(x;\lambda) = \frac{\Phi_n(x;\lambda)}{\Phi_n(0;\lambda)} \ \text{for} \ \lambda \not\in\{\lambda_1,\ldots, 
+    \lambda_{n-1}\}
+  \end{equation}
+  It is in $\mathscr{S}_{n+1}$ and has the property of interpolating $\lambda^x$ at integers.
+\end{deftn}
+
+\begin{deftn}[Eigensplines,~{\cite[(5.6), Lecture 3]{Sch73}}]
+  The eigenspline for base $\lambda_j$ is
+  \begin{equation}
+    S_j(x) = \Phi_n(x;\lambda_j)
+  \end{equation}
+  It is in $\mathscr{S}_{n+1}$ and has the property of vanishing at integers.
+\end{deftn}
+
+\subsection{Eigensplines \texorpdfstring{$S_1, \ldots, S_{2(m-r)}$}{Lg}, fundamental splines \texorpdfstring{$L_0, 
+\ldots, L_{r-1}$}{Lg}}
+
+Let $\matr{P} = {(\binom{i}{j})}_{(i,j) \in \mathbb{Z}^2}$ be an infinite matrix with binomial coefficients and let 
+$P\left(\begin{matrix} i_1 & i_2 & \hdots & i_q \\ j_1 & j_2 & \hdots & j_q \end{matrix}; \lambda \right)$ the 
+determinant of the submatrix of $\matr{P}-\lambda\matr{I}$ obtained by deleting all rows and columns except $i_1, 
+\ldots, i_q$ and $j_1, \ldots, j_q$ respectively.
+
+\begin{deftn}[Euler-Frobenius polynomial multiplicity $r$,~{\cite[(3.10), Lecture 5]{Sch73}}]\label{def:EF-r}
+  The $n^{th}$ Euler-Frobenius of multiplicity $r$ is the polynomial
+  \begin{equation}\label{eq:def-EF-r}
+    \Pi_{n,r}(\lambda) = P\left(\begin{matrix} r & r+1 & \hdots & n \\ 0 & 1 & \hdots & n-r \end{matrix}; \lambda 
+    \right)
+    \end{equation}
+    It belongs to the linear space $\Pi_{<n-2r+2}$.
+\end{deftn}
+
+\begin{remark}
+  \begin{enumerate}
+    \item The $n^{th}$ Euler-Frobenius polynomial of multiplicity $r$ is the determinant of the following matrix whose 
+      coefficients depend on $\lambda$ \begin{equation*}
+	\begin{vmatrix} 1 & \binom{r}{1} & \hdots & \binom{r}{r-1} & 1- \lambda & 0  & \hdots &  0 \\
+	  1 & \binom{r+1}{1} & \hdots & \binom{r+1}{r-1} & \binom{r+1}{r} & 1- \lambda &  \hdots & 0 \\
+	  \vdots & & & & & & & \vdots \\
+	  1 & \binom{n-r}{1} & & & \hdots &  & \binom{n-r}{n-r-1} &  1- \lambda  \\
+	  1 & \binom{n-r+1}{1} & & & \hdots &  & \binom{n-r+1}{n-r-1} &  \binom{n-r+1}{n-r}  \\
+	  \vdots & & & & & & & \vdots \\
+	  1 & \binom{n}{1} & & & \hdots & & \binom{n}{n-r-1} & \binom{n}{n-r}  \\
+	\end{vmatrix}
+      \end{equation*}
+    \item The $n^{th}$ Euler Frobenius polynomial of multiplicity $r=1$ is the $n^{th}$ Euler Frobenius from 
+      Definition~\ref{def:EF} i.e
+      \begin{equation*}
+	\Pi_{n,1} = \Pi_n
+      \end{equation*}
+  \end{enumerate}
+\end{remark}
+
+It is assumed from now on that $n=2m-1$ is odd.
+\begin{prop}[{\cite[Theorem 4]{Sch73}}]\label{prop:EF-r}
+  The $(2m-1)^{th}$ Euler-Frobenius polynomial for complicity $r$ is such that
+  \begin{equation}
+    \Pi_{2m-1,r}(\lambda) = \sum_{k=0}^{2m-2r}   c_{k-(m-r)}\lambda^k
+  \end{equation}
+  with
+  \begin{equation*}
+  c_0 > 0, c_{-k} = c_k, c_{-(m-r)} = c_{m-r} = \pm 1
+  \end{equation*}
+  It is therefore reciprocal and monic, except for the sign. Moreover, it has $n-2r+1 = 2(m-r)$ real simple zeros of 
+  sign ${(-1)}^r$
+  \begin{equation*}
+    0 < |\lambda_1 | < \cdots < |\lambda_{m-r}| < 1 < |\lambda_{m-r+1}| < \cdots < |\lambda_{2(m-r)}|
+  \end{equation*}
+  which are reciprocal in pairs i.e
+  \begin{equation*}
+    \lambda_j \lambda_{2m-2r+1-j} = 1, \quad j=1, \ldots, m-r
+  \end{equation*}
+\end{prop}
+
+\begin{deftn}[Eigensplines for muliplicity $r$,~\cite{Sch73}, Lecture 5]\label{def:eigsplines-r}
+  Let $j \in \llbracket1,2(m-r)\rrbracket$. The $j^{th}$ eigenspline for multiplicity $r$ is the spline defined by
+  \begin{equation*}
+    \begin{dcases}
+      S_j(x) = a_{0,j}x^{2m-1} + \binom{2m-1}{1} a_{1,j} x^{2m-2} + \cdots + \binom{2m-1}{2m-r-1} a_{2m-r-1, j}x^r, & 
+      \text{if} \ 0 \leq x \leq 1 \\
+      S_j(x+1) = \lambda_j S_j(x) & \text{elsewhere}
+    \end{dcases}
+  \end{equation*}
+  with $a_{0,j}, \ldots, a_{2m-r-1,j}$ the unique solution to the system formed of the homogeneous equations 
+  (\ref{eq:def-EF-r}) at $\lambda = \lambda_j$ and the equation $S_j^{(r)}(0) = 1$. 
+  
+  It belongs to the linear space $\mathring{\mathscr{S}}_{2m,r}$.
+\end{deftn}
+
+\underline{Examples}
+\begin{enumerate}
+  \item Let $r=1$. If $m=1$, $\dim \mathring{\mathscr{S}}_{2m,r} = 0$ and the only eigenspline is the trivial 
+      function.
+      If $m=2$, $P = S_{|[0,1]}$ takes the form \begin{equation*}
+	P = a_0 x^3 + 3 a_1 x^2 + 3a_2 x
+      \end{equation*}
+      with homogeneous system
+      \begin{equation*}
+      \begin{array}{lcl}
+       a_0 + 3a_1 + 3a_2 & = & 0 \\
+       3a_0 + 6a_1 + 3(1-\lambda)a_2 & = & 0 \\
+       6a_0 + 6a_1(1-\lambda) & = & 0
+      \end{array}
+      \end{equation*}
+     
+      $\lambda$ is chosen so that the matrix of the system in singular in order for the eigenspline not to be trivial.  
+      Coefficients are then determined up to constant which is fixed by the following constraint $S^{(1)}(0) = 1$, 
+      adding the equation
+      \begin{equation*}
+       3a_2 = 1
+      \end{equation*}
+      
+      The matrix of the homogeneous system is singular if and only if $\lambda$ is a zero of \begin{equation*}
+       \Pi_{2m, r}(\lambda) = 1+4\lambda+\lambda^2
+      \end{equation*}
+      
+      that is $\lambda_1 = -2 + \sqrt{3}, \lambda_2 = -2 - \sqrt{3}$.
+
+      \begin{figure}[!h]
+	\centering
+	\includegraphics[width=\textwidth]{eigsplines_r1_m2.png}
+	\caption{Eigensplines for $r=1$, $m=2$}
+      \end{figure}
+    \item Let $r=2$. If $m=2$, $\dim \mathring{\mathscr{S}}_{2m,r} = 0$ and the only eigenspline is the trivial 
+      function. If $m=3$, $P = S_{|[0,1]}$ takes the form   
+      \begin{equation*}
+          P = a_0 x^5 + 5 a_1 x^4 + 10a_2 x^3 + 10a_3 x^2
+      \end{equation*}
+      with homogeneous system
+      \begin{equation*}
+      \begin{array}{lcl}
+       a_0 + 5a_1 + 10a_2 + 10a_3 & = & 0 \\
+       5a_0 + 20a_1 + 30a_2 + 20a_3 & = & 0 \\
+       20a_0 + 60a_1 + 60a_2 + 20a_3(1-\lambda) & = & 0 \\
+       60a_0 + 120a_1 + 60a_2(1-\lambda) & = & 0
+      \end{array}
+      \end{equation*}
+	   
+      $\lambda$ is chosen so that the matrix of the system in singular in order for the eigenspline not to be trivial.  
+      Coefficients are then determined up to constant which is fixed by the following constraint $S^{(2)}(0) = 1$, 
+      adding the equation
+      \begin{equation*}
+       20a_3 = 1
+      \end{equation*}
+      
+      The matrix of the homogeneous system is singular if and only if f $\lambda$ is a zero of \begin{equation*}
+       \Pi_{2m, r}(\lambda) = 1-6\lambda+\lambda^2
+      \end{equation*}
+      that is $\lambda_1 = 3-2\sqrt{2}, \lambda_2 = 3+2\sqrt{2}$.
+
+      \begin{figure}[!h]
+	\centering
+	\includegraphics[width=\textwidth]{eigsplines_r2_m3.png}
+	\caption{Eigensplines for $r=2$, $m=3$}
+      \end{figure}
+\end{enumerate}
+
+\begin{prop}[\cite{Sch73}, p49]
+  To every $S \in \mathring{\mathscr{S}}_{2m,r}$ corresponds a unique sequence $(c_1, \ldots, c_{2m-2r})$ such that
+  \begin{equation}
+    S = \sum_{j=1}^{2m-2r} c_j S_{j}
+  \end{equation}
+\end{prop}
+
+\begin{deftn}[Fundamental splines,{~\cite[(5.1)-(5.5), Lecture 5]{Sch73}}]\label{def:fundamental-r}
+  Let $s \in \llbracket 0, r-1\rrbracket$. The ${s+1}^{th}$ \emph{fundamental} splines $L_s := L_{2m,r,s}$ is defined by  
+  \begin{equation}
+    L_s(t) = 
+    \begin{dcases} 
+      P_s(t) & \text{if} \ 0 \leq t \leq 1 \\
+      \sum_{j=1}^{m-r} c_{j,s} S_j(t) & \text{if} \ t \geq 1 \\
+      {(-1)}^s L_s(-t) & \text{if} \ t < 0
+    \end{dcases}
+  \end{equation}
+  with~(\cite[(7.13)]{LS73})
+  \begin{equation}
+    P_s(t) = \begin{dcases} \frac{1}{s!}t^s + a_{1,s}t^r + a_{2,s}t^{r+2} + \cdots + a_{m-r+1,s}t^{2m-r} \\ \quad +  
+      a_{m-r+2,s} t^{2m-r+1} + \cdots + a_{m,s} t^{2m-1} & \text{if $r-s \equiv 0[2]$} \\
+      \frac{1}{s!}t^s + a_{1,s}t^{r+1} + a_{2,s}t^{r+3} + \cdots + a_{m-r,s}t^{2m-r-1} \\
+      \quad + a_{m-r+1,s} t^{2m-r} + \cdots + a_{m,s} t^{2m-1} & \text{otherwise}
+   \end{dcases}
+  \end{equation}
+  and the $2m-r$ unknowns $a_{1,s}, \ldots, a_{m,s}, c_{1,s}, \ldots, c_{m-r,s}$ defining $L_s$ are obtained as the 
+  unique solution to the linear system of $2m-r$ equations
+  \begin{equation}
+   \forall \rho=0, \ldots, 2m-r-1, \quad P_s^{(\rho)}(1) =\sum_{j=1}^{m-r} c_{j,s} S_j^{(\rho)}(1)
+  \end{equation}
+\end{deftn}
+
+\underline{Examples}
+\begin{enumerate}
+  \item If $r=1, m=1$, $L_0$ is even, has compact support in $[-1,1]$ with \begin{equation}
+      L_0(t) = \begin{cases} 1 + a_{1,0} t & \text{if} \ 0 \leq t \leq 1 \\
+	0 & \text{if} \ t \geq 1
+      \end{cases}
+    \end{equation}
+    and the coefficient $a_{1,0}$ satisfies
+    \begin{equation}
+     1 + a_{1,0} = 0
+    \end{equation}
+    that is $L_0$ is the hat function.
+    \begin{figure}[!h]
+      \centering
+      \includegraphics[width=\textwidth]{fundspline_r1_m1.png}
+      \caption{Fundamental spline for $r=1$, $m=1$}
+    \end{figure}
+    
+  \item If $r=1, m=2$, $L_0$ is even, infinitely supported with
+    \begin{equation*}
+      L_0(t) =
+      \begin{dcases}
+	1 + a_{1,0} t^2 + a_{2,0}t^3 & \text{if} \ 0 \leq t \leq 1  \\
+	c_{1,0}S_1(t) & \text{if} \ t \geq 1  \\
+      \end{dcases}
+    \end{equation*}
+    and the coefficients satisfy
+    \begin{equation}
+      \begin{array}{rcl}
+       a_{1,0} + a_{2,0} - c_{1,0} S_1(1) & = & -1  \\
+       2a_{1,0} + 3a_{2,0} - c_{1,0} S_1^{(1)}(1) & = & 0 \\
+       2a_{1,0} + 6a_{2,0} - c_{1,0} S_1^{(2)}(1) & = & 0
+      \end{array}
+    \end{equation}
+    \begin{figure}[!h]
+      \centering
+      \includegraphics[width=\textwidth]{fundspline_r1_m2.png}
+      \caption{Fundamental spline for $r=1$, $m=2$}
+    \end{figure}
+
+  \item If $r=2, m=2$, $L_0, L_1$ are compactly supported in $[-1,1]$
+    \begin{align*}
+      L_0(t) &= 
+      \begin{cases}
+	 1 + a_{1,0} t^2 + a_{2,0}t^3 & \text{if} \ 0 \leq t \leq 1 \\
+         0 & \text{if} \  t \geq 1 \\
+      \end{cases} \\
+      L_1(t) &= 
+      \begin{cases}
+         t + a_{1,1} t^2 + a_{2,1}t^3 & \text{if} \ 0 \leq t \leq 1 \\
+         0 & \text{if} \  t \geq 1 \\
+      \end{cases} \\
+    \end{align*}
+    and the coefficients satisfy
+    \begin{equation*}
+     \begin{array}{rcl}
+     a_{1,0} + a_{2,0} & = & -1  \\
+     2a_{1,0} + 3a_{2,0} & = & 0 \\
+    \end{array}
+    \end{equation*}
+    and 
+    \begin{equation*}
+    \begin{array}{rcl}
+     a_{1,1} + a_{2,1} & = & -1  \\
+     2a_{1,1} + 3a_{2,1} & = & -1 \\
+    \end{array}
+    \end{equation*}
+    \begin{figure}[!h]
+      \centering
+      \includegraphics[width=\textwidth]{fundspline_r2_m2.png}
+      \caption{Fundamental splines for $r=2$, $m=2$}\label{fig:fund-r2-m2}
+    \end{figure}
+
+  \item If $r=2, m=3$, $L_0, L_1$ are infinitely supported with
+    \begin{align*}
+      L_0(t) &= 
+     \begin{cases}
+        1 + a_{1,0} t^2 + a_{2,0}t^4 + a_{3,0}t^5 & \text{if} \ 0 \leq t \leq 1 \\
+	c_{1,0} S_1 & \text{if} \  t \geq 1 \\
+      \end{cases} \\
+     L_1(t) &= 
+     \begin{cases}
+        t + a_{1,1} t^3 + a_{2,1}t^4 + a_{3,1}t^5 & \text{if} \ 0 \leq t \leq 1 \\
+	c_{1,1} S_1 & \text{if} \  t \geq 1 \\
+      \end{cases}
+    \end{align*}
+    and the coefficients satisfy
+    \begin{equation*}
+      \begin{array}{rcl}
+       a_{1,0} + a_{2,0} + a_{3,0} - c_{1,0} S_1(1) & = & -1  \\
+       2a_{1,0} + 4a_{2,0} + 5a_{3,0} - c_{1,0} S_1^{(1)}(1) & = & 0 \\
+       2a_{1,0} + 12a_{2,0} + 20a_{3,0} - c_{1,0} S_1^{(2)}(1) & = & 0 \\
+       24a_{2,0} + 60a_{3,0} - c_{1,0} S_1^{(3)}(1) & = & 0 
+      \end{array}
+    \end{equation*}
+    and 
+    \begin{equation*}
+      \begin{array}{rcl}
+       a_{1,1} + a_{2,1} + a_{3,1} - c_{1,1} S_1(1) & = & -1  \\
+       3a_{1,1} + 4a_{2,1} + 5a_{3,1} - c_{1,1} S_1^{(1)}(1) & = & -1 \\
+       6a_{1,1} + 12a_{2,1} + 20a_{3,1} - c_{1,1} S_1^{(2)}(1) & = & 0 \\
+       a_{1,1} + 24a_{2,1} + 60a_{3,1} - c_{1,1} S_1^{(3)}(1) & = & 0 
+      \end{array}
+    \end{equation*}
+    \begin{figure}[!h]
+      \centering
+      \includegraphics[width=\textwidth]{fundspline_r2_m3.png}
+      \caption{Fundamental splines for $r=2$, $m=3$}
+    \end{figure}
+\end{enumerate}
+
+
+\subsection{Exponential Euler-Hermite splines}
+
+Let $s \in \llbracket0,r-1\rrbracket$. Define
+\begin{equation}\label{eq:def-anrs}
+  A_{n,r,s}(x;\lambda) = \begin{vmatrix}
+    \frac{A_n(0;\lambda)}{n!} & \hdots & \frac{A_{n-s+1}}{(n-s+1)!} & \frac{A_n(x;\lambda)}{n!} & \hdots & 
+    \frac{A_{n-r+1}(0;\lambda)}{(n-r+1)!} \\
+    \vdots & & & \vdots & & \vdots \\
+    \frac{A_{n-r+1}(0;\lambda)}{(n-r+1)!} & \hdots & \frac{A_{n-r-s+2}}{(n-r-s+2)!} & \frac{A_n(x;\lambda)}{(n-r+1)!} & 
+    \hdots & \frac{A_{n-2r+2}(0;\lambda)}{(n-2r+2)!} \\
+  \end{vmatrix}
+\end{equation}
+
+As $\frac{A_n'(x;\lambda)}{n!} = \frac{A_{n-1}(x;\lambda)}{(n-1)!}$, one has that 
+\begin{equation}\label{eq:anrs}
+  A^{(s)}_{n,r,s}(0; \lambda) = H_r\left(\frac{A_n(0;\lambda)}{n!}\right)
+\end{equation}
+with  $A_n$ the exponential Euler polynomial of degree $n$ (Definition~\ref{def:EE}) and $H_r$ the Hankel determinant of 
+order $r$ (Definition~\ref{def:Hankel}).
+
+\begin{prop}
+  \begin{align*}
+    A_{n,r,s}^{(\rho)}(1;\lambda) &= \lambda A_{n,r,s}^{(\rho)}(0;\lambda), \quad \rho=r, \ldots, n-r  \\
+    A_{n,r,s}^{(\rho)}(1;\lambda) &= A_{n,r,s}^{(\rho)}(0;\lambda) = 0, \quad \rho=0, \ldots, r-1, \rho \neq s \\
+    A_{n,r,s}^{(s)}(0;\lambda) &= H_r(\frac{A_n(0;\lambda)}{n!})
+  \end{align*}
+\end{prop}
+
+\begin{deftn}[Exponential Euler-Hermite spline,{\cite[(2.1)]{Lee76a}}]\label{def:EEH}
+  Let $s \in \llbracket0, r-1\rrbracket$ and $\lambda \in \mathbb{R}$ such that $\Pi_{n,r}(\lambda) \neq 0$. The 
+  ${s+1}^{th}$ exponential Euler-Hermite spline of order $n+1$ for the base $\lambda$ is the function $S_{n+1,r,s}$ 
+  defined by \begin{align}
+    S_{n+1,r,s}(x) &= \frac{A_{n,r,s}(x; \lambda)}{A_{n,r,s}^{(s)}(0; \lambda)}, \quad 0 \leq x \leq 1 \\
+    S_{n+1,r,s}(x+1) &= \lambda S_{s}(x), \quad \forall x \in \mathbb{R}
+  \end{align}
+  It belongs to the linear space $\mathscr{S}_{n+1,r}$.
+\end{deftn}
+
+\begin{prop}[{\cite[(2.2)]{Lee76a}}]\label{prop:snrs}
+  For $k \in \mathbb{Z}$,
+  \begin{align*}
+    S_{n+1,r,s}^{(\rho)}(k) &= 0, \quad \rho=0, \ldots, r-1, \rho \neq s \\
+    S_{n+1,r,s}^{(s)}(k) &= \lambda^k, \quad \rho=0, \ldots, r-1, \rho \neq s
+  \end{align*}
+  hence $S_{n+1,r,s} \in \mathscr{S}_{n+1,r}^{(s)}$ (\ref{def:subspace-s}).
+\end{prop}
+
+\subsection{Hermite B-splines}
+
+\section{Exponential splines}
+
+In the first part of this zoo, a lot of different splines and splines basis were introduced, all of which were piecewise 
+polynomials. However, it is not necessary to restrict ourselves to polynomials to fulfill all the good properties of 
+splines. Other types of splines, more general, exist and provide additional tools in all areas where polynomials were 
+already in use, but also in areas where their impact was less significant. More specifically, polynomial splines didn't 
+develop much in continuous-time signal processing for the reason that the most prominent functions in this domain are 
+the exponentials, not the polynomials. This observation motivated the study of an enlarged class of splines, namely the 
+class of \emph{exponential} splines, that contributed a lot to the unification between continuous and discrete-time 
+approaches. The kind of splines that are the most convenient are the \emph{cardinal} ones, which are defined on a 
+uniform grid. We shall thefore introduce hereafter the theory of \emph{cardinal exponential splines}, following the 
+works of Unser~\cite{unser_cardinal_2005},~\cite{unser_cardinal_2005-1}.
+
+\subsection{Green's function of differential operator}
+In order to define exponential splines, it is necessary to define what the \emph{Green's} function of a differential 
+operator, $L$, is. Let $n \in \mathbb{N}^*$, $L$ be the generic differential operator of order $n$ \begin{equation*}
+  L\{f\} = D^n{f} + a_{n-1}D^{n-1}{f} + \cdots + a_0 I{f}
+\end{equation*}
+with $a_0, \ldots, a_{n-1} \in \mathbb{C}$. Formally, $L$ is an operator from the Schwartz space $\mathcal{S} := 
+\mathcal{S}(\mathbb{R})$ into its topological dual $\mathcal{S}' := \mathcal{S}'(\mathbb{R})$, also known as the space 
+of \emph{distributions} or \emph{generalized functions} on $\mathbb{R}$. Let $\langle\cdot,\cdot\rangle: 
+\mathcal{S}\times\mathcal{S}' \to \mathbb{C}$ that associates to each pair $(\varphi, f) \in 
+\mathcal{S}\times\mathcal{S}'$ the complex number $\langle \varphi, f \rangle := f\{\varphi\}$. Let $T_s$ the 
+translation operator by $s$, \textit{i.e}, for any $\varphi \in \mathcal{S}$, $T_s\varphi(t) = \varphi(t-s)$. $L$ is a 
+continuous, linear and shift-invariant (LSI) operator, where shift-invariance means that
+\begin{equation*}
+  \forall \varphi \in \mathcal{S}, \forall s \in \mathbb{R}, \qquad L\{T_s\varphi\} = T_sL\{\varphi\},
+\end{equation*}
+From Schwartz kernel theorem~\cite[Corollary 3.3]{unser_introduction_2014}, we know there exists a generalized function 
+$h \in \mathcal{S}'$, called convolution kernel of $L$, such that
+\begin{equation*}
+  \forall \varphi \in \mathcal{S}, \qquad L\{\varphi\} = \varphi * h
+\end{equation*}
+
+\begin{remark}
+  \begin{enumerate}
+    \item The convolution $\varphi * f$ is also noted $f * \varphi$, mirroring the commutativity of the convolution 
+      product on $\mathcal{S}$.
+    \item Formally, the convolution $\varphi * f$ between a test function $\varphi$ and a distribution $f$ is a 
+      distribution such that
+    \begin{equation*}
+      \forall \psi \in \mathcal{S}, \qquad f*\varphi\{\psi\} = f\{\check{\varphi}*\psi\}
+    \end{equation*}
+    This defines a continuous and linear functional (exercise) on $\mathcal{S}$, that is, a distribution.
+    \item The Fourier transform of the distribution $f * \varphi$ is the distribution
+      \begin{align*}
+	\forall \psi \in \mathcal{S}, \qquad \widehat{f*\varphi}\{\psi\} &= f*\varphi\{\hat{\psi}\}, \\
+	&= f\{\check{\varphi}*\hat{\psi}\}, \\
+	&= f\{\widehat{\hat{\varphi}\psi}\}, \\
+	&= \hat{f}\{\hat{\varphi}\psi\}.
+      \end{align*}
+  \end{enumerate}
+\end{remark}
+
+\begin{example}
+  \begin{enumerate}
+    \item
+      For $L := D$, derivation operator, the distribution $h$ is $\delta'$, \textit{i.e}, the distribution that 
+      associates to each test function $\varphi$ the complex number $-\varphi'(0)$. Indeed,
+      \begin{align*}
+	\forall (\varphi,\psi) \in \mathcal{S}^2, \qquad \delta'*\varphi \{\psi\} &= \delta'\{\check{\varphi}*\psi\}, \\
+	&= - \left(\check{\varphi}*\psi\right)'(0), \\
+	&= \int_{-\infty}^{\infty} \varphi'(t)\psi(t)dt.
+      \end{align*}
+      The Fourier transform of $D\{\varphi\}$ is by definition the distribution
+      \begin{align*}
+	\forall \psi \in \mathcal{S}, \qquad \widehat{D\{\varphi\}}\{\psi\} &= \int \varphi'\hat{\psi}, \\
+	&= \int \hat{\varphi'} \psi.
+      \end{align*}
+    There, we use the notation $\hat{D}(u) = ju$ for the distributional equality 
+    \begin{equation*}
+      \forall \varphi \in \mathcal{S}, \quad \widehat{\hat{D}\{\varphi\}}(u) = ju\varphi(u).
+    \end{equation*}
+  \item For $L := D-\alpha I$, the distribution $h$ is $\delta' - \alpha id$. The Fourier transform of $(D-\alpha 
+    I)\{\varphi\}$ is the distribution
+    \begin{equation*}
+      \forall \psi \in \mathcal{S}, \qquad \reallywidehat{(D-\alpha I)\{\varphi\}}\{\psi\} = \int (\hat{\varphi'}-\alpha 
+      \varphi)\psi.
+    \end{equation*}
+    Similarly, $\widehat{D-\alpha I}(u) = ju-\alpha$ denotes the distributional equality
+    \begin{equation*}
+    \forall \varphi \in \mathcal{S}, \quad \reallywidehat{(D-\alpha I)\{\varphi\}}(u) = (ju-\alpha)\varphi(u).
+    \end{equation*}
+  \end{enumerate}
+\end{example}
+
+The operator $L$ is also characterized by the roots $\bm{\alpha}$ of its characteristic polynomial
+\begin{equation*}
+  s^n + a_{n-1}s^{n-1} + \cdots + a_0 = \prod_{k=1}^{n} (s-\alpha_k)
+\end{equation*}
+Accordingly, we shall denote $L_{\bm{\alpha}}$ the operator induced by the vector $\bm{\alpha}$. The “Fourier transform” 
+of the operator $L_{\bm{\alpha}}$ is
+\begin{equation*}
+  \hat{L_{\alpha}}(u) = \prod_{k=1}^n (ju-\alpha_k)
+\end{equation*}
+Let $\{\alpha_{(m)}\}_{m=1,\ldots, n_d}$ be the $n_d$ distinct components of $\bm{\alpha}$ with multiplicity $n_{(m)}$, 
+hence ${\sum_{m=1}^{n_d} n_{(m)} = n}$. Then, the null space of $L_{\bm{\alpha}}$ is the set~\cite{unser_cardinal_2005}
+\begin{equation*}
+  \mathcal{N}_{\bm{\alpha}} = \Span \{t^{k-1}e^{\alpha_{(m)}t}\}_{m \in \llbracket1, n_d\rrbracket, k \in \llbracket1, 
+  n_{(m)}\rrbracket}
+\end{equation*}
+
+The Fourier multiplier of $L$, is the distribution $\hat{L}$, such that 
+\begin{equation*}
+  \forall \varphi \in \mathcal{S}, \qquad L\{\varphi\} = \mathscr{F}^{-1}\{\hat{L}\hat{\varphi}\}
+\end{equation*}
+
+\begin{deftn}\label{def:Green}
+  Let $L:\mathcal{S} \to \mathcal{S}'$ be an operator with smooth Fourier multiplier that is nowhere zero on 
+  $\mathbb{R}$ and decaying slowly (as a polynomial at most) at infinity. The following equivalence holds
+  \begin{align*}
+    \rho &= \mathscr{F}^{-1}\left\{\frac{1}{\hat{L}}\right\} \\
+    &\iff \\
+    L \{\rho\} &= \delta \quad \text{and} \ \rho \ \text{is causal.}
+  \end{align*}
+  A function, $\rho_L$, satisfying these is called the \emph{Green} function of the operator $L$. It is the convolution 
+  kernel of the LSI inverse operator $L^{-1}: \mathcal{S}\to\mathcal{S}$ given by
+  \begin{equation*}
+    \forall \varphi \in \mathcal{S}, \qquad 
+    L^{-1}\{\varphi\}=\mathscr{F}^{-1}\left\{\frac{\hat{\varphi}}{\hat{L}}\right\}.
+  \end{equation*}
+ \end{deftn}
+
+\begin{example}
+  The Green function of the first-order operator $L_{\alpha} := D-\alpha I$ is the one-sided (or causal) exponential
+  \begin{equation*}
+    \rho_{\alpha}(t) = 1_+(t)e^{\alpha t}
+  \end{equation*}
+  It easily verified that $L_{\alpha}\{\rho_{\alpha}\} = \delta$.
+\end{example}
+
+\subsection{Exponential splines and B-splines}
+
+An exponential spline is then defined as
+\begin{deftn}[{\cite[Definition 1]{unser_cardinal_2005}}]\label{def:exponential-spline}
+  An exponential spline with parameter $\bm{\alpha}$ and knots $(t_{k})_{k}$ is a function $S$ such that
+  \begin{equation*}
+    L_{\bm{\alpha}}\{S\} = \sum_{k} a_k \delta\{\cdot-t_k\}
+  \end{equation*}
+  with $a_k$ bounded and $\delta\{\cdot-t_k\}$ the shifted Dirac distribution.
+\end{deftn}
+
+From the definition of the Green function, the exponential spline $S$ can be explicitly represented as 
+\begin{equation*}
+  S(t) = \sum_{k} a_k \rho_{\bm{\alpha}}(t-t_k) + p_{\bm{\alpha}}(t)
+\end{equation*}
+with $p_{\bm{\alpha}} \in \mathcal{N}_{\bm{\alpha}}$. 
+
+For the reason explained in the preamble to the second part of this zoo, the knots are chosen to be the uniform integer 
+grid $\mathbb{Z}$. The associated exponential splines are said to be \emph{cardinal}. In the polynomial splines, 
+localized function called $B$-splines were defined, with the property that they span the set of all splines. Similarly, 
+one can define exponential B-splines as follows
+
+\begin{deftn}[{\cite[(10), (11)]{unser_cardinal_2005}}]\label{def:exponential-B-spline}
+  A cardinal exponential B-spline of first-order with parameter $\alpha$ is the function given by
+  \begin{equation*}
+    \beta_{\alpha}(t) = \rho_{\alpha}(t) - e^{\alpha} \rho_{\alpha}(t-1)
+  \end{equation*}
+  High-order B-splines are obtained as successive convolution of first-order B-splines
+  \begin{equation*}
+    \beta_{\bm{\alpha}} = \beta_{\alpha_1}*\cdots*\beta_{\alpha_n}
+  \end{equation*}
+\end{deftn}

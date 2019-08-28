@@ -1,0 +1,2711 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nyt/global//global/global}
+  \entry{aldroubi_oblique_1996}{article}{}
+    \name{author}{1}{}{%
+      {{hash=AA}{%
+         family={Aldroubi},
+         familyi={A\bibinitperiod},
+         given={Akram},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{AA1}
+    \strng{fullhash}{AA1}
+    \field{shorthand}{Ald96}
+    \field{label}{Ald96}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{number}{7}
+    \field{pages}{2051\bibrangedash 2060}
+    \field{title}{{OBLIQUE} {PROJECTIONS} {IN} {ATOMIC} {SPACES}}
+    \field{volume}{124}
+    \verb{file}
+    \verb Aldroubi - OBLIQUE PROJECTIONS IN ATOMIC SPACES.pdf:/Users/pradaty/Zo
+    \verb tero/storage/7ZR8STZ4/Aldroubi - OBLIQUE PROJECTIONS IN ATOMIC SPACES
+    \verb .pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Proceedings of the American Mathematical Society}
+    \field{month}{07}
+    \field{year}{1996}
+  \endentry
+
+  \entry{aldroubi_sampling_1994}{article}{}
+    \name{author}{2}{}{%
+      {{hash=AA}{%
+         family={Aldroubi},
+         familyi={A\bibinitperiod},
+         given={Akram},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{AAUM1}
+    \strng{fullhash}{AAUM1}
+    \field{shorthand}{AldUns94}
+    \field{label}{AldUns94}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \verb{doi}
+    \verb 10.1080/01630569408816545
+    \endverb
+    \field{issn}{0163-0563, 1532-2467}
+    \field{number}{1-2}
+    \field{pages}{1\bibrangedash 21}
+    \field{title}{Sampling procedures in function spaces and asymptotic
+  equivalence with shannon's sampling theory}
+    \verb{url}
+    \verb http://www.tandfonline.com/doi/abs/10.1080/01630569408816545
+    \endverb
+    \field{volume}{15}
+    \field{journaltitle}{Numerical Functional Analysis and Optimization}
+    \field{month}{01}
+    \field{year}{1994}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{blu_approximation_1999}{article}{}
+    \name{author}{2}{}{%
+      {{hash=BT}{%
+         family={Blu},
+         familyi={B\bibinitperiod},
+         given={Thierry},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{BTUM1}
+    \strng{fullhash}{BTUM1}
+    \field{shorthand}{BluUns99}
+    \field{label}{BluUns99}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \verb{doi}
+    \verb 10.1006/acha.1998.0249
+    \endverb
+    \field{issn}{10635203}
+    \field{number}{2}
+    \field{pages}{219\bibrangedash 251}
+    \field{title}{Approximation {Error} for {Quasi}-{Interpolators} and
+  ({Multi}-){Wavelet} {Expansions}}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/S1063520398902494
+    \endverb
+    \field{volume}{6}
+    \field{journaltitle}{Applied and Computational Harmonic Analysis}
+    \field{month}{03}
+    \field{year}{1999}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{chui_cardinal_1991}{article}{}
+    \name{author}{2}{}{%
+      {{hash=CCK}{%
+         family={Chui},
+         familyi={C\bibinitperiod},
+         given={Charles\bibnamedelima K.},
+         giveni={C\bibinitperiod\bibinitdelim K\bibinitperiod},
+      }}%
+      {{hash=WJz}{%
+         family={Wang},
+         familyi={W\bibinitperiod},
+         given={Jian-zhong},
+         giveni={J\bibinitperiod-z\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{CCKWJz1}
+    \strng{fullhash}{CCKWJz1}
+    \field{shorthand}{ChuWan91}
+    \field{label}{ChuWan91}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \verb{doi}
+    \verb 10.1090/S0002-9939-1991-1077784-X
+    \endverb
+    \field{issn}{0002-9939}
+    \field{number}{3}
+    \field{pages}{785\bibrangedash 785}
+    \field{title}{A cardinal spline approach to wavelets}
+    \verb{url}
+    \verb http://www.ams.org/jourcgi/jour-getitem?pii=S0002-9939-1991-1077784-X
+    \endverb
+    \field{volume}{113}
+    \field{journaltitle}{Proceedings of the American Mathematical Society}
+    \field{month}{03}
+    \field{year}{1991}
+    \field{urlday}{27}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{conti_ellipse-preserving_2015}{article}{}
+    \name{author}{3}{}{%
+      {{hash=CC}{%
+         family={Conti},
+         familyi={C\bibinitperiod},
+         given={Costanza},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=RL}{%
+         family={Romani},
+         familyi={R\bibinitperiod},
+         given={Lucia},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{CCRLUM1}
+    \strng{fullhash}{CCRLUM1}
+    \field{shorthand}{CRU15}
+    \field{label}{CRU15}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{abstract}{%
+    We introduce a family of piecewise-exponential functions that have the
+  Hermite interpolation property. Our design is motivated by the search for an
+  eﬀective scheme for the joint interpolation of points and associated
+  tangents on a curve with the ability to perfectly reproduce ellipses. We
+  prove that the proposed Hermite functions form a Riesz basis and that they
+  reproduce prescribed exponential polynomials. We present a method based on
+  Green’s functions to unravel their multi-resolution and
+  approximation-theoretic properties. Finally, we derive the corresponding
+  vector and scalar subdivision schemes, which lend themselves to a fast
+  implementation. The proposed vector scheme is interpolatory and
+  level-dependent, but its asymptotic behavior is the same as the classical
+  cubic Hermite spline algorithm. The same convergence properties—i.e.,
+  fourth order of approximation—are hence ensured.%
+    }
+    \verb{doi}
+    \verb 10.1016/j.jmaa.2015.01.017
+    \endverb
+    \field{issn}{0022247X}
+    \field{number}{1}
+    \field{pages}{211\bibrangedash 227}
+    \field{title}{Ellipse-preserving {Hermite} interpolation and subdivision}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/S0022247X15000323
+    \endverb
+    \field{volume}{426}
+    \verb{file}
+    \verb Conti et al. - 2015 - Ellipse-preserving Hermite interpolation and su
+    \verb bdi.pdf:/Users/pradaty/Zotero/storage/6HLKYP8K/Conti et al. - 2015 -
+    \verb Ellipse-preserving Hermite interpolation and subdi.pdf:application/pd
+    \verb f
+    \endverb
+    \field{journaltitle}{ournal of Mathematical Analysis and Applications}
+    \field{month}{06}
+    \field{year}{2015}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{curry_polya_1966}{article}{}
+    \name{author}{2}{}{%
+      {{hash=CHB}{%
+         family={Curry},
+         familyi={C\bibinitperiod},
+         given={H.\bibnamedelima B.},
+         giveni={H\bibinitperiod\bibinitdelim B\bibinitperiod},
+      }}%
+      {{hash=SIJ}{%
+         family={Schoenberg},
+         familyi={S\bibinitperiod},
+         given={I.\bibnamedelima J.},
+         giveni={I\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{CHBSIJ1}
+    \strng{fullhash}{CHBSIJ1}
+    \field{shorthand}{CurSch66}
+    \field{label}{CurSch66}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{shorttitle}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \verb{doi}
+    \verb 10.1007/BF02788653
+    \endverb
+    \field{issn}{0021-7670, 1565-8538}
+    \field{number}{1}
+    \field{pages}{71\bibrangedash 107}
+    \field{shorttitle}{On {Pólya} frequency functions {IV}}
+    \field{title}{On {Pólya} frequency functions {IV}: {The} fundamental
+  spline functions and their limits}
+    \verb{url}
+    \verb http://link.springer.com/10.1007/BF02788653
+    \endverb
+    \field{volume}{17}
+    \field{journaltitle}{Journal d'Analyse Mathématique}
+    \field{month}{12}
+    \field{year}{1966}
+    \field{urlday}{27}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{de_boor_practical_2001}{book}{}
+    \name{author}{1}{}{%
+      {{hash=DBC}{%
+         family={De\bibnamedelima Boor},
+         familyi={D\bibinitperiod\bibinitdelim B\bibinitperiod},
+         given={Carl},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Springer}%
+    }
+    \keyw{Spline theory}
+    \strng{namehash}{DBC1}
+    \strng{fullhash}{DBC1}
+    \field{shorthand}{Boo01}
+    \field{label}{Boo01}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{shorttitle}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{edition}{Rev. ed}
+    \field{isbn}{978-0-387-95366-3}
+    \field{number}{v. 27}
+    \field{series}{Applied mathematical sciences}
+    \field{shorttitle}{A practical guide to splines}
+    \field{title}{A practical guide to splines: with 32 figures}
+    \list{location}{1}{%
+      {New York}%
+    }
+    \field{year}{2001}
+  \endentry
+
+  \entry{delgado-gonzalo_exponential_2012}{article}{}
+    \name{author}{3}{}{%
+      {{hash=DGR}{%
+         family={Delgado-Gonzalo},
+         familyi={D\bibinitperiod-G\bibinitperiod},
+         given={R.},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=TP}{%
+         family={Thévenaz},
+         familyi={T\bibinitperiod},
+         given={P.},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{DGRTPUM1}
+    \strng{fullhash}{DGRTPUM1}
+    \field{shorthand}{DTU12}
+    \field{label}{DTU12}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{abstract}{%
+    Our interest is to characterize the spline-like integer-shift-invariant
+  bases capable of reproducing exponential polynomial curves. We prove that any
+  compact-support function that reproduces a subspace of the exponential
+  polynomials can be expressed as the convolution of an exponential B-spline
+  with a compact-support distribution. As a direct consequence of this
+  factorization theorem, we show that the minimal-support basis functions of
+  that subspace are linear combinations of derivatives of exponential Bsplines.
+  These minimal-support basis functions form a natural multiscale hierarchy,
+  which we utilize to design fast multiresolution algorithms and subdivision
+  schemes for the representation of closed geometric curves. This makes them
+  attractive from a computational point of view. Finally, we illustrate our
+  scheme by constructing minimalsupport bases that reproduce ellipses and
+  higher-order harmonic curves.%
+    }
+    \verb{doi}
+    \verb 10.1016/j.cagd.2011.10.005
+    \endverb
+    \field{issn}{01678396}
+    \field{number}{2}
+    \field{pages}{109\bibrangedash 128}
+    \field{title}{Exponential splines and minimal-support bases for curve
+  representation}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/S0167839611001257
+    \endverb
+    \field{volume}{29}
+    \verb{file}
+    \verb Delgado-Gonzalo et al. - 2012 - Exponential splines and minimal-suppo
+    \verb rt bases for .pdf:/Users/pradaty/Zotero/storage/UPWF6MMF/Delgado-Gonz
+    \verb alo et al. - 2012 - Exponential splines and minimal-support bases for
+    \verb  .pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Computer Aided Geometric Design}
+    \field{month}{02}
+    \field{year}{2012}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{delgado-gonzalo_snakes_2012}{article}{}
+    \name{author}{4}{}{%
+      {{hash=DGR}{%
+         family={Delgado-Gonzalo},
+         familyi={D\bibinitperiod-G\bibinitperiod},
+         given={R.},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=TP}{%
+         family={Thevenaz},
+         familyi={T\bibinitperiod},
+         given={P.},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=SCS}{%
+         family={Seelamantula},
+         familyi={S\bibinitperiod},
+         given={C.\bibnamedelima S.},
+         giveni={C\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{DGR+1}
+    \strng{fullhash}{DGRTPSCSUM1}
+    \field{shorthand}{DTSU12}
+    \field{label}{DTSU12}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{abstract}{%
+    We present a new class of continuously deﬁned parametric snakes using a
+  special kind of exponential splines as basis functions. We have enforced our
+  bases to have the shortest possible support subject to some design
+  constraints to maximize efﬁciency. While the resulting snakes are versatile
+  enough to provide a good approximation of any closed curve in the plane,
+  their most important feature is the fact that they admit ellipses within
+  their span. Thus, they can perfectly generate circular and elliptical shapes.
+  These features are appropriate to delineate cross sections of
+  cylindrical-like conduits and to outline bloblike objects. We address the
+  implementation details and illustrate the capabilities of our snake with
+  synthetic and real data.%
+    }
+    \verb{doi}
+    \verb 10.1109/TIP.2011.2169975
+    \endverb
+    \field{issn}{1057-7149, 1941-0042}
+    \field{number}{3}
+    \field{pages}{1258\bibrangedash 1271}
+    \field{title}{Snakes {With} an {Ellipse}-{Reproducing} {Property}}
+    \verb{url}
+    \verb http://ieeexplore.ieee.org/document/6030932/
+    \endverb
+    \field{volume}{21}
+    \verb{file}
+    \verb Delgado-Gonzalo et al. - 2012 - Snakes With an Ellipse-Reproducing Pr
+    \verb operty.pdf:/Users/pradaty/Zotero/storage/BNCMEJQS/Delgado-Gonzalo et
+    \verb al. - 2012 - Snakes With an Ellipse-Reproducing Property.pdf:applicat
+    \verb ion/pdf
+    \endverb
+    \field{journaltitle}{IEEE Transactions on Image Processing}
+    \field{month}{03}
+    \field{year}{2012}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{delgado-gonzalo_spline-based_2013}{article}{}
+    \name{author}{3}{}{%
+      {{hash=DGR}{%
+         family={Delgado-Gonzalo},
+         familyi={D\bibinitperiod-G\bibinitperiod},
+         given={Ricard},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=CN}{%
+         family={Chenouard},
+         familyi={C\bibinitperiod},
+         given={Nicolas},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{DGRCNUM1}
+    \strng{fullhash}{DGRCNUM1}
+    \field{shorthand}{DCU13}
+    \field{label}{DCU13}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{abstract}{%
+    We present a new fast active-contour model (a.k.a. snake) for image
+  segmentation in 3D microscopy. We introduce a parametric design that relies
+  on exponential B-spline bases and allows us to build snakes that are able to
+  reproduce ellipsoids. We design our bases to have the shortest-possible
+  support, subject to some constraints. Thus, computational efﬁciency is
+  maximized. The proposed 3D snake can approximate blob-like objects with good
+  accuracy and can perfectly reproduce spheres and ellipsoids, irrespective of
+  their position and orientation. The optimization process is remarkably fast
+  due to the use of Gauss’ theorem within our energy computation scheme. Our
+  technique yields successful segmentation results, even for challenging data
+  where object contours are not well deﬁned. This is due to our parametric
+  approach that allows one to favor prior shapes. In addition, this paper
+  provides a software that gives full control over the snakes via an intuitive
+  manipulation of few control points.%
+    }
+    \verb{doi}
+    \verb 10.1109/TIP.2013.2264680
+    \endverb
+    \field{issn}{1057-7149, 1941-0042}
+    \field{number}{10}
+    \field{pages}{3926\bibrangedash 3940}
+    \field{title}{Spline-{Based} {Deforming} {Ellipsoids} for {Interactive} 3D
+  {Bioimage} {Segmentation}}
+    \verb{url}
+    \verb http://ieeexplore.ieee.org/document/6518128/
+    \endverb
+    \field{volume}{22}
+    \verb{file}
+    \verb Delgado-Gonzalo et al. - 2013 - Spline-Based Deforming Ellipsoids for
+    \verb  Interactive .pdf:/Users/pradaty/Zotero/storage/E3TMZ5Z7/Delgado-Gonz
+    \verb alo et al. - 2013 - Spline-Based Deforming Ellipsoids for Interactive
+    \verb  .pdf:application/pdf
+    \endverb
+    \field{journaltitle}{IEEE Transactions on Image Processing}
+    \field{month}{10}
+    \field{year}{2013}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{delgado-gonzalo_efficient_2015}{article}{}
+    \name{author}{4}{}{%
+      {{hash=DGR}{%
+         family={Delgado-Gonzalo},
+         familyi={D\bibinitperiod-G\bibinitperiod},
+         given={Ricard},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=SD}{%
+         family={Schmitter},
+         familyi={S\bibinitperiod},
+         given={Daniel},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=UV}{%
+         family={Uhlmann},
+         familyi={U\bibinitperiod},
+         given={Virginie},
+         giveni={V\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{DGR+2}
+    \strng{fullhash}{DGRSDUVUM1}
+    \field{shorthand}{DSUU15}
+    \field{label}{DSUU15}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{abstract}{%
+    Parametric active contours are an attractive approach for image
+  segmentation, thanks to their computational efﬁciency. They are driven by
+  application-dependent energies that reﬂect the prior knowledge on the
+  object to be segmented. We propose an energy involving shape priors acting in
+  a regularization-like manner. Thereby, the shape of the snake is orthogonally
+  projected onto the space that spans the afﬁne transformations of a given
+  shape prior. The formulation of the curves is continuous, which provides
+  computational beneﬁts when compared with landmark-based (discrete) methods.
+  We show that this approach improves the robustness and quality of splinebased
+  segmentation algorithms, while its computational overhead is negligible. An
+  interactive and ready-to-use implementation of the proposed algorithm is
+  available and was successfully tested on real data in order to segment
+  Drosophila ﬂies and yeast cells in microscopic images.%
+    }
+    \verb{doi}
+    \verb 10.1109/TIP.2015.2457335
+    \endverb
+    \field{issn}{1057-7149, 1941-0042}
+    \field{number}{11}
+    \field{pages}{3915\bibrangedash 3926}
+    \field{title}{Efficient {Shape} {Priors} for {Spline}-{Based} {Snakes}}
+    \verb{url}
+    \verb http://ieeexplore.ieee.org/document/7160736/
+    \endverb
+    \field{volume}{24}
+    \verb{file}
+    \verb Delgado-Gonzalo et al. - 2015 - Efficient Shape Priors for Spline-Bas
+    \verb ed Snakes.pdf:/Users/pradaty/Zotero/storage/NJMDG35A/Delgado-Gonzalo
+    \verb et al. - 2015 - Efficient Shape Priors for Spline-Based Snakes.pdf:ap
+    \verb plication/pdf
+    \endverb
+    \field{journaltitle}{IEEE Transactions on Image Processing}
+    \field{month}{11}
+    \field{year}{2015}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{fageot_support_2019}{article}{}
+    \name{author}{4}{}{%
+      {{hash=FJ}{%
+         family={Fageot},
+         familyi={F\bibinitperiod},
+         given={Julien},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=AS}{%
+         family={Aziznejad},
+         familyi={A\bibinitperiod},
+         given={Shayan},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=UV}{%
+         family={Uhlmann},
+         familyi={U\bibinitperiod},
+         given={Virginie},
+         giveni={V\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \keyw{Mathematics - Numerical Analysis}
+    \strng{namehash}{FJ+1}
+    \strng{fullhash}{FJASUMUV1}
+    \field{shorthand}{FAUU19}
+    \field{label}{FAUU19}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{abstract}{%
+    In this paper, we formally investigate two mathematical aspects of Hermite
+  splines which translate to features that are relevant to their practical
+  applications. We ﬁrst demonstrate that Hermite splines are maximally
+  localized in the sense that their support sizes are minimal among pairs of
+  functions with identical reproduction properties. Then, we precisely quantify
+  the approximation power of Hermite splines for reconstructing functions and
+  their derivatives, and show that they are asymptotically identical to cubic
+  B-splines for these tasks. Hermite splines therefore combine optimal
+  localization and excellent approximation power, while retaining interpolation
+  properties and closed-form expression, in contrast to existing similar
+  approaches. These ﬁndings shed a new light on the convenience of Hermite
+  splines for use in computer graphics and geometrical design.%
+    }
+    \field{note}{arXiv: 1902.02565}
+    \field{title}{Support and {Approximation} {Properties} of {Hermite}
+  {Splines}}
+    \verb{url}
+    \verb http://arxiv.org/abs/1902.02565
+    \endverb
+    \verb{file}
+    \verb Fageot et al. - 2019 - Support and Approximation Properties of Hermit
+    \verb e Sp.pdf:/Users/pradaty/Zotero/storage/CP9Z74LG/Fageot et al. - 2019
+    \verb - Support and Approximation Properties of Hermite Sp.pdf:application/
+    \verb pdf
+    \endverb
+    \field{journaltitle}{arXiv:1902.02565 [math]}
+    \field{month}{02}
+    \field{year}{2019}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{farouki_bernstein_2012}{article}{}
+    \name{author}{1}{}{%
+      {{hash=FRT}{%
+         family={Farouki},
+         familyi={F\bibinitperiod},
+         given={Rida\bibnamedelima T.},
+         giveni={R\bibinitperiod\bibinitdelim T\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{FRT1}
+    \strng{fullhash}{FRT1}
+    \field{shorthand}{Far12}
+    \field{label}{Far12}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{shorttitle}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{abstract}{%
+    One hundred years after the introduction of the Bernstein polynomial basis,
+  we survey the historical development and current state of theory, algorithms,
+  and applications associated with this remarkable method of representing
+  polynomials over ﬁnite domains. Originally introduced by Sergei Natanovich
+  Bernstein to facilitate a constructive proof of the Weierstrass approximation
+  theorem, the leisurely convergence rate of Bernstein polynomial
+  approximations to continuous functions caused them to languish in obscurity,
+  pending the advent of digital computers. With the desire to exploit the power
+  of computers for geometric design applications, however, the Bernstein form
+  began to enjoy widespread use as a versatile means of intuitively
+  constructing and manipulating geometric shapes, spurring further development
+  of basic theory, simple and eﬃcient recursive algorithms, recognition of
+  its excellent numerical stability properties, and an increasing
+  diversiﬁcation of its repertoire of applications. This survey provides a
+  brief historical perspective on the evolution of the Bernstein polynomial
+  basis, and a synopsis of the current state of associated algorithms and
+  applications.%
+    }
+    \verb{doi}
+    \verb 10.1016/j.cagd.2012.03.001
+    \endverb
+    \field{issn}{01678396}
+    \field{number}{6}
+    \field{pages}{379\bibrangedash 419}
+    \field{shorttitle}{The {Bernstein} polynomial basis}
+    \field{title}{The {Bernstein} polynomial basis: {A} centennial
+  retrospective}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/S0167839612000192
+    \endverb
+    \field{volume}{29}
+    \verb{file}
+    \verb Farouki - 2012 - The Bernstein polynomial basis A centennial retro.pd
+    \verb f:/Users/pradaty/Zotero/storage/WV2RZG4K/Farouki - 2012 - The Bernste
+    \verb in polynomial basis A centennial retro.pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Computer Aided Geometric Design}
+    \field{month}{08}
+    \field{year}{2012}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{goodman_wavelets_1994}{article}{}
+    \name{author}{2}{}{%
+      {{hash=GTNT}{%
+         family={Goodman},
+         familyi={G\bibinitperiod},
+         given={T.\bibnamedelima N.\bibnamedelima T.},
+         giveni={T\bibinitperiod\bibinitdelim N\bibinitperiod\bibinitdelim
+  T\bibinitperiod},
+      }}%
+      {{hash=LSL}{%
+         family={Lee},
+         familyi={L\bibinitperiod},
+         given={S.\bibnamedelima L.},
+         giveni={S\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GTNTLSL1}
+    \strng{fullhash}{GTNTLSL1}
+    \field{shorthand}{GooLee94}
+    \field{label}{GooLee94}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \verb{doi}
+    \verb 10.2307/2154695
+    \endverb
+    \field{issn}{00029947}
+    \field{number}{1}
+    \field{pages}{307}
+    \field{title}{Wavelets of {Multiplicity} r}
+    \verb{url}
+    \verb https://www.jstor.org/stable/2154695?origin=crossref
+    \endverb
+    \field{volume}{342}
+    \field{journaltitle}{Transactions of the American Mathematical Society}
+    \field{month}{03}
+    \field{year}{1994}
+    \field{urlday}{27}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{goodman_wavelets_1993}{article}{}
+    \name{author}{3}{}{%
+      {{hash=GTNT}{%
+         family={Goodman},
+         familyi={G\bibinitperiod},
+         given={T.\bibnamedelima N.\bibnamedelima T.},
+         giveni={T\bibinitperiod\bibinitdelim N\bibinitperiod\bibinitdelim
+  T\bibinitperiod},
+      }}%
+      {{hash=LSL}{%
+         family={Lee},
+         familyi={L\bibinitperiod},
+         given={S.\bibnamedelima L.},
+         giveni={S\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+      {{hash=TWS}{%
+         family={Tang},
+         familyi={T\bibinitperiod},
+         given={W.\bibnamedelima S.},
+         giveni={W\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{GTNTLSLTWS1}
+    \strng{fullhash}{GTNTLSLTWS1}
+    \field{shorthand}{GLT93}
+    \field{label}{GLT93}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \verb{doi}
+    \verb 10.1090/S0002-9947-1993-1117215-0
+    \endverb
+    \field{issn}{0002-9947, 1088-6850}
+    \field{number}{2}
+    \field{pages}{639\bibrangedash 654}
+    \field{title}{Wavelets in wandering subspaces}
+    \verb{url}
+    \verb http://www.ams.org/jourcgi/jour-getitem?pii=S0002-9947-1993-1117215-0
+    \endverb
+    \field{volume}{338}
+    \field{journaltitle}{Transactions of the American Mathematical Society}
+    \field{month}{02}
+    \field{year}{1993}
+    \field{urlday}{27}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{goodman_interpolatory_1994}{article}{}
+    \name{author}{1}{}{%
+      {{hash=GT}{%
+         family={Goodman},
+         familyi={G\bibinitperiod},
+         given={T.N.T.},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{GT1}
+    \strng{fullhash}{GT1}
+    \field{shorthand}{Goo94}
+    \field{label}{Goo94}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \verb{doi}
+    \verb 10.1006/jath.1994.1071
+    \endverb
+    \field{issn}{00219045}
+    \field{number}{2}
+    \field{pages}{174\bibrangedash 189}
+    \field{title}{Interpolatory {Hermite} {Spline} {Wavelets}}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/S0021904584710719
+    \endverb
+    \field{volume}{78}
+    \field{journaltitle}{Journal of Approximation Theory}
+    \field{month}{08}
+    \field{year}{1994}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{gregory_letter_1670}{article}{}
+    \name{author}{1}{}{%
+      {{hash=GJ}{%
+         family={Gregory},
+         familyi={G\bibinitperiod},
+         given={J.},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \list{publisher}{1}{%
+      {Turnbull H.W.}%
+    }
+    \strng{namehash}{GJ1}
+    \strng{fullhash}{GJ1}
+    \field{shorthand}{Gre1670}
+    \field{label}{Gre1670}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{pages}{118\bibrangedash 137}
+    \field{title}{Letter to J.Collins (23 november 1670)}
+    \field{journaltitle}{James Gregory Tercentenary Memorial Volume}
+    \field{month}{11}
+    \field{year}{1939}
+  \endentry
+
+  \entry{guo_new_2019}{article}{}
+    \name{author}{2}{}{%
+      {{hash=GX}{%
+         family={Guo},
+         familyi={G\bibinitperiod},
+         given={Xiao},
+         giveni={X\bibinitperiod},
+      }}%
+      {{hash=HX}{%
+         family={Han},
+         familyi={H\bibinitperiod},
+         given={Xuli},
+         giveni={X\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{GXHX1}
+    \strng{fullhash}{GXHX1}
+    \field{shorthand}{GuoHan19}
+    \field{label}{GuoHan19}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{abstract}{%
+    In this paper, we present a new optimal approach to the calculation of the
+  twists for constructing bicubic Coons interpolating surfaces from given
+  points. A new objective function called minimal oscillation is proposed to
+  generate the bicubic Coons surface to approximate bilinear interpolation by
+  optimizing twists of Coons surfaces. A linear system with block tridiagonal
+  coefﬁcient matrix is established to solve the optimal problem. The
+  efﬁciency of the proposed method is illustrated by some numerical
+  examples.%
+    }
+    \verb{doi}
+    \verb 10.1007/s40840-018-0629-6
+    \endverb
+    \field{issn}{0126-6705, 2180-4206}
+    \field{number}{5}
+    \field{pages}{2759\bibrangedash 2769}
+    \field{title}{A {New} {Computational} {Approach} to the {Twists} of
+  {Bicubic} {Coons} {Surfaces}}
+    \verb{url}
+    \verb http://link.springer.com/10.1007/s40840-018-0629-6
+    \endverb
+    \field{volume}{42}
+    \verb{file}
+    \verb Guo and Han - 2019 - A New Computational Approach to the Twists of Bi
+    \verb cu.pdf:/Users/pradaty/Zotero/storage/DGX4XT5S/Guo and Han - 2019 - A
+    \verb New Computational Approach to the Twists of Bicu.pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Bulletin of the Malaysian Mathematical Sciences
+  Society}
+    \field{month}{09}
+    \field{year}{2019}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{hermite_1877}{article}{}
+    \name{author}{1}{}{%
+      {{hash=HC}{%
+         family={Hermite},
+         familyi={H\bibinitperiod},
+         given={Ch.},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \keyw{Lagrange interpolation formula}
+    \strng{namehash}{HC1}
+    \strng{fullhash}{HC1}
+    \field{shorthand}{Her1877}
+    \field{label}{Her1877}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{pages}{70\bibrangedash 79}
+    \field{title}{Sur la formule d'interpolation de Lagrange. (Extrait d'une
+  lettre de M. Ch. Hermite à M. Borchardt).}
+    \verb{url}
+    \verb http://eudml.org/doc/148345
+    \endverb
+    \field{volume}{84}
+    \field{journaltitle}{Journal für die reine und angewandte Mathematik}
+    \field{year}{1877}
+  \endentry
+
+  \entry{holtz_approximation_2005}{article}{}
+    \name{author}{2}{}{%
+      {{hash=HO}{%
+         family={Holtz},
+         familyi={H\bibinitperiod},
+         given={Olga},
+         giveni={O\bibinitperiod},
+      }}%
+      {{hash=RA}{%
+         family={Ron},
+         familyi={R\bibinitperiod},
+         given={Amos},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{HORA1}
+    \strng{fullhash}{HORA1}
+    \field{shorthand}{HolRon05}
+    \field{label}{HolRon05}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{abstract}{%
+    We extend the existing theory of approximation orders provided by
+  shift-invariant subspaces of L2 to the setting of Sobolev spaces, provide
+  treatment of L2 cases that have not been covered before, and apply our
+  results to determine approximation order of solutions to a reﬁnement
+  equation with a higher-dimensional solution space.%
+    }
+    \verb{doi}
+    \verb 10.1016/j.jat.2004.10.006
+    \endverb
+    \field{issn}{00219045}
+    \field{number}{1}
+    \field{pages}{97\bibrangedash 148}
+    \field{title}{Approximation orders of shift-invariant subspaces of
+  {W}2s({Rd})}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/S0021904504001807
+    \endverb
+    \field{volume}{132}
+    \verb{file}
+    \verb Holtz and Ron - 2005 - Approximation orders of shift-invariant subspa
+    \verb ces .pdf:/Users/pradaty/Zotero/storage/T7LJMRWZ/Holtz and Ron - 2005
+    \verb - Approximation orders of shift-invariant subspaces .pdf:application/
+    \verb pdf
+    \endverb
+    \field{journaltitle}{Journal of Approximation Theory}
+    \field{month}{01}
+    \field{year}{2005}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{jerome_uniform_1973}{article}{}
+    \name{author}{1}{}{%
+      {{hash=JJW}{%
+         family={Jerome},
+         familyi={J\bibinitperiod},
+         given={Joseph\bibnamedelima W},
+         giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{JJW1}
+    \strng{fullhash}{JJW1}
+    \field{shorthand}{Jer73}
+    \field{label}{Jer73}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \verb{doi}
+    \verb 10.1016/0021-9045(73)90061-0
+    \endverb
+    \field{issn}{00219045}
+    \field{number}{2}
+    \field{pages}{143\bibrangedash 154}
+    \field{title}{On uniform approximation by certain generalized spline
+  functions}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/0021904573900610
+    \endverb
+    \field{volume}{7}
+    \verb{file}
+    \verb Jerome - 1973 - On uniform approximation by certain generalized sp.pd
+    \verb f:/Users/pradaty/Zotero/storage/72G3ZSIB/Jerome - 1973 - On uniform a
+    \verb pproximation by certain generalized sp.pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Journal of Approximation Theory}
+    \field{month}{02}
+    \field{year}{1973}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{jetter_riesz_1996}{article}{}
+    \name{author}{2}{}{%
+      {{hash=JK}{%
+         family={Jetter},
+         familyi={J\bibinitperiod},
+         given={K.},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=SJ}{%
+         family={Stöckler},
+         familyi={S\bibinitperiod},
+         given={J.},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{JKSJ1}
+    \strng{fullhash}{JKSJ1}
+    \field{shorthand}{JetStö96}
+    \field{label}{JetStö96}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \verb{doi}
+    \verb 10.1006/jath.1996.0108
+    \endverb
+    \field{issn}{00219045}
+    \field{number}{3}
+    \field{pages}{338\bibrangedash 359}
+    \field{title}{Riesz {Bases} of {Splines} and {Regularized} {Splines} with
+  {Multiple} {Knots}}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/S0021904596901082
+    \endverb
+    \field{volume}{87}
+    \verb{file}
+    \verb Jetter and Stöckler - 1996 - Riesz Bases of Splines and Regularized
+    \verb Splines wit.pdf:/Users/pradaty/Zotero/storage/R55MPREU/Jetter and St�
+    \verb �ckler - 1996 - Riesz Bases of Splines and Regularized Splines wit.pd
+    \verb f:application/pdf
+    \endverb
+    \field{journaltitle}{Journal of Approximation Theory}
+    \field{month}{12}
+    \field{year}{1996}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{lee_fourier_1976}{article}{}
+    \name{author}{1}{}{%
+      {{hash=LSL}{%
+         family={Lee},
+         familyi={L\bibinitperiod},
+         given={S\bibnamedelima L},
+         giveni={S\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{LSL1}
+    \strng{fullhash}{LSL1}
+    \field{shorthand}{Lee76a}
+    \field{label}{Lee76a}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{abstract}{%
+    Using the exponential Hermite Euler splines we compute the Fourier
+  transforms of the B-splines and fundamental splines for Cardinal Hermite
+  Interpolation, introduced by Schoenberg and Sharma and Lipow and Schoenberg
+  respectively.%
+    }
+    \field{number}{2}
+    \field{pages}{6}
+    \field{title}{Fourier {Transforms} of B-{Splines} and {Fundamental}
+  {Splines} for {Cardinal} {Hermite} {Interpolations}}
+    \field{volume}{57}
+    \verb{file}
+    \verb Lee - Fourier Transforms of B-Splines and Fundamental .pdf:/Users/pra
+    \verb daty/Zotero/storage/ZMG85BIL/Lee - Fourier Transforms of B-Splines an
+    \verb d Fundamental .pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Proceedings of the American Mathematical Society}
+    \field{month}{06}
+    \field{year}{1976}
+  \endentry
+
+  \entry{lee_b-splines_1975}{article}{}
+    \name{author}{1}{}{%
+      {{hash=LS}{%
+         family={Lee},
+         familyi={L\bibinitperiod},
+         given={S.L.},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{LS1}
+    \strng{fullhash}{LS1}
+    \field{shorthand}{Lee75}
+    \field{label}{Lee75}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \verb{doi}
+    \verb 10.1016/0024-3795(75)90049-X
+    \endverb
+    \field{issn}{00243795}
+    \field{number}{3}
+    \field{pages}{269\bibrangedash 280}
+    \field{title}{B-splines for cardinal hermite interpolation}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/002437957590049X
+    \endverb
+    \field{volume}{12}
+    \field{journaltitle}{Linear Algebra and its Applications}
+    \field{year}{1975}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{lee_exponential_1976}{article}{}
+    \name{author}{1}{}{%
+      {{hash=LS}{%
+         family={Lee},
+         familyi={L\bibinitperiod},
+         given={S.L},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{LS2}
+    \strng{fullhash}{LS2}
+    \field{shorthand}{Lee76b}
+    \field{label}{Lee76b}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \verb{doi}
+    \verb 10.1016/0021-9045(76)90015-0
+    \endverb
+    \field{issn}{00219045}
+    \field{number}{3}
+    \field{pages}{205\bibrangedash 212}
+    \field{title}{Exponential {Hermite}-{Euler} splines}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/0021904576900150
+    \endverb
+    \field{volume}{18}
+    \field{journaltitle}{Journal of Approximation Theory}
+    \field{month}{11}
+    \field{year}{1976}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{lipow_cardinal_1973}{article}{}
+    \name{author}{2}{}{%
+      {{hash=LPR}{%
+         family={Lipow},
+         familyi={L\bibinitperiod},
+         given={Peter\bibnamedelima R.},
+         giveni={P\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+      {{hash=SI}{%
+         family={Schoenberg},
+         familyi={S\bibinitperiod},
+         given={I.J.},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{LPRSI1}
+    \strng{fullhash}{LPRSI1}
+    \field{shorthand}{LipSch73}
+    \field{label}{LipSch73}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{abstract}{%
+    The results of item [9] in our list of References, concerning cardinal
+  spline interpolation of data of power growth are here extended to the case of
+  Hermite interpolation. Let m {\textgreater} 2, and 1 {\textless} r
+  {\textless} m. Given are now Y sequences y = (y,), y’ = (yv’), . ., y+1)
+  = (y Y(r-1)) (- w {\textless} \$1{\textless} a), and the objective is to find
+  a cardinal spline function S(x) of degree 2m - 1, having its knots at the
+  integers, and satisfying the conditions S(Y) = yv, S’(v) = yv’, . ,
+  S(T-l)({\textasciitilde}) = Y,({\textasciitilde}-‘) for all Y. Here we must
+  assume that the knots of S(x) are r-fold, which means that S(x) E C2m-r-1(-
+  00, m). If Y = 1 we have the problem discussed in [9]. In the present paper
+  it is shown that the interpolation problem has a unique solution that grows
+  like a power of 1x1, provided that all data grow like a power of /VI. An
+  analogue of the Lagrange formula is also available. Essential use is made of
+  a theorem of Gantmacher and Krein concerning the eigenvalues of oscillation
+  matrices (see [1] and [2; Satz 6, 1001).%
+    }
+    \verb{doi}
+    \verb 10.1016/0024-3795(73)90029-3
+    \endverb
+    \field{issn}{00243795}
+    \field{pages}{273\bibrangedash 304}
+    \field{title}{Cardinal interpolation and spline functions. {III}.
+  {Cardinal} {Hermite} interpolation}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/0024379573900293
+    \endverb
+    \field{volume}{6}
+    \verb{file}
+    \verb Lipow and Schoenberg - 1973 - Cardinal interpolation and spline funct
+    \verb ions. III. .pdf:/Users/pradaty/Zotero/storage/DZVLEXW4/Lipow and Scho
+    \verb enberg - 1973 - Cardinal interpolation and spline functions. III. .pd
+    \verb f:application/pdf
+    \endverb
+    \field{journaltitle}{Linear Algebra and its Applications}
+    \field{year}{1973}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{mcinerney_t-snakes:_2000}{article}{}
+    \name{author}{2}{}{%
+      {{hash=MT}{%
+         family={McInerney},
+         familyi={M\bibinitperiod},
+         given={Tim},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=TD}{%
+         family={Terzopoulos},
+         familyi={T\bibinitperiod},
+         given={Demetri},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{MTTD1}
+    \strng{fullhash}{MTTD1}
+    \field{shorthand}{McITer00}
+    \field{label}{McITer00}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{shorttitle}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{abstract}{%
+    We present a new class of deformable contours (snakes) and apply them to
+  the segmentation of medical images. Our snakes are deﬁned in terms of an
+  afﬁne cell image decomposition (ACID). The ‘snakes in ACID’ framework
+  signiﬁcantly extends conventional snakes, enabling topological ﬂexibility
+  among other features. The resulting topology adaptive snakes, or
+  ‘T-snakes’, can be used to segment some of the most complex-shaped
+  biological structures from medical images in an efﬁcient and highly
+  automated manner. © 2000 Elsevier Science B.V. All rights reserved.%
+    }
+    \verb{doi}
+    \verb 10.1016/S1361-8415(00)00008-6
+    \endverb
+    \field{issn}{13618415}
+    \field{number}{2}
+    \field{pages}{73\bibrangedash 91}
+    \field{shorttitle}{T-snakes}
+    \field{title}{T-snakes: {Topology} adaptive snakes}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/S1361841500000086
+    \endverb
+    \field{volume}{4}
+    \verb{file}
+    \verb McInerney and Terzopoulos - 2000 - T-snakes Topology adaptive snakes.
+    \verb pdf:/Users/pradaty/Zotero/storage/QMQX5G42/McInerney and Terzopoulos
+    \verb - 2000 - T-snakes Topology adaptive snakes.pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Medical Image Analysis}
+    \field{month}{06}
+    \field{year}{2000}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{meijering_chronology_2002}{article}{}
+    \name{author}{1}{}{%
+      {{hash=ME}{%
+         family={Meijering},
+         familyi={M\bibinitperiod},
+         given={E.},
+         giveni={E\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{ME1}
+    \strng{fullhash}{ME1}
+    \field{shorthand}{Mei02}
+    \field{label}{Mei02}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{shorttitle}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \verb{doi}
+    \verb 10.1109/5.993400
+    \endverb
+    \field{issn}{00189219}
+    \field{number}{3}
+    \field{pages}{319\bibrangedash 342}
+    \field{shorttitle}{A chronology of interpolation}
+    \field{title}{A chronology of interpolation: from ancient astronomy to
+  modern signal and image processing}
+    \verb{url}
+    \verb http://ieeexplore.ieee.org/document/993400/
+    \endverb
+    \field{volume}{90}
+    \verb{file}
+    \verb Meijering - 2002 - A chronology of interpolation from ancient astron.
+    \verb pdf:/Users/pradaty/Zotero/storage/SLDNPWZW/Meijering - 2002 - A chron
+    \verb ology of interpolation from ancient astron.pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Proceedings of the IEEE}
+    \field{month}{03}
+    \field{year}{2002}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{newton_philosophiae_1960}{incollection}{}
+    \name{author}{1}{}{%
+      {{hash=NI}{%
+         family={Newton},
+         familyi={N\bibinitperiod},
+         given={I.},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \name{editor}{1}{}{%
+      {{hash=CF}{%
+         family={Cajori},
+         familyi={C\bibinitperiod},
+         given={F},
+         giveni={F},
+      }}%
+    }
+    \strng{namehash}{NI1}
+    \strng{fullhash}{NI1}
+    \field{shorthand}{New60}
+    \field{label}{New60}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{booktitle}{Sir Isaac Newton's Mathematical Principles of Natural
+  Philosophy and his System of the World.}
+    \field{title}{Philosophiae Naturalis Principia Mathematica}
+    \list{location}{1}{%
+      {Berkeley, CA}%
+    }
+    \field{year}{1960}
+  \endentry
+
+  \entry{peters_local_1990}{article}{}
+    \name{author}{1}{}{%
+      {{hash=PJ}{%
+         family={Peters},
+         familyi={P\bibinitperiod},
+         given={Jörg},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{PJ1}
+    \strng{fullhash}{PJ1}
+    \field{shorthand}{Pet90}
+    \field{label}{Pet90}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{abstract}{%
+    An algorithm for the interpolation of a `mesh of points' in 3-space by a C'
+  surface is developed . At each point, the surface normal can be specified .
+  The surface is constructed locally and consists of cubic and bicubic patches
+  to match the underlying mesh facets. The surface construction is special in
+  that it generates a piecewise parametric surface such that the normal along
+  patch boundaries varies linearly .%
+    }
+    \verb{doi}
+    \verb 10.1016/0167-8396(90)90012-G
+    \endverb
+    \field{issn}{01678396}
+    \field{number}{6}
+    \field{pages}{499\bibrangedash 516}
+    \field{title}{Local cubic and bicubic {C}1 surface interpolation with
+  linearly varying boundary normal}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/016783969090012G
+    \endverb
+    \field{volume}{7}
+    \verb{file}
+    \verb Peters - 1990 - Local cubic and bicubic C1 surface interpolation w.pd
+    \verb f:/Users/pradaty/Zotero/storage/LGKIXHJK/Peters - 1990 - Local cubic
+    \verb and bicubic C1 surface interpolation w.pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Computer Aided Geometric Design}
+    \field{month}{11}
+    \field{year}{1990}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{qu_approximation_1998}{article}{}
+    \name{author}{2}{}{%
+      {{hash=QR}{%
+         family={Qu},
+         familyi={Q\bibinitperiod},
+         given={R.},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=YJ}{%
+         family={Ye},
+         familyi={Y\bibinitperiod},
+         given={J.},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{QRYJ1}
+    \strng{fullhash}{QRYJ1}
+    \field{shorthand}{QuYe98}
+    \field{label}{QuYe98}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Q}
+    \field{sortinithash}{Q}
+    \verb{doi}
+    \verb 10.1016/S0895-7177(98)00163-0
+    \endverb
+    \field{issn}{08957177}
+    \field{number}{11}
+    \field{pages}{41\bibrangedash 48}
+    \field{title}{Approximation of minimum energy surfaces using optimal
+  twists}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/S0895717798001630
+    \endverb
+    \field{volume}{28}
+    \verb{file}
+    \verb Qu and Ye - 1998 - Approximation of minimum energy surfaces using opt
+    \verb .pdf:/Users/pradaty/Zotero/storage/NBSNRDGL/Qu and Ye - 1998 - Approx
+    \verb imation of minimum energy surfaces using opt.pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Mathematical and Computer Modelling}
+    \field{month}{12}
+    \field{year}{1998}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{schmitter_family_2016}{article}{}
+    \name{author}{3}{}{%
+      {{hash=SD}{%
+         family={Schmitter},
+         familyi={S\bibinitperiod},
+         given={D.},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=DGR}{%
+         family={Delgado-Gonzalo},
+         familyi={D\bibinitperiod-G\bibinitperiod},
+         given={R.},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{SDDGRUM1}
+    \strng{fullhash}{SDDGRUM1}
+    \field{shorthand}{SDU16}
+    \field{label}{SDU16}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{abstract}{%
+    Interpolatory basis functions are helpful to specify parametric curves or
+  surfaces that can be modiﬁed by simple user-interaction. Their main
+  advantage is a characterization of the object by a set of control points that
+  lie on the shape itself (i.e., curve or surface). In this paper, we
+  characterize a new family of compactly supported piecewise-exponential basis
+  functions that are smooth and satisfy the interpolation property. They can be
+  seen as a generalization and extension of the Keys interpolation kernel using
+  cardinal exponential B-splines. The proposed interpolators can be designed to
+  reproduce trigonometric, hyperbolic, and polynomial functions or combinations
+  of them. We illustrate the construction and give concrete examples on how to
+  use such functions to construct parametric curves and surfaces.%
+    }
+    \verb{doi}
+    \verb 10.1016/j.amc.2015.06.127
+    \endverb
+    \field{issn}{00963003}
+    \field{pages}{53\bibrangedash 63}
+    \field{title}{A family of smooth and interpolatory basis functions for
+  parametric curve and surface representation}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/S009630031500911X
+    \endverb
+    \field{volume}{272}
+    \verb{file}
+    \verb Schmitter et al. - 2016 - A family of smooth and interpolatory basis
+    \verb functio.pdf:/Users/pradaty/Zotero/storage/ZJNMJLCH/Schmitter et al. -
+    \verb  2016 - A family of smooth and interpolatory basis functio.pdf:applic
+    \verb ation/pdf
+    \endverb
+    \field{journaltitle}{Applied Mathematics and Computation}
+    \field{month}{01}
+    \field{year}{2016}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{schmitter_smooth_2017}{article}{}
+    \name{author}{3}{}{%
+      {{hash=SD}{%
+         family={Schmitter},
+         familyi={S\bibinitperiod},
+         given={D.},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=GAP}{%
+         family={García-Amorena},
+         familyi={G\bibinitperiod-A\bibinitperiod},
+         given={P.},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{SDGAPUM1}
+    \strng{fullhash}{SDGAPUM1}
+    \field{shorthand}{SGU17}
+    \field{label}{SGU17}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{shorttitle}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{abstract}{%
+    Existing shape models with spherical topology are typically designed either
+  in the discrete domain using interpolating polygon meshes or in the
+  continuous domain using smooth but non-interpolating schemes such as
+  subdivision or NURBS. Both polygon models and subdivision methods require a
+  large number of parameters to model smooth surfaces. NURBS need fewer
+  parameters but have a complicated rational expression and non-uniform shifts
+  in their formulation. We present a new method to construct deformable closed
+  surfaces, which includes exact spheres, by combining the best of two worlds:
+  a smooth, interpolating model with a continuously varying tangent plane and
+  well-deﬁned curvature at every point on the surface. Our formulation is
+  considerably simpler than NURBS and requires fewer parameters than polygon
+  meshes. We demonstrate the generality of our method with applications
+  including intuitive user-interactive shape modeling, continuous surface
+  deformation, shape morphing, reconstruction of shapes from parameterized
+  point clouds, and fast iterative shape optimization for image segmentation.
+  Comparisons with discrete methods and non-interpolating approaches highlight
+  the advantages of our framework.%
+    }
+    \verb{doi}
+    \verb 10.1007/s41095-017-0086-4
+    \endverb
+    \field{issn}{2096-0433, 2096-0662}
+    \field{number}{3}
+    \field{pages}{199\bibrangedash 215}
+    \field{shorttitle}{Smooth shapes with spherical topology}
+    \field{title}{Smooth shapes with spherical topology: {Beyond} traditional
+  modeling, efficient deformation, and interaction}
+    \verb{url}
+    \verb http://link.springer.com/10.1007/s41095-017-0086-4
+    \endverb
+    \field{volume}{3}
+    \verb{file}
+    \verb Schmitter et al. - 2017 - Smooth shapes with spherical topology Beyon
+    \verb d trad.pdf:/Users/pradaty/Zotero/storage/R4W6FPPM/Schmitter et al. -
+    \verb 2017 - Smooth shapes with spherical topology Beyond trad.pdf:applicat
+    \verb ion/pdf
+    \endverb
+    \field{journaltitle}{Computational Visual Media}
+    \field{month}{09}
+    \field{year}{2017}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{schmitter_compactly-supported_2017}{article}{}
+    \name{author}{5}{}{%
+      {{hash=SD}{%
+         family={Schmitter},
+         familyi={S\bibinitperiod},
+         given={D.},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=FJ}{%
+         family={Fageot},
+         familyi={F\bibinitperiod},
+         given={J.},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=BA}{%
+         family={Badoual},
+         familyi={B\bibinitperiod},
+         given={A.},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=GAP}{%
+         family={Garcia-Amorena},
+         familyi={G\bibinitperiod-A\bibinitperiod},
+         given={P.},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{SD+1}
+    \strng{fullhash}{SDFJBAGAPUM1}
+    \field{shorthand}{SFBGU17}
+    \field{label}{SFBGU17}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{abstract}{%
+    In applications that involve interactive curve and surface modeling, the
+  intuitive manipulation of shapes is crucial. For instance, user interaction
+  is facilitated if a geometrical object can be manipulated through control
+  points that interpolate the shape itself. Additionally, models for shape
+  representation often need to provide local shape control and they need to be
+  able to reproduce common shape primitives such as ellipsoids, spheres,
+  cylinders, or tori. We present a general framework to construct families of
+  compactly-supported interpolators that are piecewise-exponential polynomial.
+  They can be designed to satisfy regularity constraints of any order and they
+  enable one to build parametric deformable shape models by suitable linear
+  combinations of interpolators. They allow to change the resolution of shapes
+  based on the reﬁnability of B-splines. We illustrate their use on examples
+  to construct shape models that involve curves and surfaces with applications
+  to interactive modeling and character design.%
+    }
+    \verb{doi}
+    \verb 10.1016/j.gmod.2017.11.001
+    \endverb
+    \field{issn}{15240703}
+    \field{pages}{52\bibrangedash 64}
+    \field{title}{Compactly-supported smooth interpolators for shape modeling
+  with varying resolution}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/S1524070317300620
+    \endverb
+    \field{volume}{94}
+    \verb{file}
+    \verb Schmitter et al. - 2017 - Compactly-supported smooth interpolators fo
+    \verb r shape.pdf:/Users/pradaty/Zotero/storage/BA2P3MZ9/Schmitter et al. -
+    \verb  2017 - Compactly-supported smooth interpolators for shape.pdf:applic
+    \verb ation/pdf
+    \endverb
+    \field{journaltitle}{Graphical Models}
+    \field{month}{11}
+    \field{year}{2017}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{schmitter_trigonometric_2015}{article}{}
+    \name{author}{3}{}{%
+      {{hash=SD}{%
+         family={Schmitter},
+         familyi={S\bibinitperiod},
+         given={Daniel},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=DGR}{%
+         family={Delgado-Gonzalo},
+         familyi={D\bibinitperiod-G\bibinitperiod},
+         given={Ricard},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{SDDGRUM2}
+    \strng{fullhash}{SDDGRUM2}
+    \field{shorthand}{SDU15}
+    \field{label}{SDU15}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{abstract}{%
+    We present a new trigonometric basis function that is capable of perfectly
+  reproducing circles, spheres and ellipsoids while at the same time being
+  interpolatory. Such basis functions have the advantage that they allow to
+  construct shapes through a sequence of control points that lie on their
+  contour (2-D) or surface (3-D) which facilitates user-interaction, especially
+  in 3-D. Our piecewise exponential basis function has ﬁnite support, which
+  enables local control for shape modiﬁcation. We derive and prove all the
+  necessary properties of the kernel to represent shapes that can be smoothly
+  deformed and show how idealized shapes such as ellipses and spheres can be
+  constructed.%
+    }
+    \verb{doi}
+    \verb 10.1109/LSP.2015.2461557
+    \endverb
+    \field{issn}{1070-9908, 1558-2361}
+    \field{number}{11}
+    \field{pages}{2097\bibrangedash 2101}
+    \field{title}{Trigonometric {Interpolation} {Kernel} to {Construct}
+  {Deformable} {Shapes} for {User}-{Interactive} {Applications}}
+    \verb{url}
+    \verb http://ieeexplore.ieee.org/document/7169542/
+    \endverb
+    \field{volume}{22}
+    \verb{file}
+    \verb Schmitter et al. - 2015 - Trigonometric Interpolation Kernel to Const
+    \verb ruct De.pdf:/Users/pradaty/Zotero/storage/8UFZNVF4/Schmitter et al. -
+    \verb  2015 - Trigonometric Interpolation Kernel to Construct De.pdf:applic
+    \verb ation/pdf
+    \endverb
+    \field{journaltitle}{IEEE Signal Processing Letters}
+    \field{month}{11}
+    \field{year}{2015}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{schoenberg_contributions_1946}{article}{}
+    \name{author}{1}{}{%
+      {{hash=SIJ}{%
+         family={Schoenberg},
+         familyi={S\bibinitperiod},
+         given={I.\bibnamedelima J.},
+         giveni={I\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{SIJ1}
+    \strng{fullhash}{SIJ1}
+    \field{shorthand}{Sch46}
+    \field{label}{Sch46}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \verb{doi}
+    \verb 10.1090/qam/15914
+    \endverb
+    \field{issn}{0033-569X, 1552-4485}
+    \field{number}{1}
+    \field{pages}{45\bibrangedash 99}
+    \field{title}{Contributions to the problem of approximation of equidistant
+  data by analytic functions. {Part} {A}. {On} the problem of smoothing or
+  graduation. {A} first class of analytic approximation formulae}
+    \verb{url}
+    \verb http://www.ams.org/qam/1946-04-01/S0033-569X-1946-15914-5/
+    \endverb
+    \field{volume}{4}
+    \verb{file}
+    \verb Schoenberg - 1946 - Contributions to the problem of approximation of
+    \verb e.pdf:/Users/pradaty/Zotero/storage/Q394N7CH/Schoenberg - 1946 - Cont
+    \verb ributions to the problem of approximation of e.pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Quarterly of Applied Mathematics}
+    \field{month}{04}
+    \field{year}{1946}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{schoenberg_cardinal_1972b}{incollection}{}
+    \name{author}{1}{}{%
+      {{hash=SIJ}{%
+         family={Schoenberg},
+         familyi={S\bibinitperiod},
+         given={I.\bibnamedelima J.},
+         giveni={I\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+    }
+    \name{editor}{3}{}{%
+      {{hash=BPL}{%
+         family={Butzer},
+         familyi={B\bibinitperiod},
+         given={P.\bibnamedelima L.},
+         giveni={P\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+      {{hash=KJP}{%
+         family={Kahane},
+         familyi={K\bibinitperiod},
+         given={J.-P.},
+         giveni={J\bibinitperiod-P\bibinitperiod},
+      }}%
+      {{hash=SNB}{%
+         family={Szökefalvi-Nagy},
+         familyi={S\bibinitperiod-N\bibinitperiod},
+         given={B.},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \list{publisher}{1}{%
+      {Birkhäuser Basel}%
+    }
+    \strng{namehash}{SIJ1}
+    \strng{fullhash}{SIJ1}
+    \field{shorthand}{Sch72b}
+    \field{label}{Sch72b}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{booktitle}{Linear {Operators} and {Approximation} / {Lineare}
+  {Operatoren} und {Approximation}}
+    \verb{doi}
+    \verb 10.1007/978-3-0348-7283-6_34
+    \endverb
+    \field{isbn}{978-3-0348-7285-0 978-3-0348-7283-6}
+    \field{pages}{382\bibrangedash 404}
+    \field{title}{Cardinal {Interpolation} and {Spline} {Functions} {IV}. {The}
+  {Exponential} {Euler} {Splines}}
+    \verb{url}
+    \verb http://link.springer.com/10.1007/978-3-0348-7283-6_34
+    \endverb
+    \list{location}{1}{%
+      {Basel}%
+    }
+    \field{year}{1972}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{schoenberg_cardinal_1969}{article}{}
+    \name{author}{1}{}{%
+      {{hash=SI}{%
+         family={Schoenberg},
+         familyi={S\bibinitperiod},
+         given={I.J},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{SI2}
+    \strng{fullhash}{SI2}
+    \field{shorthand}{Sch69}
+    \field{label}{Sch69}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \verb{doi}
+    \verb 10.1016/0021-9045(69)90040-9
+    \endverb
+    \field{issn}{00219045}
+    \field{number}{2}
+    \field{pages}{167\bibrangedash 206}
+    \field{title}{Cardinal interpolation and spline functions}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/0021904569900409
+    \endverb
+    \field{volume}{2}
+    \field{journaltitle}{Journal of Approximation Theory}
+    \field{month}{06}
+    \field{year}{1969}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{schoenberg_cardinal_1972a}{article}{}
+    \name{author}{1}{}{%
+      {{hash=SI}{%
+         family={Schoenberg},
+         familyi={S\bibinitperiod},
+         given={I.J},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{SI2}
+    \strng{fullhash}{SI2}
+    \field{shorthand}{Sch72a}
+    \field{label}{Sch72a}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{shorttitle}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \verb{doi}
+    \verb 10.1016/0021-9045(72)90048-2
+    \endverb
+    \field{issn}{00219045}
+    \field{number}{4}
+    \field{pages}{404\bibrangedash 420}
+    \field{shorttitle}{Cardinal interpolation and spline functions}
+    \field{title}{Cardinal interpolation and spline functions: {II}
+  interpolation of data of power growth}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/0021904572900482
+    \endverb
+    \field{volume}{6}
+    \field{journaltitle}{Journal of Approximation Theory}
+    \field{month}{12}
+    \field{year}{1972}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{schoenberg_cardinal_1973-1}{book}{}
+    \name{author}{1}{}{%
+      {{hash=SI}{%
+         family={Schoenberg},
+         familyi={S\bibinitperiod},
+         given={I.J.},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{2}{%
+      {Society for Industrial}%
+      {Applied Mathematics}%
+    }
+    \strng{namehash}{SI1}
+    \strng{fullhash}{SI1}
+    \field{shorthand}{Sch73}
+    \field{label}{Sch73}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{series}{Regional conference series in applied mathematics}
+    \field{title}{Cardinal spline interpolation}
+    \verb{url}
+    \verb https://books.google.co.uk/books?id=nl8_AQAAIAAJ
+    \endverb
+    \field{year}{1973}
+  \endentry
+
+  \entry{schoenberg_cardinal_1973}{article}{}
+    \name{author}{2}{}{%
+      {{hash=SI}{%
+         family={Schoenberg},
+         familyi={S\bibinitperiod},
+         given={I.J.},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=SA}{%
+         family={Sharma},
+         familyi={S\bibinitperiod},
+         given={A.},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{SISA1}
+    \strng{fullhash}{SISA1}
+    \field{shorthand}{SchSha73}
+    \field{label}{SchSha73}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \verb{doi}
+    \verb 10.1016/0024-3795(73)90034-7
+    \endverb
+    \field{issn}{00243795}
+    \field{number}{1}
+    \field{pages}{1\bibrangedash 42}
+    \field{title}{Cardinal interpolation and spline fucntions {V}. {The}
+  {B}-splines for cardinal {Hermite} interpolation}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/0024379573900347
+    \endverb
+    \field{volume}{7}
+    \field{journaltitle}{Linear Algebra and its Applications}
+    \field{month}{01}
+    \field{year}{1973}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{selesnick_local_1981}{article}{}
+    \name{author}{1}{}{%
+      {{hash=SS}{%
+         family={Selesnick},
+         familyi={S\bibinitperiod},
+         given={S.A},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{SS1}
+    \strng{fullhash}{SS1}
+    \field{shorthand}{Sel81}
+    \field{label}{Sel81}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \verb{doi}
+    \verb 10.1016/0146-664X(81)90022-8
+    \endverb
+    \field{issn}{0146664X}
+    \field{number}{2}
+    \field{pages}{145\bibrangedash 160}
+    \field{title}{Local invariants and twist vectors in computer-aided
+  geometric design}
+    \verb{url}
+    \verb https://linkinghub.elsevier.com/retrieve/pii/0146664X81900228
+    \endverb
+    \field{volume}{17}
+    \verb{file}
+    \verb Selesnick - 1981 - Local invariants and twist vectors in computer-aid
+    \verb .pdf:/Users/pradaty/Zotero/storage/QJHC4P7E/Selesnick - 1981 - Local
+    \verb invariants and twist vectors in computer-aid.pdf:application/pdf
+    \endverb
+    \field{journaltitle}{Computer Graphics and Image Processing}
+    \field{month}{10}
+    \field{year}{1981}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{uhlmann_hermite_2016}{article}{}
+    \name{author}{3}{}{%
+      {{hash=UV}{%
+         family={Uhlmann},
+         familyi={U\bibinitperiod},
+         given={Virginie},
+         giveni={V\bibinitperiod},
+      }}%
+      {{hash=FJ}{%
+         family={Fageot},
+         familyi={F\bibinitperiod},
+         given={Julien},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{UVFJUM1}
+    \strng{fullhash}{UVFJUM1}
+    \field{shorthand}{UFM16}
+    \field{label}{UFM16}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \field{abstract}{%
+    We introduce a new model of parametric contours deﬁned in a continuous
+  fashion. Our curve model relies on Hermite spline interpolation and can
+  easily generate curves with sharp discontinuities; it also grants direct
+  access to the tangent at each location. With these two features, the Hermite
+  snake distinguishes itself from classical spline-snake models and allows one
+  to address certain bioimaging problems in a more efﬁcient way. More
+  precisely, the Hermite snake construction allows introducing sharp corners in
+  the snake curve and designing directional energy functionals relying on local
+  orientation information in the input image. Using the formalism of spline
+  theory, the model is shown to meet practical requirements such as invariance
+  to afﬁne transformations and good approximation properties. Finally, the
+  dependence on initial conditions and the robustness to the noise is studied
+  on synthetic data in order to validate our Hermite snake model, and its
+  usefulness is illustrated on real biological images acquired using
+  brightﬁeld, phase-contrast, differentialinterference-contrast, and
+  scanning-electron microscopy.%
+    }
+    \verb{doi}
+    \verb 10.1109/TIP.2016.2551363
+    \endverb
+    \field{issn}{1057-7149, 1941-0042}
+    \field{number}{6}
+    \field{pages}{2803\bibrangedash 2816}
+    \field{title}{Hermite {Snakes} {With} {Control} of {Tangents}}
+    \verb{url}
+    \verb http://ieeexplore.ieee.org/document/7448425/
+    \endverb
+    \field{volume}{25}
+    \verb{file}
+    \verb Uhlmann et al. - 2016 - Hermite Snakes With Control of Tangents.pdf:/
+    \verb Users/pradaty/Zotero/storage/9V3KHEDC/Uhlmann et al. - 2016 - Hermite
+    \verb  Snakes With Control of Tangents.pdf:application/pdf
+    \endverb
+    \field{journaltitle}{IEEE Transactions on Image Processing}
+    \field{month}{06}
+    \field{year}{2016}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{uhlmann_exponential_2014}{inproceedings}{}
+    \name{author}{5}{}{%
+      {{hash=UV}{%
+         family={Uhlmann},
+         familyi={U\bibinitperiod},
+         given={Virginie},
+         giveni={V\bibinitperiod},
+      }}%
+      {{hash=DGR}{%
+         family={Delgado-Gonzalo},
+         familyi={D\bibinitperiod-G\bibinitperiod},
+         given={Ricard},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=CC}{%
+         family={Conti},
+         familyi={C\bibinitperiod},
+         given={Costanza},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=RL}{%
+         family={Romani},
+         familyi={R\bibinitperiod},
+         given={Lucia},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \list{publisher}{1}{%
+      {IEEE}%
+    }
+    \strng{namehash}{UV+1}
+    \strng{fullhash}{UVDGRCCRLUM1}
+    \field{shorthand}{UDCRU14}
+    \field{label}{UDCRU14}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \field{abstract}{%
+    We present a new exponential B-spline basis that enables the construction
+  of active contours for the analysis of biomedical images. Our functions
+  generalize the well-known polynomial Hermite B-splines and provide us with a
+  direct control over the tangents of the parameterized contour, which is
+  absent in traditional spline-based active contours. Our basis functions have
+  been designed to perfectly reproduce elliptical and circular shapes.
+  Moreover, they can approximate any closed curve up to arbitrary precision by
+  increasing the number of anchor points. They are therefore well-suited to the
+  segmentation of the roundish objects that are commonly encountered in the
+  analysis of bioimages. We illustrate the performance of an active contour
+  built using our functions on some examples of real biological data.%
+    }
+    \field{booktitle}{2014 {IEEE} {International} {Conference} on {Acoustics},
+  {Speech} and {Signal} {Processing} ({ICASSP})}
+    \verb{doi}
+    \verb 10.1109/ICASSP.2014.6853874
+    \endverb
+    \field{isbn}{978-1-4799-2893-4}
+    \field{pages}{1631\bibrangedash 1634}
+    \field{title}{Exponential {Hermite} splines for the analysis of biomedical
+  images}
+    \verb{url}
+    \verb http://ieeexplore.ieee.org/document/6853874/
+    \endverb
+    \list{location}{1}{%
+      {Florence, Italy}%
+    }
+    \verb{file}
+    \verb Uhlmann et al. - 2014 - Exponential Hermite splines for the analysis
+    \verb of bi.pdf:/Users/pradaty/Zotero/storage/7BEU3A3G/Uhlmann et al. - 201
+    \verb 4 - Exponential Hermite splines for the analysis of bi.pdf:applicatio
+    \verb n/pdf
+    \endverb
+    \field{month}{05}
+    \field{year}{2014}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{uhlmann_flylimbtracker:_2017}{article}{}
+    \name{author}{5}{}{%
+      {{hash=UV}{%
+         family={Uhlmann},
+         familyi={U\bibinitperiod},
+         given={Virginie},
+         giveni={V\bibinitperiod},
+      }}%
+      {{hash=RP}{%
+         family={Ramdya},
+         familyi={R\bibinitperiod},
+         given={Pavan},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=DGR}{%
+         family={Delgado-Gonzalo},
+         familyi={D\bibinitperiod-G\bibinitperiod},
+         given={Ricard},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=BR}{%
+         family={Benton},
+         familyi={B\bibinitperiod},
+         given={Richard},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{UV+1}
+    \strng{fullhash}{UVRPDGRBRUM1}
+    \field{shorthand}{UDBU17}
+    \field{label}{UDBU17}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \field{pages}{21}
+    \field{title}{{FlyLimbTracker}: {An} active contour based approach for leg
+  segment tracking in unmarked, freely behaving {Drosophila}}
+    \verb{file}
+    \verb Uhlmann et al. - FlyLimbTracker An active contour based approach f.pd
+    \verb f:/Users/pradaty/Zotero/storage/UFM3XT7W/Uhlmann et al. - FlyLimbTrac
+    \verb ker An active contour based approach f.pdf:application/pdf
+    \endverb
+    \field{year}{2017}
+  \endentry
+
+  \entry{unser_splines:_1999}{article}{}
+    \name{author}{1}{}{%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{UM1}
+    \strng{fullhash}{UM1}
+    \field{shorthand}{Uns99}
+    \field{label}{Uns99}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{shorttitle}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \verb{doi}
+    \verb 10.1109/79.799930
+    \endverb
+    \field{issn}{10535888}
+    \field{number}{6}
+    \field{pages}{22\bibrangedash 38}
+    \field{shorttitle}{Splines}
+    \field{title}{Splines: a perfect fit for signal and image processing}
+    \verb{url}
+    \verb http://ieeexplore.ieee.org/document/799930/
+    \endverb
+    \field{volume}{16}
+    \verb{file}
+    \verb Submitted Version:/Users/pradaty/Zotero/storage/R4ZS7ETT/Unser - 1999
+    \verb  - Splines a perfect fit for signal and image proces.pdf:application/
+    \verb pdf
+    \endverb
+    \field{journaltitle}{IEEE Signal Processing Magazine}
+    \field{month}{11}
+    \field{year}{1999}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{unser_cardinal_2005-1}{article}{}
+    \name{author}{1}{}{%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{UM1}
+    \strng{fullhash}{UM1}
+    \field{shorthand}{Uns05}
+    \field{label}{Uns05}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{shorttitle}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \field{abstract}{%
+    By interpreting the Green-function reproduction property of exponential
+  splines in signal processing terms, we uncover a fundamental relation that
+  connects the impulse responses of allpole analog ﬁlters to their discrete
+  counterparts. The link is that the latter are the B-spline coefﬁcients of
+  the former (which happen to be exponential splines). Motivated by this
+  observation, we introduce an extended family of cardinal splines—the
+  generalized E-splines—to generalize the concept for all convolution
+  operators with rational transfer functions. We construct the corresponding
+  compactly supported B-spline basis functions, which are characterized by
+  their poles and zeros, thereby establishing an interesting connection with
+  analog ﬁlter design techniques. We investigate the properties of these new
+  B-splines and present the corresponding signal processing calculus, which
+  allows us to perform continuous-time operations, such as convolution,
+  differential operators, and modulation, by simple application of the discrete
+  version of these operators in the B-spline domain. In particular, we show how
+  the formalism can be used to obtain exact, discrete implementations of analog
+  ﬁlters. Finally, we apply our results to the design of hybrid signal
+  processing systems that rely on digital ﬁltering to compensate for the
+  nonideal characteristics of real-world analog-to-digital (A-to-D) and D-to-A
+  conversion systems.%
+    }
+    \verb{doi}
+    \verb 10.1109/TSP.2005.843699
+    \endverb
+    \field{issn}{1053-587X}
+    \field{number}{4}
+    \field{pages}{1439\bibrangedash 1449}
+    \field{shorttitle}{Cardinal exponential splines}
+    \field{title}{Cardinal exponential splines: part {II} - think analog, act
+  digital}
+    \verb{url}
+    \verb http://ieeexplore.ieee.org/document/1408194/
+    \endverb
+    \field{volume}{53}
+    \verb{file}
+    \verb Unser - 2005 - Cardinal exponential splines part II - think anal.pdf:
+    \verb /Users/pradaty/Zotero/storage/V7WWXHUZ/Unser - 2005 - Cardinal expone
+    \verb ntial splines part II - think anal.pdf:application/pdf
+    \endverb
+    \field{journaltitle}{IEEE Transactions on Signal Processing}
+    \field{month}{04}
+    \field{year}{2005}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{unser_cardinal_2005}{article}{}
+    \name{author}{2}{}{%
+      {{hash=UM}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=BT}{%
+         family={Blu},
+         familyi={B\bibinitperiod},
+         given={T.},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{UMBT1}
+    \strng{fullhash}{UMBT1}
+    \field{shorthand}{UnsBlu05}
+    \field{label}{UnsBlu05}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{shorttitle}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \field{abstract}{%
+    Causal exponentials play a fundamental role in classical system theory.
+  Starting from those elementary building blocks, we propose a complete and
+  self-contained signal processing formulation of exponential splines deﬁned
+  on a uniform grid. We specify the corresponding B-spline basis functions and
+  investigate their reproduction properties (Green function and exponential
+  polynomials); we also characterize their stability (Riesz bounds). We show
+  that the exponential B-spline framework allows an exact implementation of
+  continuous-time signal processing operators including convolution,
+  differential operators, and modulation, by simple processing in the discrete
+  B-spline domain. We derive efﬁcient ﬁltering algorithms for
+  multiresolution signal extrapolation and approximation, extending earlier
+  results for polynomial splines. Finally, we present a new asymptotic error
+  formula that predicts the magnitude and the th-order decay of the
+  2-approximation error as a function of the knot spacing .%
+    }
+    \verb{doi}
+    \verb 10.1109/TSP.2005.843700
+    \endverb
+    \field{issn}{1053-587X}
+    \field{number}{4}
+    \field{pages}{1425\bibrangedash 1438}
+    \field{shorttitle}{Cardinal exponential splines}
+    \field{title}{Cardinal exponential splines: part {I} - theory and filtering
+  algorithms}
+    \verb{url}
+    \verb http://ieeexplore.ieee.org/document/1408193/
+    \endverb
+    \field{volume}{53}
+    \verb{file}
+    \verb Unser and Blu - 2005 - Cardinal exponential splines part I - theory a
+    \verb nd .pdf:/Users/pradaty/Zotero/storage/4B6R9DVE/Unser and Blu - 2005 -
+    \verb  Cardinal exponential splines part I - theory and .pdf:application/pd
+    \verb f
+    \endverb
+    \field{journaltitle}{IEEE Transactions on Signal Processing}
+    \field{month}{04}
+    \field{year}{2005}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+
+  \entry{unser_introduction_2014}{book}{}
+    \name{author}{2}{}{%
+      {{hash=UMA}{%
+         family={Unser},
+         familyi={U\bibinitperiod},
+         given={Michael\bibnamedelima A.},
+         giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+      {{hash=TP}{%
+         family={Tafti},
+         familyi={T\bibinitperiod},
+         given={Pouya},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Cambridge University Press}%
+    }
+    \keyw{Gaussian processes, Random fields, Stochastic differential equations}
+    \strng{namehash}{UMATP1}
+    \strng{fullhash}{UMATP1}
+    \field{shorthand}{UnsTaf14}
+    \field{label}{UnsTaf14}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \field{isbn}{978-1-107-05854-5}
+    \field{title}{An introduction to sparse stochastic processes}
+    \list{location}{1}{%
+      {Cambridge ; New York}%
+    }
+    \field{year}{2014}
+  \endentry
+
+  \entry{whittaker_xviii.functions_1915}{article}{}
+    \name{author}{1}{}{%
+      {{hash=WET}{%
+         family={Whittaker},
+         familyi={W\bibinitperiod},
+         given={E.\bibnamedelima T.},
+         giveni={E\bibinitperiod\bibinitdelim T\bibinitperiod},
+      }}%
+    }
+    \list{language}{1}{%
+      {en}%
+    }
+    \strng{namehash}{WET1}
+    \strng{fullhash}{WET1}
+    \field{shorthand}{Whi15}
+    \field{label}{Whi15}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{W}
+    \field{sortinithash}{W}
+    \verb{doi}
+    \verb 10.1017/S0370164600017806
+    \endverb
+    \field{issn}{0370-1646}
+    \field{pages}{181\bibrangedash 194}
+    \field{title}{{XVIII}.—{On} the {Functions} which are represented by the
+  {Expansions} of the {Interpolation}-{Theory}}
+    \verb{url}
+    \verb https://www.cambridge.org/core/product/identifier/S0370164600017806/t
+    \verb ype/journal_article
+    \endverb
+    \field{volume}{35}
+    \verb{file}
+    \verb Submitted Version:/Users/pradaty/Zotero/storage/TNZY5RHP/Whittaker -
+    \verb 1915 - XVIII.—On the Functions which are represented by t.pdf:appli
+    \verb cation/pdf
+    \endverb
+    \field{journaltitle}{Proceedings of the Royal Society of Edinburgh}
+    \field{year}{1915}
+    \field{urlday}{26}
+    \field{urlmonth}{08}
+    \field{urlyear}{2019}
+  \endentry
+\enddatalist
+\endinput

@@ -1,0 +1,107 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nyt/global//global/global}
+  \entry{Lee76b}{article}{}
+    \name{author}{1}{}{%
+      {{hash=LSL}{%
+         family={Lee},
+         familyi={L\bibinitperiod},
+         given={S.\bibnamedelima L.},
+         giveni={S\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LSL1}
+    \strng{fullhash}{LSL1}
+    \field{shorthand}{Lee76b}
+    \field{label}{Lee76b}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1976}
+    \field{labeldatesource}{year}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{pages}{291\bibrangedash 296}
+    \field{title}{Fourier transforms of B-splines and fundamental splines for
+  cardinal Hermite interpolation}
+    \field{volume}{57}
+    \field{journaltitle}{Proceedings of the American mathematical society}
+    \field{year}{1976}
+  \endentry
+
+  \entry{LeeSh76}{article}{}
+    \name{author}{2}{}{%
+      {{hash=LSL}{%
+         family={Lee},
+         familyi={L\bibinitperiod},
+         given={S.\bibnamedelima L.},
+         giveni={S\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+      {{hash=SA}{%
+         family={Sharma},
+         familyi={S\bibinitperiod},
+         given={A.},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LSLSA1}
+    \strng{fullhash}{LSLSA1}
+    \field{shorthand}{LeeSh76}
+    \field{label}{LeeSh76}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1976}
+    \field{labeldatesource}{year}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{pages}{85\bibrangedash 96}
+    \field{title}{Cardinal Lacunary interpolation by g-splines. I. The
+  characteristic polynomial}
+    \field{volume}{16}
+    \field{journaltitle}{J. Approx. Theory}
+    \field{year}{1976}
+  \endentry
+
+  \entry{Sch72b}{article}{}
+    \name{author}{1}{}{%
+      {{hash=SI}{%
+         family={Schoenberg},
+         familyi={S\bibinitperiod},
+         given={I.J.},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SI1}
+    \strng{fullhash}{SI1}
+    \field{shorthand}{Sch72b}
+    \field{label}{Sch72b}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1972}
+    \field{labeldatesource}{year}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{pages}{382\bibrangedash 404}
+    \field{title}{Cardinal interpolation and spline functions IV: the
+  exponential Euler splines}
+    \field{volume}{20}
+    \field{journaltitle}{International series of numerical mathematics}
+    \field{year}{1972}
+  \endentry
+\enddatalist
+\endinput

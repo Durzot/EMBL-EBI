@@ -1,0 +1,555 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, mathtools, amsthm, amssymb} % amsthm contains the proof environment
+\usepackage{amsfonts} % for the \mathfrak command
+\usepackage{mathrsfs} % for the \mathscr command
+\usepackage{stmaryrd} % for \llbracket
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
+
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{dsfont}
+\usepackage{bm}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+\newtheorem{deftn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\essinf}{ess\ inf}
+\DeclareMathOperator*{\esssup}{ess\ sup}
+\DeclareMathOperator*{\Supp}{Supp}
+\DeclareMathOperator*{\com}{com}
+\DeclareMathOperator*{\Tr}{Tr} 
+
+\renewcommand{\thesection}{\Roman{section}}
+
+\usepackage[backend=bibtex, citestyle=authoryear, sorting=nyt]{biblatex} % Use the bibtex backend 
+\usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
+\usepackage{filecontents}
+
+\begin{filecontents}{xmpl.bib}
+@article{Me02,
+  shorthand = {Me02},
+  author = {Meijering, E.},
+  title = {A Chronology of Interpolation: From Ancient Astronomy to Modern and Signal Image processing},
+  year = {2002},
+  journal = {Proceedings of the IEEE},
+  volume = {90},
+  number = {3},
+  pages = {319-342},
+}
+
+@book{Bo01,
+  shorthand = {Bo01},
+  author = {De Boor, C.},
+  title = {A practical guide to splines},
+  year = {2001},
+  publisher = {Springer},
+  edition = {Revised edition}
+}
+
+@article{CS66,
+  shorthand = {CS66},
+  author = {Curry, H.B. and Schoenberg, I.J.},
+  title = {On Pólya frequency functions IV: the fundamental spline functions and their limits},
+  year = {1966},
+  journal = {J. Analyse Math.},
+  volume = {17},
+  pages = {71-107},
+}
+
+@article{Sch46,
+  shorthand = {Sch46},
+  author = {Schoenberg, I.J.},
+  title = {Contributions to the problem of approximation of equidistant data by analytic functions.},
+  year = {1946},
+  journal = {Quart. Appl. Math.},
+  volume = {IV},
+  number = {1},
+  pages = {45-99},
+}
+
+@article{Sch69,
+  shorthand = {Sch69},
+  author = {Schoenberg, I.J.},
+  title = {Cardinal interpolation and spline functions},
+  year = {1969},
+  journal = {J. Approx. Theory},
+  volume = {2},
+  pages = {167-206},
+}
+
+@article{Sch72a,
+  shorthand = {Sch72a},
+  author = {Schoenberg, I.J.},
+  title = {Cardinal interpolation and spline functions II: interpolation of data of power growth},
+  year = {1972},
+  journal = {J. Approx. Theory},
+  volume = {6},
+  pages = {404-420},
+}
+
+@article{LS73,
+  shorthand = {LS73},
+  author = {Lipow, P.R. and Schoenberg, I.J.},
+  title = {Cardinal Interpolation and Spline Functions. III\@. Cardinal Hermite Interpolation},
+  year = {1973},
+  journal = {Linear Algebra and its Applications},
+  volume = {6},
+  pages = {273-304},
+}
+
+@article{Sch72b,
+  shorthand = {Sch72b},
+  author = {Schoenberg, I.J.},
+  title = {Cardinal interpolation and spline functions IV: the exponential Euler splines},
+  year = {1972},
+  journal = {International series of numerical mathematics},
+  volume = {20},
+  pages = {382-404},
+}
+
+@article{SS73,
+  shorthand = {SS73},
+  author = {Schoenberg, I.J. and Sharma, A.},
+  title = {Cardinal Interpolation and Spline Functions. V\@. The B-splines for cardinal Hermite interpolation},
+  year = {1973},
+  journal = {Linear Algebra and its Applications},
+  volume = {7},
+  number = {1},
+  pages = {1-42},
+}
+
+@article{Sch73,
+  shorthand = {Sch73},
+  author = {Schoenberg, I.J.},
+  title = {Cardinal Spline Interpolation},
+  year = {1973},
+  journal = {CBMS-NSF Regional conference series in applied mathematics},
+}
+
+@article{Her78,
+  shorthand = {Her78},
+  author = {Hermite, C.},
+  title = {Sur la formule d'interpolation de Lagrange},
+  year = {1878},
+  journal = {Journal für die Reine und Angewandte Mathematik},
+  volume = {84},
+  number = {1},
+  pages = {70-79}
+}
+
+@article{Lee73,
+  shorthand = {Lee73},
+  author = {Lee, S. L.},
+  title = {B-splines for cardinal Hermite interpolation},
+  year = {1975},
+  journal = {Linear Algebra and its Applications},
+  volume = {12},
+  pages = {269-280}
+}
+
+@article{Lee76a,
+  shorthand = {Lee76a},
+  author = {Lee, S. L.},
+  title = {Exponential Hermite-Euler splines},
+  year = {1976},
+  journal = {J. Approx. Theory.},
+  volume = {18},
+  pages = {205-212}
+}
+
+@article{Lee76b,
+  shorthand = {Lee76b},
+  author = {Lee, S. L.},
+  title = {Fourier transforms of B-splines and fundamental splines for cardinal Hermite interpolation},
+  year = {1976},
+  journal = {Proceedings of the American mathematical society},
+  volume = {57},
+  pages = {291-296}
+}
+
+@article{LeeSh76,
+  shorthand = {LeeSh76},
+  author = {Lee, S. L. and Sharma, A.},
+  title = {Cardinal Lacunary interpolation by g-splines. I. The characteristic polynomial},
+  year = {1976},
+  journal = {J. Approx. Theory},
+  volume = {16},
+  pages = {85-96}
+}
+
+@article{FAUU19,
+  shorthand = {FAUU73},
+  author = {Fageot, Julien and Aziznejad, Shayan and Unser, Michael and Uhlmann, Virginie},
+  title = {Support and approximation properties of Hermite splines},
+  year = {2019},
+  journal = {arXiv:1902.02565 [math.NA]}
+}
+
+\end{filecontents}
+
+\addbibresource{xmpl.bib} % The filename of the bibliography
+
+
+\begin{document}
+\title{Fourier transforms of $N_s$ and Lee's formula}
+\author{Yoann Pradat}
+\maketitle
+\tableofcontents
+
+\section{The proof}
+
+\underline{Notations}
+\begin{itemize}
+  \item $m, r \in \mathbb{N}^*$ with $m \geq r$
+  \item $N_s := N_{2m,r,s}$, $s=0, \ldots, r-1$ are Hermite B-splines
+  \item $L_s := L_{2m,r,s}$, $s=0, \ldots, r-1$ are Schoenberg fundamental splines
+\end{itemize}
+
+Given these notations, Lee stated and proved the following theorem
+\begin{thm}[{\cite[Theorem 1]{Lee76b}}]\label{thm:Lee1}
+  The Fourier transform of the fundamental splines is
+  \begin{equation}\label{eq:Lee1}
+    \hat{L}_{2m,r,s}(u) = {(-j)}^{s} \frac{H_{r,s}(\alpha_{2m}(u))}{H_r(\alpha_{2m}(u))}
+  \end{equation}
+\end{thm}
+
+\begin{proof}
+  Let's first prove a property of the Hankel determinant that we will use later. For any sequence ${(a_n)}_n$ and any 
+  complex $\mu$ the following holds
+  \begin{equation}\label{prop:hankel}
+    H_r(a_n \mu^n) = \mu^{r(n-r+1)} H_r(a_n)
+  \end{equation}
+  This is easily proved using the Leibniz formula for the determinant as follows
+  \begin{align*}
+    H_r(a_n \mu^n) &= \sum_{\sigma \in \mathfrak{S}_r} \epsilon(\sigma) \prod_{j=1}^r \mu^{n-\sigma(j) - j+2} 
+    a_{n-\sigma(j)-j+2} \\
+    &= \mu^{rn-(\sum_{j=1}^r \sigma(j) + j) + 2r} \sum_{\sigma \in \mathfrak{S}_r} \epsilon(\sigma) \prod_{j=1}^r  
+    a_{n-\sigma(j)-j+2} \\
+    &= \mu^{rn-r(r+1) + 2r} \sum_{\sigma \in \mathfrak{S}_r} \epsilon(\sigma) \prod_{j=1}^r  a_{n-\sigma(j)-j+2} \\
+    &= \mu^{r(n-r+1)} H_r(a_n)
+  \end{align*}
+  
+  Let $m, r \in \mathbb{N}^*$ such that $m \geq r$ and let $s \in \llbracket0, r-1\rrbracket$. The key observation for 
+  the proof of the Fourier transform of $L_{2m,r,s}$ is that the $(s+1)^{th}$ fundamental spline can be written as the 
+  integral of the $(s+1)^{th}$ exponential Euler-Hermite splines of order $n+1=2m$.  By definition, the $(s+1)^{th}$ 
+  exponential Euler-Hermite splines of order $n$ for the base $\lambda$ ($\Pi_{n,r}(\lambda) \neq 0$) is given by
+  \begin{align}
+    S_{n+1,r,s}(x;\lambda) &= \frac{A_{n,r,s}(x; \lambda)}{A_{n,r,s}^{(s)}(x; \lambda)}, \quad 0 \leq x \leq 1 \\
+    S_{n+1,r,s}(x+1;\lambda) &= \lambda S_{n+1,r,s}(x;\lambda), \quad \forall x \in \mathbb{R}
+  \end{align}
+   
+  Consider the $r$ functions
+  \begin{equation}\label{eq:def-I}
+    I_{2m,r,s}(x) = \begin{dcases}
+      \frac{1}{2\pi} \int_0^{2\pi} S_{2m, r, s}(x;e^{ju}) du & \text{if $r$ even} \\
+      \frac{1}{2\pi} \int_{-\pi}^{\pi} S_{2m, r, s}(x;e^{ju}) du & \text{if $r$ odd} \\
+    \end{dcases}
+  \end{equation}
+  The functions $S_{2m,r,s}(\cdot;\lambda)$ being in $\mathscr{S}_{2m,r}^{(s)}$ so is $I_{2m,r,s}$. Given the properties 
+  of the derivatives of $S_{2m,r,s}$, the following holds 
+  \begin{equation*}
+    \forall k \in \mathbb{Z}, \quad 
+    \begin{dcases}
+      I_{2m,r,s}^{(\rho)}(k) = 0 & \ \rho=0, \ldots, r-1, \rho \neq s,  \\
+      I_{2m,r,s}^{(s)}(k) = \delta_k &
+    \end{dcases}
+  \end{equation*}
+  
+  However there is only one element in $\mathscr{S}_{2m,r}$ that satisfies such conditions and that element is 
+  $L_{2m,r,s}$ by definition. As a consequence,
+  \begin{equation}
+    L_{2m,r,s} = I_{2m,r,s}, \quad s=0, \ldots, r-1
+  \end{equation}
+  
+  From (\cite[(7.14)]{Sch72b}), the Euler-Frobenius polynomial can be written as \begin{equation}\label{eq:sch-an}
+      \frac{A_n(x;e^{ju})}{n!} = (e^{ju}-1)e^{-ju}e^{jux} \sum_{k=-\infty}^{\infty} \frac{e^{2j\pi kx}}{{(ju + 
+      2jk\pi)}^{n+1}}, \quad e^{ju} \neq 1, 0 \leq x \leq 1
+  \end{equation}
+  
+  Using the multilinearity of the determinant $A_{n,r,s}$ and using the equation (\ref{prop:hankel}), the numerator of 
+  $S_{n+1,r,s}$ can be written as \begin{align*}
+    A_{n,r,s}(x;e^{ju}) &= \frac{(e^{ju}-1)}{e^{ju}}e^{jux} \sum_{k=-\infty}^{\infty} e^{2j\pi kx}
+    \begin{vmatrix}
+      \frac{A_n(0;e^{ju})}{n!}  &  \hdots & \frac{1}{{(ju+2jk\pi)}^{n+1}} & \hdots &  
+      \frac{A_{n-r+1}(0;e^{ju})}{(n-r+1)!} \\
+      \vdots & & \vdots & & \vdots \\
+      \frac{A_{n-r+1}(0;e^{ju})}{(n-r+1)!}  & \hdots & \frac{1}{{(ju+2jk\pi)}^{n-r+2}} & \hdots &  
+      \frac{A_{n-2r+2}(0;e^{ju})}{(n-2r+2)!} \\
+    \end{vmatrix} \\
+    &= \frac{{(e^{ju}-1)}^r}{e^{jur}}e^{jux} {(-j)}^{s} j^{r(n-r+1)} \sum_{k=-\infty}^{\infty} e^{2j\pi kx} 
+    \Delta_{n+1,k,s}(u)
+  \end{align*}
+  with $\Delta_{n+1,k,s}(u)$ the Hankel determinant of order $r$ of $\alpha_{n+1}(u)$ with its ${(s+1)}^{th}$ column 
+  replaced by the vector
+  \begin{equation*}
+    \begin{bmatrix} \frac{1}{{(u+2k\pi)}^{n+1}} & \frac{1}{{(u+2k\pi)}^{n}} & \hdots & \frac{1}{{(u+2k\pi)}^{n-r+2}} 
+    \end{bmatrix}^T
+  \end{equation*}
+  Similarly, the denominator of $S_{n,r,s}$ can be written as 
+  \begin{align*}
+    A^{(s)}_{n,r,s}(0;e^{ju}) &= H_r\left(\frac{A_n(0;\lambda)}{n!}\right) \\
+    & = \frac{{(e^{ju}-1)}^r}{e^{jur}}{(-j)}^{r(n-r+1)} H_r(\alpha_{n+1}(u))
+  \end{align*}
+  
+  As a consequence, \begin{equation}\label{eq:exp-s2mrs}
+    S_{n+1,r,s}(x;e^{ju}) = {(-j)}^s e^{jux} \sum_{k=-\infty}^{\infty}  e^{2j\pi kx} 
+    \frac{\Delta_{n+1,k,s}(u)}{H_r(\alpha_{n+1}(u))}
+  \end{equation}
+  
+  Let now replace the expression (\ref{eq:exp-s2mrs}) into (\ref{eq:def-I}). The details are given for $r$ even as the 
+  calculations are similar for $r$ odd.
+  \begin{align*}
+    I_{2m,r,s}(x) &= \frac{1}{2\pi} \int_0^{2\pi} S_{2m, r, s}(x;e^{ju}) du \\
+    &= \frac{{(-j)}^s}{2\pi} \int_0^{2\pi} e^{jux} \sum_{k=-\infty}^{\infty}  e^{2j\pi kx} 
+    \frac{\Delta_{2m,k,s}(u)}{H_r(\alpha_{2m}(u))} du \\
+    &= \frac{{(-j)}^s}{2\pi} \sum_{k=-\infty}^{\infty} \int_0^{2\pi} e^{j(u+2k\pi) x}  
+    \frac{\Delta_{2m,k,s}(u)}{H_r(\alpha_{2m}(u+2k\pi))} du \quad (\alpha_{2m} \text{is $2\pi$-periodic}) \\
+    &= \frac{{(-j)}^s}{2\pi} \int_{-\infty}^{\infty} e^{jux} \frac{H_{r, s}(\alpha_{2m}(u))}{H_r(\alpha_{2m}(u))} du
+  \end{align*}
+\end{proof}
+
+\begin{thm}[{\cite[Theorem 2]{Lee76b}}]\label{thm:Lee2}
+  The Fourier transform of the Hermite B-splines is
+  \begin{equation}\label{eq:Lee2}
+    \hat{N}_s(u) = {(-j)}^s K(m,r) {\left(2 \sin \frac{u}{2} \right)}^{2m} H_{r,s}(\alpha_{2m}(u))
+  \end{equation}
+  with $K(m,r) = {(-1)}^{m(r+1)} \frac{(2m-1)!(2m-2)!\ldots(2m-r)!}{1!2!\ldots(r-1)!}$
+\end{thm}
+
+\begin{remark}
+  From Theorem~\ref{thm:Lee1} and the definition
+  \begin{equation}
+    N_s = \sum_{k=-(m-r)}^{(m-r)} c_k L_s(\cdot-k)
+  \end{equation}
+  $N_s$ can be written in the following integral representation
+  \begin{equation}
+    N_s(x) = \frac{{(-j)}^s}{2\pi} \int_{-\infty}^{\infty} e^{-ju(m-r)} \Pi_{2m-1,r}(e^{ju}) e^{jux} \frac{H_{r, 
+    s}(\alpha_{2m}(u))}{H_r(\alpha_{2m}(u))} du
+  \end{equation}
+\end{remark}
+
+\begin{example}
+  \begin{enumerate}
+    \item In the case where $m=r$, we know that $N_0 = (2m-1)! M_{2m}$ i.e we expect \begin{equation}
+	\hat{N_0}(u) = (2m-1)!{\left(\frac{2\sin(\frac{u}{2})}{u}\right)}^{2m}
+      \end{equation}
+
+    \item Assume $m \geq 1, r=1$. Lee's formula is
+      \begin{equation}
+	\hat{N_0}(u) = (2m-1)! \times {\left(2 \sin \frac{u}{2} \right)}^{2m} \frac{1}{u}^{2m} 
+      \end{equation}
+
+    \item Assume $m=2, r=2$. Lee's formula is 
+      \begin{align*}
+	\hat{N_0}(u) &= 3!2! {\left(2 \sin \frac{u}{2} \right)}^{4}   
+	\begin{vmatrix}
+	  \frac{1}{u^4} & \sum_{k} \frac{1}{{(u+2k\pi)}^{3}} \\
+	  \frac{1}{u^3} & \sum_{k} \frac{1}{{(u+2k\pi)}^{2}} \\
+	\end{vmatrix} \\
+      &=  3!2! {\left(2 \sin \frac{u}{2} \right)}^{4}  \frac{1}{u^6} \left[ 1+ \sum_{k \neq 0} 
+      \frac{u^2}{{(u+2k\pi)}^{2}} - (1+ \sum_{k \neq 0} \frac{u^3}{{(u+2k\pi)}^{3}})  \right] \\
+      &=  3!2! {\left(2 \sin \frac{u}{2} \right)}^{4}  \frac{1}{u^4} \left[\sum_{k \neq 0} \frac{1}{{(u+2k\pi)}^{2}} - 
+      \sum_{k \neq 0} \frac{u}{{(u+2k\pi)}^{3}} \right]
+      \end{align*}
+      while
+      \begin{align*}
+	\hat{N_1}(u) &= (-j) 3!2! {\left(2 \sin \frac{u}{2} \right)}^{4}   \begin{vmatrix}
+	  \sum_{k} \frac{1}{{(u+2k\pi)}^{4}} & \frac{1}{u^4}  \\
+	  \sum_{k} \frac{1}{{(u+2k\pi)}^{3}} & \frac{1}{u^3} \\
+	\end{vmatrix} \\
+	&= (-j) 3!2! {\left(2 \sin \frac{u}{2} \right)}^{4}  \frac{1}{u^7} \left[ 1+ \sum_{k \neq 0} 
+	\frac{u^4}{{(u+2k\pi)}^{4}} - (1+ \sum_{k \neq 0} \frac{u^3}{{(u+2k\pi)}^{3}})  \right] \\
+	&= (-j) 3!2! {\left(2 \sin \frac{u}{2} \right)}^{4}  \frac{1}{u^4} \left[\sum_{k \neq 0} 
+	\frac{u}{{(u+2k\pi)}^{4}} - \sum_{k \neq 0} \frac{1}{{(u+2k\pi)}^{3}} \right]
+      \end{align*}
+
+    \item Assume $m \geq 2, r=2$.
+      \begin{itemize}
+	\item \underline{Around 0}
+	  \begin{align*}
+	    \hat{N_0}(u) &= K(m,2) {\left(2 \sin \frac{u}{2} \right)}^{2m}   
+	      \begin{vmatrix}
+		\frac{1}{u^{2m}} & \sum_{k} \frac{1}{{(u+2k\pi)}^{2m-1}} \\
+		\frac{1}{u^{2m-1}} & \sum_{k} \frac{1}{{(u+2k\pi)}^{2m-2}} \\
+	      \end{vmatrix} \\
+	      &=  K(m,2) {\left(2 \sin \frac{u}{2} \right)}^{2m} \frac{1}{u^{4m-2}} \left[ 1+ \sum_{k \neq 0} 
+	      \frac{u^{2m-2}}{{(u+2k\pi)}^{2m-2}} - (1+ \sum_{k \neq 0} \frac{u^{2m-1}}{{(u+2k\pi)}^{2m-1}})  \right] \\
+	      &=  K(m,2) {\left(2 \sin \frac{u}{2} \right)}^{2m} \frac{1}{u^{2m}}\left[\beta_{2m-2}(u) - u 
+	      \beta_{2m-1}(u) \right]
+	    \end{align*}
+	    while
+	    \begin{align*}
+	      \hat{N_1}(u) &= (-j)K(m,2) {\left(2 \sin \frac{u}{2} \right)}^{2m}   
+	      \begin{vmatrix}
+		\sum_{k} \frac{1}{{(u+2k\pi)}^{2m}} & \frac{1}{u^{2m}}  \\
+		\sum_{k} \frac{1}{{(u+2k\pi)}^{2m-1}} & \frac{1}{u^{2m-1}}  \\
+	      \end{vmatrix} \\
+	      &=  (-j)K(m,2) {\left(2 \sin \frac{u}{2} \right)}^{4m-2} \frac{1}{u^{4m-1}}\left[ 1+ \sum_{k \neq 0} 
+	      \frac{u^{2m}}{{(u+2k\pi)}^{2m}} - (1+ \sum_{k \neq 0} \frac{u^{2m-1}}{{(u+2k\pi)}^{2m-1}})  \right] \\
+	      &=  (-j)K(m,2) {\left(2 \sin \frac{u}{2} \right)}^{2m} \frac{1}{u^{2m}}\left[u\beta_{2m}(u) - 
+	    \beta_{2m-1}(u) \right]
+	  \end{align*}
+	\item \underline{Around $2l\pi$}
+	  \begin{align*}
+	    \hat{N_0}(u) &= K(m,2) {\left(2 \sin \frac{u}{2} \right)}^{2m}   \begin{vmatrix}
+		\frac{1}{u^{2m}} & \sum_{k} \frac{1}{{(u+2k\pi)}^{2m-1}} \\
+		\frac{1}{u^{2m-1}} & \sum_{k} \frac{1}{{(u+2k\pi)}^{2m-2}} \\
+	      \end{vmatrix} \\
+	      &=  K(m,2) {\left(2 \sin \frac{u}{2} \right)}^{2m} \frac{1}{(u-2l\pi)^{2m}} \bigg[ 
+		\frac{{(u-2l\pi)}^2}{u^{2m}} + \frac{{(u-2l\pi)}^{2m}}{u^{2m}} \beta_{2m-2}(u-2l\pi) \\
+	      & \quad - \Big( \frac{{(u-2l\pi)}^1}{u^{2m-1}} + \frac{{(u-2l\pi)}^{2m}}{u^{2m-1}} 
+	    \beta_{2m-1}(u-2l\pi)\Big) \bigg] \\
+	    \end{align*}
+	    i.e $\displaystyle \lim_{u \to 2l\pi} \hat{N}_0(u) = 0$ while
+	    \begin{align*}
+	      \hat{N_1}(u) &= (-j)K(m,2) {\left(2 \sin \frac{u}{2} \right)}^{2m}   
+	      \begin{vmatrix}
+		\sum_{k} \frac{1}{{(u+2k\pi)}^{2m}} & \frac{1}{u^{2m}}  \\
+		\sum_{k} \frac{1}{{(u+2k\pi)}^{2m-1}} & \frac{1}{u^{2m-1}}  \\
+	      \end{vmatrix} \\
+	      &=  K(m,2) {\left(2 \sin \frac{u}{2} \right)}^{2m} \frac{1}{(u-2l\pi)^{2m}} \bigg[ \frac{1}{u^{2m-1}} + 
+		\frac{{(u-2l\pi)}^{2m}}{u^{2m-1}} \beta_{2m}(u-2l\pi) \\
+	      & \quad - \Big( \frac{{(u-2l\pi)}^1}{u^{2m}} + \frac{{(u-2l\pi)}^{2m}}{u^{2m}} \beta_{2m-1}(u-2l\pi)\Big) 
+	    \bigg] \\
+	    \end{align*}
+	    i.e $\displaystyle \lim_{u \to 2l\pi} \hat{N}_1(u) = -\frac{jK(m,2)}{{(2l\pi)}^{2m-1}}$
+      \end{itemize}
+
+    \item Assume $m=3, r=3$.
+      \begin{itemize}
+	\item \underline{Around 0}
+	  \begin{align*}
+	    \hat{N_0}(u) &= \frac{5!4!3!}{2!} {\left(2 \sin \frac{u}{2} \right)}^{6}   
+	    \begin{vmatrix}
+	      \frac{1}{u^6} & \sum_{k} \frac{1}{{(u+2k\pi)}^{5}}& \sum_{k} \frac{1}{{(u+2k\pi)}^{4}} \\
+	      \frac{1}{u^5} & \sum_{k} \frac{1}{{(u+2k\pi)}^{4}}& \sum_{k} \frac{1}{{(u+2k\pi)}^{3}} \\
+	      \frac{1}{u^4} & \sum_{k} \frac{1}{{(u+2k\pi)}^{3}}& \sum_{k} \frac{1}{{(u+2k\pi)}^{2}} \\
+	    \end{vmatrix} \\
+	    &=  \frac{5!4!3!}{2!} {\left(2 \sin \frac{u}{2} \right)}^{6}  \frac{1}{u^{12}} \Big[ 1+ \sum_{k \neq 0} 
+	      \frac{u^4}{{(u+2k\pi)}^{4}} + \frac{u^2}{{(u+2k\pi)}^{2}} + \sum_{k \neq 0}\frac{u^4}{{(u+2k\pi)}^{4}} \sum_{k 
+	      \neq 0}\frac{u^2}{{(u+2k\pi)}^{2}} \\
+	    & \quad - (1+ \sum_{k \neq 0} \frac{u^3}{{(u+2k\pi)}^{3}} + \frac{u^3}{{(u+2k\pi)}^{3}} + \sum_{k \neq 0} 
+	    \frac{u^3}{{(u+2k\pi)}^{3}}\sum_{k \neq 0} \frac{u^3}{{(u+2k\pi)}^{3}})  \\
+	    & \quad - (1+ \sum_{k \neq 0} \frac{u^5}{{(u+2k\pi)}^{5}} + \frac{u^2}{{(u+2k\pi)}^{2}} + \sum_{k \neq 
+	    0}\frac{u^5}{{(u+2k\pi)}^{5}} \sum_{k \neq 0}\frac{u^2}{{(u+2k\pi)}^{2}}) \\
+	    & \quad + (1+ \sum_{k \neq 0} \frac{u^4}{{(u+2k\pi)}^{4}} + \frac{u^3}{{(u+2k\pi)}^{3}} + \sum_{k \neq 0} 
+	  \frac{u^3}{{(u+2k\pi)}^{3}}\sum_{k \neq 0} \frac{u^4}{{(u+2k\pi)}^{4}}) \\
+	   &\quad + 1+ \sum_{k \neq 0} 
+	      \frac{u^5}{{(u+2k\pi)}^{5}} + \frac{u^3}{{(u+2k\pi)}^{3}} + \sum_{k \neq 0}\frac{u^5}{{(u+2k\pi)}^{5}} \sum_{k 
+	      \neq 0}\frac{u^3}{{(u+2k\pi)}^{3}} \\
+	    & \quad - (1+ \sum_{k \neq 0} \frac{u^4}{{(u+2k\pi)}^{4}} + \frac{u^4}{{(u+2k\pi)}^{4}} + \sum_{k \neq 0} 
+	    \frac{u^4}{{(u+2k\pi)}^{4}}\sum_{k \neq 0} \frac{u^4}{{(u+2k\pi)}^{4}}) \Big] \\
+	    &= \frac{5!4!3!}{2!} {\left(2 \sin \frac{u}{2} \right)}^{6}  \frac{1}{u^6} \Big[\beta_4(u)\beta_2(u) - 
+	    \beta_3(u)\beta_3(u) + \mathcal{O}(u) \Big]
+	  \end{align*}
+
+	\item \underline{Around $2l\pi$, $v=u-2l\pi$}
+	  \begin{align*}
+	    \hat{N_0}(u) &= K(m,3) {\left(2 \sin \frac{v}{2} \right)}^{2m}   \begin{vmatrix}
+	      \frac{1}{u^{2m}} & \frac{1}{v^{2m-1}}(1+v^{2m-1}\beta_{2m-1}(v)) & 
+	      \frac{1}{v^{2m-2}}(1+v^{2m-2}\beta_{2m-2}(v)) \\
+	      \frac{1}{u^{2m-1}} & \frac{1}{v^{2m-2}}(1+v^{2m-2}\beta_{2m-2}(v)) & 
+	      \frac{1}{v^{2m-3}}(1+v^{2m-3}\beta_{2m-3}(v)) \\
+	      \frac{1}{u^{2m-2}} & \frac{1}{v^{2m-3}}(1+v^{2m-3}\beta_{2m-3}(v)) & 
+	      \frac{1}{v^{2m-4}}(1+v^{2m-4}\beta_{2m-4}(v)) \\
+	    \end{vmatrix} \\
+	    &=  K(m,3) {\left(2 \sin \frac{u}{2} \right)}^{2m}  \frac{1}{v^{r(2m-r+1)}} \Big[ 1+ \sum_{k \neq 0} 
+	      \frac{u^4}{{(u+2k\pi)}^{4}} + \frac{u^2}{{(u+2k\pi)}^{2}} + \sum_{k \neq 0}\frac{u^4}{{(u+2k\pi)}^{4}} 
+	      \sum_{k \neq 0}\frac{u^2}{{(u+2k\pi)}^{2}} \\
+	    & \quad - (1+ \sum_{k \neq 0} \frac{u^3}{{(u+2k\pi)}^{3}} + \frac{u^3}{{(u+2k\pi)}^{3}} + \sum_{k \neq 0} 
+	    \frac{u^3}{{(u+2k\pi)}^{3}}\sum_{k \neq 0} \frac{u^3}{{(u+2k\pi)}^{3}})  \\
+	    & \quad - (1+ \sum_{k \neq 0} \frac{u^5}{{(u+2k\pi)}^{5}} + \frac{u^2}{{(u+2k\pi)}^{2}} + \sum_{k \neq 
+	    0}\frac{u^5}{{(u+2k\pi)}^{5}} \sum_{k \neq 0}\frac{u^2}{{(u+2k\pi)}^{2}}) \\
+	    & \quad + (1+ \sum_{k \neq 0} \frac{u^4}{{(u+2k\pi)}^{4}} + \frac{u^3}{{(u+2k\pi)}^{3}} + \sum_{k \neq 0} 
+	  \frac{u^3}{{(u+2k\pi)}^{3}}\sum_{k \neq 0} \frac{u^4}{{(u+2k\pi)}^{4}}) \\
+	   &\quad + 1+ \sum_{k \neq 0} 
+	      \frac{u^5}{{(u+2k\pi)}^{5}} + \frac{u^3}{{(u+2k\pi)}^{3}} + \sum_{k \neq 0}\frac{u^5}{{(u+2k\pi)}^{5}} \sum_{k 
+	      \neq 0}\frac{u^3}{{(u+2k\pi)}^{3}} \\
+	    & \quad - (1+ \sum_{k \neq 0} \frac{u^4}{{(u+2k\pi)}^{4}} + \frac{u^4}{{(u+2k\pi)}^{4}} + \sum_{k \neq 0} 
+	    \frac{u^4}{{(u+2k\pi)}^{4}}\sum_{k \neq 0} \frac{u^4}{{(u+2k\pi)}^{4}}) \Big] \\
+	    &= \frac{5!4!3!}{2!} {\left(2 \sin \frac{u}{2} \right)}^{6}  \frac{1}{u^6} \Big[\beta_4(u)\beta_2(u) - 
+	    \beta_3(u)\beta_3(u) o(u) \Big]
+	  \end{align*}
+      \end{itemize}
+  \end{enumerate}
+\end{example}
+
+\begin{proof}
+Using the definition of Hermite B-splines
+\begin{equation*}
+  N_s(x) = \sum_{k=-(m-r)}^{m-r} c_k L_{2m,r,s}(x-k)
+\end{equation*}
+and given the integral representation of $I_{2m,r,s} = L_{2m,r,s}$, the following holds
+\begin{equation}
+  N_s(x) = \frac{{(-j)}^s}{2\pi} \int_{-\infty}^{\infty} e^{-ju(m-r)} \Pi_{2m-1,r}(e^{ju}) e^{jux} \frac{H_{r, 
+  s}(\alpha_{2m}(u))}{H_r(\alpha_{2m}(u))} du
+\end{equation}
+
+It was proven by Lee and Sharma in (\cite[Theorem 4]{LeeSh76}) that the following holds
+  \begin{equation}\label{eq:LeeSh}
+    H_r\left(\frac{\Pi_{n}(\lambda)}{n!}\right) = {(-1)}^{\lfloor \frac{r}{2}\rfloor} C(n,r) 
+    {(1-\lambda)}^{(r-1)(n-r+1)} \Pi_{n,r}(\lambda)
+\end{equation}
+with $C(n,r)$ the quantity
+\begin{equation*}
+  C(n,r) = \frac{1!2!\ldots(r-1)!}{n!(n-1)!\ldots(n-r+1)!}
+\end{equation*}
+Therefore,
+\begin{equation*}
+  \Pi_{2m-1,r}(e^{ju}) = {(-1)}^{\lfloor \frac{r}{2} \rfloor + m(r+1)} K(m,r) {(1-e^{ju})}^{-(r-1)(2m-r)} H_r\left( 
+  \frac{\Pi_{2m-1}(e^{ju})}{(2m-1)!} \right)
+\end{equation*}
+
+We have $\Pi_{n}(\lambda) = A_n(0;\lambda){(1-\lambda)}^n$.  Using this and (\ref{prop:hankel}), we have
+\begin{equation*}
+  H_r\left(\frac{\Pi_{2m-1}(e^{ju})}{(2m-1)!}\right) = H_r\left(\frac{A_{2m-1}(0;e^{ju})}{(2m-1)!}\right) 
+  {(1-e^{ju})}^{r(2m-r)}
+\end{equation*}
+while we previously established
+\begin{equation*}
+  H_r\left(\frac{A_{2m-1}(0;e^{ju})}{(2m-1)!}\right) = {(e^{ju}-1)}^{r}e^{-jur} {(-j)}^{r(2m-r)} 
+  H_r(\alpha_{2m} (u))
+\end{equation*}
+Combining the previous relations we have
+\begin{equation}
+  \Pi_{2m-1,r}(e^{ju}) = {(-1)}^{\lfloor \frac{r}{2} \rfloor + m(r+1) + r} {(-j)}^{r(2m-r)} 
+  \frac{{\left(e^{ju}-1\right)}^{2m}}{e^{jur}} K(m,r) H_r(\alpha_{2m}(u))
+\end{equation}
+
+Eventually,
+\begin{equation}
+  N_s(x) = \frac{{(-j)}^{s}}{2\pi} \int_{-\infty}^{\infty} e^{jux} {\left(2\sin \frac{u}{2}\right)}^{2m} K(m,r)   
+  H_{r,s}(\alpha_{2m}(u)) du
+\end{equation}
+
+\end{proof}
+
+\end{document}
+
+

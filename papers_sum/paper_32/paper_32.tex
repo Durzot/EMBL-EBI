@@ -1,0 +1,314 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=1.5cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}  
+\usepackage{lmodern}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage{dsfont}
+
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric}
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{thm}{Theorem}
+\newcustomtheorem{lem}{Lemma}
+\newcustomtheorem{cor}{Corollary}
+\newcustomtheorem{deftn}{Definition}
+\newcustomtheorem{prop}{Proposition}
+\newcustomtheorem{remark}{Remark}
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\Tr}{Tr}
+\DeclareMathOperator*{\sinc}{sinc} 
+\DeclareMathOperator*{\supp}{supp}
+\DeclareMathOperator*{\essinf}{ess\ inf}
+\DeclareMathOperator*{\esssup}{ess\ sup} 
+
+\begin{document}
+\title{Summary paper 32: Interpolatory Hermite Spline wavelets}
+\author{Yoann Pradat}
+\maketitle
+
+\section{Introduction}
+
+This paper by T. Goodman proposes a construction of wavelets from spline functions with multiple knots. These wavelets 
+inherit some properties of the B-splines. \\
+
+Let $\psi$ a function in $L_2(\mathbb{R})$ and its translated dilates $B = {\{ 2^{k/2} \psi(2^k. -j) \}}_{j,k \in 
+\mathbb{Z}}$. 
+
+\begin{deftn}{1}
+  $\psi$ is said to be an \emph{orthogonal wavelet} if $B$ forms an orthonormal basis of $L^2(\mathbb{R})$.
+\end{deftn}
+
+\begin{deftn}{2}
+  $\psi$ is said to be a \emph{wavelet} if $B$ forms a Riesz basis of $L^2(\mathbb{R})$ and $\psi(2^k.-i)$ orthogonal to 
+  $\psi(2^l-j)$ whenever $k \neq l$.
+\end{deftn}
+
+Idea used in another article by Goodman “Wavelets with multiplicity r” to construct compactly supported spline wavelets 
+$\psi_0, \ldots, \psi_{r-1}$ with knots multiplicity $r$. Here different construction of $\psi_0, \ldots, \psi_{r-1}$ 
+related to Schoenberg and Sharma's problem of cardinal Hermite spline interpolation. They satisfy for $s=0, \ldots, 
+r-1$,
+
+\begin{equation}
+  \psi_s^{(j)}(k) = 0 \quad \text{for} \quad j=0, \ldots, r-1, j\neq s, k\in \mathbb{Z}
+\end{equation}
+
+\section{Construction of wavelets}
+
+\underline{Notations}
+\begin{itemize}
+  \itemsep0em
+  \item $\zeta_{n,r}(S)$ space of spline functions of degree $n$ on $\mathbb{R}$ with knots multiplicity $r$ on set $S$.  
+    Note that $\zeta_{n, r}(\mathbb{Z}) = \$_{n+1, \mathbb{Z}_r}$ in De Boor's notation.
+  \item $N_i$ B-spline in $\zeta_{2r-1, r}(\mathbb{Z})$ with support in $[0, 2]$ and knots at $0, 1$ and 2 of 
+    multiplicity $r-i, r$ and $i+1$ for $i=0, \ldots, r-1$.
+  \item For $s=0, \ldots, r-1$, $B_s$ Schoenberg spline in $\zeta_{2r-1, r}(\mathbb{Z})$ and support in $[0,2]$ such 
+    that for all $j=0, \ldots, r-1$,
+    \begin{equation*}
+      B_s^{(j)}(1) = \delta_{sj}
+    \end{equation*}
+    Note that $B_s = L_s(.-1) = \phi_{s+1}(.-1)$ in my notation for order $r$ Hermite interpolation.
+  \item $V_0 = \zeta_{2r-1, r}(\mathbb{Z}) \cap L_2$, $V_1 = \zeta_{2r-1, r}(\frac{1}{2}\mathbb{Z}) \cap L_2$ and $W$ 
+    such that $V_1 = V_0 \bigoplus W$.
+  \item $T_s = \{ f \in V_1 : {f^{(j)}}_{|\mathbb{Z}}=0, 0 \leq j \leq r-1, j\neq s \}$
+  \item $U_s = \{ f \in \zeta_{4r-1,r}(\frac{1}{2}\mathbb{Z}) : {f^{(j)}}_{|\mathbb{Z}}=0, 0 \leq j \leq r-1, 2r\leq j 
+    \leq 3r-1,  j\neq 2r+s \}$
+  \item $U = \{ f \in \zeta_{4r-1,r}(\frac{1}{2}\mathbb{Z}) : {f^{(j)}}_{|\mathbb{Z}}=0, 0 \leq j \leq r-1\}$
+\end{itemize}
+
+$B_0, \ldots, B_{r-1}$ forms a basis for ${\zeta_{2r-1, r}(\mathbb{Z})}_{|[0,2]}$. Any $f \in {\zeta_{2r-1, 
+r}(\mathbb{Z})}$ with support in $[k, k+N]$ can be written as
+
+\begin{equation*}
+  f = \sum_{i=k}^{k+N-2} \sum_{j=0}^{r-1} f^{(j)}(i+1) B_j(.-i)
+\end{equation*}
+
+This is nothing more than Schoenberg's C.H.I.P theorem 4 according to which
+\begin{align*}
+  f &= \sum_{i \in \mathbb{Z}} \sum_{j=0}^{r-1} f^{(j)}(i) L_j(.-i) \\
+  &= \sum_{i=k+1}^{k+N-1} \sum_{j=0}^{r-1} f^{(j)}(i) L_j(.-i) \\
+  &= \sum_{i=k}^{k+N-2} \sum_{j=0}^{r-1} f^{(j)}(i+1) L_j(.-i-1) \
+\end{align*}
+
+Considering $f = B_s(\frac{.}{2})$ that has support in $[0,4]$ we obtain equation (2.3) in the article. Goodman states 
+that it is only for $m=r$ that Schoenberg splines $L_s = L_{2m,r,s}$ have compact support. Proof of that claim? In his 
+other article [7], Goodman proved that ${\{N_j(.-i)\}}_{i \in \mathbb{Z}, j=0, \ldots, r-1}$ is a Riesz-basis for $V_0$ 
+which has the consequence that  ${\{B_j(.-i)\}}_{i \in \mathbb{Z}, j=0, \ldots, r-1}$ \textbf{is also a Riesz basis}.  
+\\
+
+\underline{Objective}: For even $r$, construct $\psi_s \in [0, r+2]$ such that ${\{\psi_s(.-i)\}}_{i \in \mathbb{Z}, 
+s=0, \ldots, r-1}$ is a Riesz-basis for $W$. Then from [6], $\psi_0, \ldots, \psi_{r-1}$ are wavelets of multiplicity 
+$r$.
+
+\begin{lem}{2.1}
+  $f \in W \cap T_s$ with support in $[a,b]$ $\implies \exists! g \in U_s $ with support in $[a,b]$ s.t $g^{(2r)} = f$
+  Conversely, $g \in U_s$ with support in $[a,b]$ $\implies g^{(2r)} \in W \cap T_s$.
+\end{lem}
+
+Goodman now constructs $\Psi_s \in U_s$ to define then $\psi_s = \Psi_s^{(2r)}$. Consider
+
+\begin{equation}
+  S(x) = \sum_r^{2r-1} a_j x^j + \sum_{3r}^{4r-1} a_j x^j + \sum_{3r}^{4r-1} b_j {(x-\frac{1}{2})}_+^j
+\end{equation}
+
+Let $\pi_s(\lambda, t) = \pi_s(t)$ the determinant of the system of $3r+1$ linear equations on 
+
+\begin{equation}
+  T(x) = S(x) + c\frac{x^{2r+s}}{(2r+s)!} \quad 0 \leq x \leq 1
+\end{equation}
+
+Then $\pi_s(\lambda, t)$ can be viewed as a polynomial of $r+2$ on $\lambda$ (degree less than or equal to $r+1$) with 
+coefficients depending on $s$ and $t$ as follows
+
+\begin{equation}
+  \pi_s(\lambda, t) = \sum_{k=0}^{r+1} \Phi_{s,k}(t)  \lambda^{r+1-k}
+\end{equation}
+
+Equations on $T$ translate to equations on $\pi_{s}$ as follows
+
+\begin{equation}
+\begin{dcases}
+  \pi_s^{(j)}(1) = \pi_s^{(j)}(0)=0 &, 0 \leq j \leq r-1, 2r \leq j \leq 3r-1, j \neq 2r+s \\
+  \pi_s^{(j)}(1) = \lambda \pi_s^{(j)}(0) &, r \leq j \leq 2r-1, j=2r+s \\
+  \pi_s(t+1) = \lambda \pi_s(t) &, t \in \mathbb{R}
+\end{dcases}
+\end{equation}
+
+Define 
+
+\begin{equation*}
+  \Psi_{s}(t) = \Phi_{s,k}(t-k) \quad \text{for} \quad k \leq t < k+1, 0 \leq k \leq r+1
+\end{equation*}
+
+Then $\Psi_s$ has support in $[0, r+2]$ and lies in $U_s$. From lemma, $\psi_s = \Psi_s^{(2r)}$ lies in $W \cap T_s$ and 
+has support in $[0, r+2]$. Note that
+
+\begin{align*}
+  \pi_s(t) &= \sum_{k = -\infty}^{\infty} \Psi_s(t-k) \lambda^{r+1+k} \\
+  \pi(\lambda) &= \sum_{k = -\infty}^{\infty} \Psi_s^{(2r+s)}(r+1-k) \lambda^{k}
+\end{align*}
+
+\section{Properties of wavelets}
+
+Let's show now that ${\{\psi_s(.-i)\}}_{i \in \mathbb{Z}, s=0, \ldots, r-1}$ is a Riesz-basis for $W$.
+
+\begin{lem}{3.1}
+  For $s=0, \ldots, r-1$ and any real number $\lambda$, the function $\pi_s = \pi_s(\lambda,.)$ does not vanish 
+  identically on $\mathbb{R}$.
+\end{lem}
+
+\begin{lem}{3.2}
+  For $0 \leq s \leq r-1$, the functions $\Phi_{s,i}$ ($i=0, \ldots, r+1$) are linearly independent on $[0, 
+  \frac{1}{2}]$ and on $[\frac{1}{2}, 1]$.
+\end{lem}
+
+\begin{lem}{3.3}
+  For $0 \leq s \leq r-1$, any function $f$ in $U_s$ can be written uniquely in the form 
+  \begin{equation*}
+    f = \sum_{i = -\infty}^{\infty} c_i \psi_s(.-i)
+  \end{equation*}
+  for some constants $c_i$. Moreoever, $\exists K$ such that
+  \begin{equation*}
+    \forall f, \forall j, \forall i = j-r-1, \ldots, j, \quad |c_i| \leq K {\|f_{|[j,j+1]}\|}_{\infty}
+  \end{equation*}
+\end{lem}
+
+\begin{proof}
+  In the proof Goodman claims that ${U_s}_{|[0,1]}$ has dimension $r+2$ which is true for the reason that the 
+  interpolation problem of finding $g \in \zeta_{4r-1, r}(\frac{1}{2}\mathbb{Z})$ for values
+  \begin{equation*}
+    \begin{dcases}
+      g^{(j)}(0) &, j=0, \ldots, 3r-1 \\
+      g^{(j)}(1) &, j=0, \ldots, r-1, 2r, \ldots, 3r-1
+    \end{dcases}
+  \end{equation*}
+  has a unique solution while a fonction in $U_s$ already satisfies
+  \begin{equation*}
+    \begin{dcases}
+      g^{(j)}(0)=0 &, j=0, \ldots, r-1, 2r, \ldots, 3r-1, j \neq 2r+s \\
+      g^{(j)}(1)=0 &, j=0, \ldots, r-1, 2r, \ldots, 3r-1, j\neq 2r+s
+    \end{dcases}
+  \end{equation*}
+  which leaves $r+2$ free data choices. \\
+  Given that $\Phi_{s,i}$ lie in ${U_s}_{|[0,1]}$ and that by lemma 3.2 they are linearly independent, they form a basis 
+  for the previous space. As $\Phi_{s,i}(t) = \Psi_s(t+i)$ for $0 \leq t \leq 1, 0 \leq i \leq r+1$ we can uniquely 
+  write for any $f \in U_s$
+  \begin{equation*}
+    f(x) = \sum_{i=0}^{r+1} c_i \Psi_s(x+i), \quad 0 \leq x \leq 1 
+  \end{equation*}
+  Using the fact $\zeta_s = \text{span}(\Phi_{s,0})$ leads to
+    \begin{equation*}
+      f(x) = \sum_{i=-1}^{r+1} c_i \Psi_s(x+i), \quad 0 \leq x \leq 2
+    \end{equation*}
+
+    Regarding the second part of the lemma, the argument on equivalent norms in finite dimension \textbf{is not clear}. 
+    I do agree that ${U_s}_{|[j, j+1]}$ is finite dimensional (dimension $r+2$) and that therefore norms on it are 
+    equivalent but for which norm do we already have 
+    \begin{equation*}
+      \max_{j-r-1\leq i \leq j} |c_i| \leq C \|f_{|[j,j+1]} \|
+    \end{equation*}?
+\end{proof}
+
+\begin{thm}{3.1}
+  Any bounded function $f$ in $U$ can be written uniquely in the form
+  \begin{equation}
+    f  = \sum_{s=0}^{r-1} \sum_{i=-\infty}^{\infty} c_i^{(s)} \Psi_s(.-i)
+  \end{equation}
+  for uniformly bounded constants $c_i^{(s)}$. Moreoever, if $f(x)$ decays exponentially as $|x| \to \infty$, then 
+  $c_i^{(s)}$ decays exponentially as $|i| \to \infty$.
+\end{thm}
+
+Remember from lemma 2.1 applied to $\Psi_s$ that $\psi_s$ lies in $W \cap T_s$ and has support in $[0, r+2]$. 
+
+\begin{thm}{3.2}
+  Let $0 \leq s \leq r-1$. Any element in $W \cap T_s$ with support in $[0, r+2]$ is a constant multiple of $\psi_s$.  
+  The function $\psi_s$ does not have support on any interval $[a,b] \subsetneq [0, r+2]$ and for any $0 \leq j \leq 
+  r+1$ does not vanish identically on $[j,j+1]$. Moreover, $\psi_s$ is symmetric or anti-symmetric about 
+  $\frac{r}{2}+1$.
+\end{thm}
+
+\begin{proof}
+  We have
+  \begin{equation*}
+    f = \sum_{i=-\infty}^{\infty} c_i \Psi_s(.-i) = \sum_{i=\infty}^{\infty} c_{-i} \Phi_{s,i}
+  \end{equation*}
+  Linear independence of the $\Phi_{s,i}$ from lemma 3.2 is used to deduce that $f$ reduces to $f = c_0 \Psi_s$ as 
+  follows
+  \begin{equation*}
+    f_{|[-1,0]} = \sum_{i=1}^{r+2} c_{-i} \Phi_{s,i} = 0
+  \end{equation*}
+  and $\Phi_{s,i}$ ($i=1, \ldots, r+2$) are linearly independent on $[-1, \frac{-1}{2}]$. Similar argument on $[r+2, 
+  r+3]$ leads to $c_1 = \cdots = c_{r+2} = 0$. Added to the fact that $f$ is supported in, $[0, r+2]$, only $c_0$ may be 
+  non zero i.e $f = c_0 \Psi_s$ and $g = c_0 \psi_s$.
+\end{proof}
+
+\begin{thm}{3.3}
+  For $0 \leq s \leq r-1$ and any integer $j$, the sequence ${\{\psi_s(.-i)\}}_{i \in \mathbb{Z}}$ is locally linearly 
+  independent on $(j,j+1)$.
+\end{thm}
+
+\begin{remark}{1}
+  Interestingly ${\{\psi_{s,i}\}}_i$ are not locally linearly independent on $(0,\frac{1}{2})$. To see this, note that 
+  \begin{equation}
+    {W \cap T_s}_{|(0, \frac{1}{2})} = \{p \in {\pi_{2r-1}}_{|(0,\frac{1}{2})}, p^{(j)}(0) = 0, 0 \leq j\leq r-1,j\neq 
+    s\}
+  \end{equation}
+  and that the latter is a vector space of dimension $r+1$, less than  the $r+2$ $\psi_{i,s}$ that have support 
+  overlapping $(0, \frac{1}{2})$
+\end{remark}
+
+
+\begin{thm}{3.4}
+  Any function in $V_1$ can be uniquely written in the form
+  \begin{equation}
+    f = \sum_{s=0}^{r-1} \sum_{i=-\infty}^{\infty} b^{(s)}_i B_s(.-i) +\sum_{s=0}^{r-1} \sum_{i=-\infty}^{\infty} 
+    c^{(s)}_i \psi_s(.-i)
+  \end{equation}
+  with sequences ${(b^{(s)}_i)}_i$, ${(c^{(s)}_i)}_i$ in $l^2$. Moreover if $f(x)$ decays exponentially as $|x| \to 
+  \infty$ so do $b^{(s)}_i, c^{(s)}_i$ as $|i| \to \infty$.
+\end{thm}
+
+\begin{proof}
+  Goodman first considers the case where $f$ has support in $[a,b]$ and claims that there exists then a unique function 
+  $F$ in $\zeta_{4r-1, r}(\frac{1}{2}\mathbb{Z})$ that vanishes on $(-\infty, a)$ and satisfies $F^{(2r)} = f$.  
+  \textbf{Why is that?} Maybe this is simply polynomial interpolation of order $2r$ on each segment $[j, j+\frac{1}{2}]$ 
+  and $[j+\frac{1}{2}, j+1]$. As $F^{(2r)} \in \zeta_{2r-1, r}(\mathbb{Z})$ (see p115 De Boor's book), $F^{(2r)}$ is 
+  completely determined if we have $r$ interpolation conditions on the half-integer grid $\frac{1}{2}\mathbb{Z}$. Taking 
+  as interpolation conditions the first $r$ derivatives (0 to $r-1$) of $f$ at each half-integer leads to $F^{(2r)} = f$ 
+  with $F^{(2r)}$ vanishing identically on $(-\infty, a)$ and on $(b, \infty)$. \\
+
+  Then one can write $F = S + \Psi$ with $S \in \zeta_{4r-1. r}(\mathbb{Z}), \Psi \in U$. I am not sure \textbf{how 
+  Schoenberg's theory applies to prove that $S(x)$ decays exponentially} as $x \to -\infty$? \\
+
+  According to Goodman any function $f$ in $V_1$ can be written
+  \begin{equation*}
+    f = \sum_{j=0}^{r-1} \sum_{k = -\infty}^{\infty} a_k^{(j)} B_j(2x-k)
+  \end{equation*}
+  with $a_j = {(a_k^{(j)})}_k$ in $l^2$ satisfying
+  \begin{equation*}
+    \|a_j\|_2 \leq C \|f\|_2
+  \end{equation*}
+  for some $C$. \textbf{Why is that?}.
+\end{proof}
+
+\begin{cor}{3.2}
+  The function ${\{\psi_s(.-i)\}}_{i \in \mathbb{Z}, 0 \leq s \leq r-1}$ form a Riesz basis for $W$.
+\end{cor}
+
+\end{document}
+
+
